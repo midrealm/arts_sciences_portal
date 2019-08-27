@@ -1,0 +1,33 @@
+version: "2"
+
+services:
+  app:
+    build: .
+    volumes:
+      - "$HOME/.ssh:/tmp/host-ssh"
+      - "$PWD:/app"
+    environment:
+      MIX_ENV: dev
+      DB_NAME: arts_sciences_portal-sql
+      PORT: 4000
+    networks:
+      - internal
+    ports:
+      - "4000:4000"
+    links:
+      - mysql
+    command: ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+
+  mysql:
+    image: mysql:latest
+    container_name: arts_sciences_portal-sql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - internal
+#    ports:
+#      - "5432:5432"
+
+
+networks:
+  internal:
