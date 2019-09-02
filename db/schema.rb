@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_30_120703) do
+ActiveRecord::Schema.define(version: 2019_09_02_221123) do
 
   create_table "user_roles", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "role_name"
@@ -26,8 +26,11 @@ ActiveRecord::Schema.define(version: 2019_08_30_120703) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_role_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["user_role_id"], name: "index_users_on_user_role_id"
   end
 
+  add_foreign_key "users", "user_roles"
 end
