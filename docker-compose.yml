@@ -7,8 +7,11 @@ services:
       - "$HOME/.ssh:/tmp/host-ssh"
       - "$PWD:/app"
     environment:
-      MIX_ENV: dev
-      DB_NAME: arts_sciences_portal-sql
+      DB_HOST: arts_sciences_portal-sql
+      DB_USERNAME: username
+      DB_PASSWORD: password
+      DB_DATABASE: dev
+      DB_PORT: 3306
       PORT: 4000
     networks:
       - internal
@@ -19,10 +22,13 @@ services:
     command: ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
 
   mysql:
-    image: mysql:latest
+    image: mysql:5.7
     container_name: arts_sciences_portal-sql
     environment:
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: dev
     networks:
       - internal
 #    ports:
