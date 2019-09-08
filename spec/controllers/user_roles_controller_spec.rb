@@ -1,5 +1,4 @@
 require 'rails_helper'
-include ActionDispatch::Integration::RequestHelpers
 
 describe UserRolesController, type: :controller do
   describe 'authorization' do
