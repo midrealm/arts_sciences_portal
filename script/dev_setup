@@ -12,7 +12,7 @@ docker-compose run --rm app bundle install
 docker-compose run --rm app yarn install --check-files
 
 echo -e "Setup test database"
-docker-compose run -e SCHEMA=db/testing_schema.rb -e RAILS_ENV=test --rm app bundle exec rake db:setup
+docker-compose run -e SCHEMA=db/testing_schema.rb -e RAILS_ENV=test --rm app bundle exec rake db:reset
 
 echo -e "\nShowing ps..."
 docker-compose ps

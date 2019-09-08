@@ -1,5 +1,6 @@
 class UserRolesController < ApplicationController
   before_action :authenticate_user!
+  before_action :verify_admin
   before_action :set_user_role, only: [:show, :edit, :update, :destroy]
 
   # GET /user_roles
