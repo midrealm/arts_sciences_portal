@@ -1,0 +1,37 @@
+<%= form_with(model: judge_assign, local: true) do |form| %>
+  <% if judge_assign.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(judge_assign.errors.count, "error") %> prohibited this judge_assign from being saved:</h2>
+
+      <ul>
+        <% judge_assign.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user %>
+    <%= form.select :user_id, options_for_select(@users.collect{ |u| [u.email, u.id] }, { selected: @current_judge })%>
+  </div>
+
+  <div class="field">
+    <%= form.label :entry %>
+    <%= form.select :entry_id, options_for_select(@entries.collect{ |u| [u.entry_name, u.id] }, { selected: @current_entry }) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :assigned %>
+    <%= form.check_box :assigned %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shadow %>
+    <%= form.check_box :shadow %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

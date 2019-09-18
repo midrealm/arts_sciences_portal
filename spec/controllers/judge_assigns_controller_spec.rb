@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe UserRolesController, type: :controller do
+RSpec.describe JudgeAssignController, type: :controller do
   describe 'authorization' do
     context "if the user is not in the correct group" do
-      let!(:user_role) {FactoryBot.create(:user_role, id: 1)}
+      let!(:judge_assign) {FactoryBot.create(:judge_assign, id: 1)}
 
       before(:each) do
         login_user
@@ -16,7 +16,7 @@ RSpec.describe UserRolesController, type: :controller do
       include_examples "denies access to user", :new
 
       it "denies user to create user roles" do
-        post :create, params: {id: user_role.id, user_role: {role_name: 'test'}}
+        post :create, params: {id: judge_assign.id, judge_assign: {shadow: true}}
         expect(response.status).to eq 302
         expect(flash[:alert]).to eq "You are not authorized to perform this action."
 

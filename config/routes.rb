@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
+  resources :judge_assigns
+  resources :entries
   devise_for :users
 
-  root :to => ApplicationController
+  root 'pages#home'
+
+  resources :entries
+  resources :judge_assigns
 
   scope "/admin" do
-    get '/', to: 'admin#index', as: 'admin'
     resources :users, except: :new
     resources :user_roles
   end
