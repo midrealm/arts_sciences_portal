@@ -10,18 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_17_132239) do
+ActiveRecord::Schema.define(version: 2019_09_24_023750) do
 
-  create_table "entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "entries", force: :cascade do |t|
     t.string "entry_name"
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_entries_on_category_id"
     t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
-  create_table "judge_assigns", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  create_table "judge_assigns", force: :cascade do |t|
     t.boolean "assigned"
     t.boolean "shadow"
     t.datetime "created_at", precision: 6, null: false
@@ -32,13 +43,13 @@ ActiveRecord::Schema.define(version: 2019_09_17_132239) do
     t.index ["user_id"], name: "index_judge_assigns_on_user_id"
   end
 
-  create_table "user_roles", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "user_roles", force: :cascade do |t|
     t.string "role_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -47,11 +58,11 @@ ActiveRecord::Schema.define(version: 2019_09_17_132239) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_role_id", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["user_role_id"], name: "index_users_on_user_role_id"
   end
 
+  add_foreign_key "entries", "categories"
+  add_foreign_key "entries", "users"
   add_foreign_key "judge_assigns", "entries"
   add_foreign_key "judge_assigns", "users"
   add_foreign_key "users", "user_roles"

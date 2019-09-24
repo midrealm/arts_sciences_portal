@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :categories
   resources :judge_assigns
   resources :entries
   devise_for :users
@@ -11,5 +12,6 @@ Rails.application.routes.draw do
   scope "/admin" do
     resources :users, except: :new
     resources :user_roles
+    resources :categories
   end
 end
