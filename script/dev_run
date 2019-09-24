@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-docker-compose run -p 4000:4000 --rm app "$@"
+docker-compose run -p 4000:4000 -e RAILS_ENV=test --rm app "$@"

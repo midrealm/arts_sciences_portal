@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Assigned:</strong>
+  <%= @judge_assign.assigned %>
+</p>
+
+<p>
+  <strong>Shadow:</strong>
+  <%= @judge_assign.shadow %>
+</p>
+
+<%= link_to 'Edit', edit_judge_assign_path(@judge_assign) %> |
+<%= link_to 'Back', judge_assigns_path %>

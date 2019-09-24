@@ -6,6 +6,9 @@ class User < ApplicationRecord
 
   belongs_to :user_role
 
+  has_many :entries, class_name: 'Entry', foreign_key: :user_id
+  has_many :judge_assigns, class_name: 'JudgeAssign', foreign_key: :user_id
+
   def admin?
     self.user_role.role_name == "admin"
   end

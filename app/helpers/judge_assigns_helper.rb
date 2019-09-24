@@ -1,0 +1,2 @@
+module JudgeAssignsHelper
+end

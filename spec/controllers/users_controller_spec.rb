@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe UsersController, type: :controller do
+RSpec.describe UsersController, type: :controller do
   describe 'authorization' do
     context "if the user is not in the correct group" do
       before(:each) do
