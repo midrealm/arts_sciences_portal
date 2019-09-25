@@ -14,6 +14,8 @@ class UsersController < ApplicationController
 
   # GET /user/1/edit
   def edit
+    @current_region = @user.region.id
+    @regions = Region.all
   end
 
   # PATCH/PUT /user/1
@@ -46,6 +48,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email)
+      params.require(:user).permit(:email, :region_id)
     end
 end

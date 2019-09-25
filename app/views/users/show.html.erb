@@ -2,8 +2,12 @@
 
 <p>
   <strong>Email:</strong>
-  <%= @user.id %>
   <%= @user.email %>
+</p>
+
+<p>
+  <strong>Region:</strong>
+  <%= @user.region.name %>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |

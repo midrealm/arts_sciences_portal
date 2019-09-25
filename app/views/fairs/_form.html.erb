@@ -1,10 +1,10 @@
-<%= form_with(model: user, local: true) do |form| %>
-  <% if user.errors.any? %>
+<%= form_with(model: fair, local: true) do |form| %>
+  <% if fair.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(user_role.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= pluralize(fair.errors.count, "error") %> prohibited this fair from being saved:</h2>
 
       <ul>
-        <% user.errors.full_messages.each do |message| %>
+        <% fair.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -12,8 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
+    <%= form.label :date %>
+    <%= form.date_select :date %>
   </div>
 
   <div class="field">

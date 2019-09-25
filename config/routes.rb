@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  resources :divisions
-  resources :categories
-  resources :judge_assigns
-  resources :entries
   devise_for :users
 
   root 'pages#home'
@@ -15,5 +11,8 @@ Rails.application.routes.draw do
     resources :user_roles
     resources :categories
     resources :divisions
+    resources :regions
+    resources :fairs
+    resources :judge_assigns
   end
 end
