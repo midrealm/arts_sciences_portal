@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :divisions
   resources :categories
   resources :judge_assigns
   resources :entries
@@ -13,5 +14,6 @@ Rails.application.routes.draw do
     resources :users, except: :new
     resources :user_roles
     resources :categories
+    resources :divisions
   end
 end

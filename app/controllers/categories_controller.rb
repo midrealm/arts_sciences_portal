@@ -16,11 +16,14 @@ class CategoriesController < ApplicationController
 
   # GET /categories/new
   def new
+    @divisions = Division.all
     @category = Category.new
   end
 
   # GET /categories/1/edit
   def edit
+    @current_division = @category.division.id
+    @divisions = Division.all
   end
 
   # POST /categories
@@ -71,6 +74,6 @@ class CategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:name)
+      params.require(:category).permit(:name, :division_id)
     end
 end

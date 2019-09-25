@@ -10,12 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_24_023750) do
+ActiveRecord::Schema.define(version: 2019_09_24_143823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "division_id", null: false
+    t.index ["division_id"], name: "index_categories_on_division_id"
+  end
+
+  create_table "divisions", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -61,6 +69,7 @@ ActiveRecord::Schema.define(version: 2019_09_24_023750) do
     t.index ["user_role_id"], name: "index_users_on_user_role_id"
   end
 
+  add_foreign_key "categories", "divisions"
   add_foreign_key "entries", "categories"
   add_foreign_key "entries", "users"
   add_foreign_key "judge_assigns", "entries"
