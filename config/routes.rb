@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   resources :entries
-  resources :judge_assigns
 
   scope "/admin" do
     resources :users, except: :new
@@ -13,6 +12,10 @@ Rails.application.routes.draw do
     resources :divisions
     resources :regions
     resources :fairs
-    resources :judge_assigns
+    resources :timeslots
+
+    resources :judge_assigns do
+      get 'schedule', on: :collection
+    end
   end
 end

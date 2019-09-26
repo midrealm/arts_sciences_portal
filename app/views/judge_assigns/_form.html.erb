@@ -22,6 +22,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :timeslot %>
+    <%= form.select :timeslot_id, options_for_select(@timeslots.collect{ |u| [u.description, u.id] }, { selected: @current_timeslot }) %>
+  </div>
+
+  <div class="field">
     <%= form.label :assigned %>
     <%= form.check_box :assigned %>
   </div>

@@ -18,6 +18,7 @@ class JudgeAssignsController < ApplicationController
   def new
     @users = User.all
     @entries = Entry.all
+    @timeslots = Timeslot.all.in_order
     @judge_assign = JudgeAssign.new
   end
 
@@ -25,8 +26,10 @@ class JudgeAssignsController < ApplicationController
   def edit
     @current_judge = @judge_assign.user.id
     @current_entry = @judge_assign.entry.id
+    @current_timeslot = @judge_assign.timeslot.id
     @users = User.all
     @entries = Entry.all
+    @timeslots = Timeslot.all.in_order
   end
 
   # POST /judge_assigns
@@ -69,6 +72,11 @@ class JudgeAssignsController < ApplicationController
     end
   end
 
+  def schedule
+    @timeslots = Timeslot.all.in_order
+    @judge_assigns = JudgeAssign.all.in_schedule_order
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_judge_assign
@@ -77,6 +85,6 @@ class JudgeAssignsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def judge_assign_params
-      params.require(:judge_assign).permit(:assigned, :shadow, :user_id, :entry_id)
+      params.require(:judge_assign).permit(:assigned, :shadow, :user_id, :entry_id, :timeslot_id)
     end
 end

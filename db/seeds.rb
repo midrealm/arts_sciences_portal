@@ -21,3 +21,9 @@ Category.create(:name => 'Scribal', division: studio)
 Category.create(:name => 'Leatherwork', division: studio)
 
 Fair.create(date: Date.today, region:region)
+
+Timeslot.create(order: 1, description: 'Section 1')
+Timeslot.create(order: 2, description: 'Section 2')
+Timeslot.create(order: 3, description: 'Section 3')
+Timeslot.create(order: 4, description: 'Section 4')
+Timeslot.create(order: 5, description: 'Section 5')
