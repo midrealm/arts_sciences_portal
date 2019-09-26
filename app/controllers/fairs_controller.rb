@@ -71,6 +71,6 @@ class FairsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fair_params
-      params.require(:fair).permit(:date, :region_id)
+      params.require(:fair).permit(:date, :region_id, :name, :comment, :internet_access)
     end
 end

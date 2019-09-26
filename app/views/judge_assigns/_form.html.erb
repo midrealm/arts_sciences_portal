@@ -13,17 +13,17 @@
 
   <div class="field">
     <%= form.label :user %>
-    <%= form.select :user_id, User.all.map{ |m| [m.name, m.id] }%>
+    <%= form.select :user_id, User.all.map{ |m| [m.email, m.id] }%>
   </div>
 
   <div class="field">
     <%= form.label :entry %>
-    <%= form.select :entry_id, Entry.all.map{ |m| [m.name, m.id] }%>
+    <%= form.select :entry_id, Entry.all.map{ |m| [m.entry_name, m.id] }%>
   </div>
 
   <div class="field">
     <%= form.label :timeslot %>
-    <%= form.select :timeslot_id, Timeslot.all.in_order.map{ |m| [m.name, m.id] }%>
+    <%= form.select :timeslot_id, Timeslot.all.in_order.map{ |m| [m.description, m.id] }%>
   </div>
 
   <div class="field">

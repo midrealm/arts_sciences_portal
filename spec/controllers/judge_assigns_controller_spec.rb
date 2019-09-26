@@ -51,8 +51,9 @@ RSpec.describe JudgeAssignsController, type: :controller do
       it "allows admin to create judge assignments" do
         user = FactoryBot.create(:user)
         entry = FactoryBot.create(:entry)
+        timeslot = FactoryBot.create(:timeslot)
 
-        post :create, params: {id: judge_assign.id, judge_assign: {user_id: user.id, entry_id: entry.id}}
+        post :create, params: {id: judge_assign.id, judge_assign: {user_id: user.id, entry_id: entry.id, timeslot_id: timeslot.id}}
         expect(response.status).to eq 302
         expect(flash[:notice]).to be_present
       end

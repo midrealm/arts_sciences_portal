@@ -12,6 +12,11 @@
   <% end %>
 
   <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
     <%= form.label :date %>
     <%= form.date_select :date %>
   </div>
@@ -19,6 +24,16 @@
   <div class="field">
     <%= form.label :region %>
     <%= form.select :region_id, Region.all.map{ |m| [m.name, m.id] }%>
+  </div>
+
+  <div class="field">
+    <%= form.label :internet_access %>
+    <%= form.check_box :internet_access %>
+  </div>
+
+  <div class="field">
+    <%= form.label :comment %>
+    <%= form.text_field :comment %>
   </div>
 
   <div class="actions">

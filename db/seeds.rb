@@ -20,7 +20,7 @@ Division.create(:name => 'Div 5 Domestic Arts')
 Category.create(:name => 'Scribal', division: studio)
 Category.create(:name => 'Leatherwork', division: studio)
 
-Fair.create(date: Date.today, region:region)
+Fair.create(date: Date.today, region: region, name: 'Generic Fair', internet_access: true)
 
 Timeslot.create(order: 1, description: 'Section 1')
 Timeslot.create(order: 2, description: 'Section 2')

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe EntriesController, type: :controller do
   describe 'authorization' do
     context "if the user is not logged in" do
-      let!(:entry) { FactoryBot.create(:entry, id: 1) }
+      let!(:entry) { Entry.first || FactoryBot.create(:entry, id: 1) }
 
       include_examples "tells user to login", :index
       include_examples "tells user to login", :edit, {id: 1}
@@ -23,7 +23,7 @@ RSpec.describe EntriesController, type: :controller do
     end
 
     context "if the user is in the correct group" do
-      let!(:entry) { FactoryBot.create(:entry, id: 1) }
+      let!(:entry) { Entry.first || FactoryBot.create(:entry, id: 1) }
 
       before(:each) do
         login_admin
