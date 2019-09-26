@@ -14,8 +14,6 @@ class UsersController < ApplicationController
 
   # GET /user/1/edit
   def edit
-    @current_region = @user.region.id
-    @regions = Region.all
   end
 
   # PATCH/PUT /user/1

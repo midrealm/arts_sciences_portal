@@ -2,7 +2,7 @@
 
 <h1>Schedule</h1>
 
-<% @timeslots.each do |timeslot| %>
+<% Timeslot.all.in_order.each do |timeslot| %>
   <h3><%= timeslot.description %></h3>
 
   <table>

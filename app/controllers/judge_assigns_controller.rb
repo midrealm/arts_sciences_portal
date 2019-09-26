@@ -16,20 +16,11 @@ class JudgeAssignsController < ApplicationController
 
   # GET /judge_assigns/new
   def new
-    @users = User.all
-    @entries = Entry.all
-    @timeslots = Timeslot.all.in_order
     @judge_assign = JudgeAssign.new
   end
 
   # GET /judge_assigns/1/edit
   def edit
-    @current_judge = @judge_assign.user.id
-    @current_entry = @judge_assign.entry.id
-    @current_timeslot = @judge_assign.timeslot.id
-    @users = User.all
-    @entries = Entry.all
-    @timeslots = Timeslot.all.in_order
   end
 
   # POST /judge_assigns
@@ -73,7 +64,6 @@ class JudgeAssignsController < ApplicationController
   end
 
   def schedule
-    @timeslots = Timeslot.all.in_order
     @judge_assigns = JudgeAssign.all.in_schedule_order
   end
 

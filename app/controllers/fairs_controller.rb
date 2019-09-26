@@ -17,13 +17,10 @@ class FairsController < ApplicationController
   # GET /fairs/new
   def new
     @fair = Fair.new
-    @regions = Region.all
   end
 
   # GET /fairs/1/edit
   def edit
-    @current_region = @fair.region.id
-    @regions = Region.all
   end
 
   # POST /fairs

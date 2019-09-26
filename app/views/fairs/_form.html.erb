@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :region %>
-    <%= form.select :region_id, options_for_select(@regions.collect{ |u| [u.name, u.id] }, { selected: @current_region })%>
+    <%= form.select :region_id, Region.all.map{ |m| [m.name, m.id] }%>
   </div>
 
   <div class="actions">
