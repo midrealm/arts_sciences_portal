@@ -20,7 +20,7 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-gem 'mysql2'
+gem 'pg'
 gem 'devise'
 gem 'pundit'
 

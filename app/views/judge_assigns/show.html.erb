@@ -1,6 +1,16 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>User:</strong>
+  <%= @judge_assign.user.email %>
+</p>
+
+<p>
+  <strong>Entry:</strong>
+  <%= @judge_assign.entry.entry_name %>
+</p>
+
+<p>
   <strong>Assigned:</strong>
   <%= @judge_assign.assigned %>
 </p>

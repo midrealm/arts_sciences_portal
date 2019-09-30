@@ -1,4 +1,6 @@
 class JudgeAssignsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :verify_admin
   before_action :set_judge_assign, only: [:show, :edit, :update, :destroy]
 
   # GET /judge_assigns

@@ -21,6 +21,11 @@
     <%= form.text_field :description %>
   </div>
 
+  <div class="field">
+    <%= form.label :category %>
+    <%= form.select :category_id, options_for_select(@categories.collect{ |u| [u.name, u.id] }, { selected: @current_category })%>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

@@ -3,8 +3,21 @@
 <p>
   <strong>Entry name:</strong>
   <%= @entry.entry_name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
   <%= @entry.description %>
+</p>
+
+<p>
+  <strong>User:</strong>
   <%= @entry.user.email  %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @entry.category.name  %>
 </p>
 
 <%= link_to 'Edit', edit_entry_path(@entry) %> |

@@ -24,11 +24,14 @@ class EntriesController < ApplicationController
 
   # GET /entries/new
   def new
+    @categories = Category.all
     @entry = Entry.new
   end
 
   # GET /entries/1/edit
   def edit
+    @current_category = @entry.category.id
+    @categories = Category.all
   end
 
   # POST /entries
@@ -79,6 +82,6 @@ class EntriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def entry_params
-      params.require(:entry).permit(:entry_name, :description).merge(:user_id => current_user.id)
+      params.require(:entry).permit(:entry_name, :description, :category_id).merge(:user_id => current_user.id)
     end
 end

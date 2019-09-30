@@ -4,5 +4,6 @@ FactoryBot.define do
     description { "description" }
 
     association :user, factory: :user
+    association :category, factory: :category
   end
 end
