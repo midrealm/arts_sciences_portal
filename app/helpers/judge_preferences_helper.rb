@@ -1,0 +1,2 @@
+module JudgePreferencesHelper
+end

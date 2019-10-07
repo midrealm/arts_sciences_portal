@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :verify_admin
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :verify_admin, only: [:index, :destroy]
+  before_action :verify_user, only: [:show, :edit, :update]
+
+  def verify_user
+    authorize @user, :correct_user?
+  end
 
   # GET /user
   def index

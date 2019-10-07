@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   has_many :entries
   has_many :judge_assigns
+  has_many :judge_preferences
 
   def admin?
     self.user_role.role_name == "admin"
