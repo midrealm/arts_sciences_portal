@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   belongs_to :user_role
+  belongs_to :region
 
   has_many :entries
   has_many :judge_assigns

@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :division %>
-    <%= form.select :division_id, options_for_select(@divisions.collect{ |u| [u.name, u.id] }, { selected: @current_division })%>
+    <%= form.select :division_id, Division.all.map{ |m| [m.name, m.id] }%>
   </div>
 
   <div class="actions">

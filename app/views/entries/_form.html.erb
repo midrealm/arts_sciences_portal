@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :category %>
-    <%= form.select :category_id, options_for_select(@categories.collect{ |u| [u.name, u.id] }, { selected: @current_category })%>
+    <%= form.select :category_id, Category.all.map{ |m| [m.name, m.id] }%>
   </div>
 
   <div class="actions">

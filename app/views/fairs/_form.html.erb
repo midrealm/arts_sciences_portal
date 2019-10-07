@@ -1,0 +1,27 @@
+<%= form_with(model: fair, local: true) do |form| %>
+  <% if fair.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(fair.errors.count, "error") %> prohibited this fair from being saved:</h2>
+
+      <ul>
+        <% fair.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.date_select :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :region %>
+    <%= form.select :region_id, Region.all.map{ |m| [m.name, m.id] }%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

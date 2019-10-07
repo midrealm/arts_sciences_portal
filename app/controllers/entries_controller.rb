@@ -24,14 +24,11 @@ class EntriesController < ApplicationController
 
   # GET /entries/new
   def new
-    @categories = Category.all
     @entry = Entry.new
   end
 
   # GET /entries/1/edit
   def edit
-    @current_category = @entry.category.id
-    @categories = Category.all
   end
 
   # POST /entries

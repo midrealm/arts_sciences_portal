@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_24_143823) do
+ActiveRecord::Schema.define(version: 2019_09_25_235122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,14 @@ ActiveRecord::Schema.define(version: 2019_09_24_143823) do
     t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
+  create_table "fairs", force: :cascade do |t|
+    t.date "date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "region_id", null: false
+    t.index ["region_id"], name: "index_fairs_on_region_id"
+  end
+
   create_table "judge_assigns", force: :cascade do |t|
     t.boolean "assigned"
     t.boolean "shadow"
@@ -47,8 +55,23 @@ ActiveRecord::Schema.define(version: 2019_09_24_143823) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.bigint "entry_id", null: false
+    t.bigint "timeslot_id", null: false
     t.index ["entry_id"], name: "index_judge_assigns_on_entry_id"
+    t.index ["timeslot_id"], name: "index_judge_assigns_on_timeslot_id"
     t.index ["user_id"], name: "index_judge_assigns_on_user_id"
+  end
+
+  create_table "regions", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "timeslots", force: :cascade do |t|
+    t.integer "order"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "user_roles", force: :cascade do |t|
@@ -66,13 +89,18 @@ ActiveRecord::Schema.define(version: 2019_09_24_143823) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_role_id", null: false
+    t.bigint "region_id", null: false
+    t.index ["region_id"], name: "index_users_on_region_id"
     t.index ["user_role_id"], name: "index_users_on_user_role_id"
   end
 
   add_foreign_key "categories", "divisions"
   add_foreign_key "entries", "categories"
   add_foreign_key "entries", "users"
+  add_foreign_key "fairs", "regions"
   add_foreign_key "judge_assigns", "entries"
+  add_foreign_key "judge_assigns", "timeslots"
   add_foreign_key "judge_assigns", "users"
+  add_foreign_key "users", "regions"
   add_foreign_key "users", "user_roles"
 end

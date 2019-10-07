@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Schedule</h1>
+
+<% Timeslot.all.in_order.each do |timeslot| %>
+  <h3><%= timeslot.description %></h3>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Judge</th>
+      <th>Entry</th>
+      <th>Assigned</th>
+      <th>Shadow</th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @judge_assigns.select { |x| x.timeslot == timeslot }.each do |judge_assign| %>
+      <tr>
+        <td><%= judge_assign.user.email %></td>
+        <td><%= judge_assign.entry.entry_name %></td>
+        <td><%= judge_assign.assigned %></td>
+        <td><%= judge_assign.shadow %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<br>
+
+<br>  <%= link_to 'Back', judge_assigns_path %>
