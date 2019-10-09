@@ -10,6 +10,21 @@
   <%= @user.region.name %>
 </p>
 
+<p>
+  <strong>Prefers written entries?</strong>
+  <%= @user.written %>
+</p>
+
+<p>
+  <strong>Prefers digital entries?</strong>
+  <%= @user.digital %>
+</p>
+
+<p>
+  <strong>First time judge?</strong>
+  <%= @user.first_time %>
+</p>
+
 <%= link_to 'Edit Judging Preferences', user_judge_preferences_path(@user) %>
 <br>
 <%= link_to 'Edit', edit_user_path(@user) %> |

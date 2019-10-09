@@ -20,5 +20,51 @@
   <%= @entry.category.name  %>
 </p>
 
+<p>
+  <strong>Materials:</strong>
+  <%= @entry.materials  %>
+</p>
+
+<p>
+  <strong>Culture:</strong>
+  <%= @entry.culture  %>
+</p>
+
+<p>
+  <strong>Time Period:</strong>
+  <%= @entry.time_period  %>
+</p>
+
+<p>
+  <strong>In person?:</strong>
+  <%= @entry.in_person  %>
+</p>
+
+<p>
+  <strong>Scored?:</strong>
+  <%= @entry.scored  %>
+</p>
+
+<p>
+  <strong>Pentathlon?:</strong>
+  <%= @entry.pentathlon  %>
+</p>
+
+<p>
+  <strong>Division?:</strong>
+  <%= @entry.division  %>
+</p>
+
+<p>
+  <strong>First time?:</strong>
+  <%= @entry.first_time  %>
+</p>
+
+<p>
+  <strong>Youth?:</strong>
+  <%= @entry.youth  %>
+</p>
+
+
 <%= link_to 'Edit', edit_entry_path(@entry) %> |
 <%= link_to 'Back', entries_path %>

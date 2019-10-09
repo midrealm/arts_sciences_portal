@@ -22,8 +22,53 @@
   </div>
 
   <div class="field">
+    <%= form.label :materials %>
+    <%= form.text_field :materials %>
+  </div>
+
+  <div class="field">
+    <%= form.label :culture %>
+    <%= form.text_field :culture %>
+  </div>
+
+  <div class="field">
+    <%= form.label :time_period %>
+    <%= form.text_field :time_period %>
+  </div>
+
+  <div class="field">
     <%= form.label :category %>
     <%= form.select :category_id, Category.all.map{ |m| [m.name, m.id] }%>
+  </div>
+
+  <div class="field">
+    <%= form.label :in_person %>
+    <%= form.check_box :in_person %>
+  </div>
+
+  <div class="field">
+    <%= form.label :scored %>
+    <%= form.check_box :scored %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pentathlon %>
+    <%= form.check_box :pentathlon %>
+  </div>
+
+  <div class="field">
+    <%= form.label :division %>
+    <%= form.check_box :division %>
+  </div>
+
+  <div class="field">
+    <%= form.label :first_time %>
+    <%= form.check_box :first_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :youth %>
+    <%= form.check_box :youth %>
   </div>
 
   <div class="actions">

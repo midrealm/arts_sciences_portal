@@ -1,6 +1,6 @@
 class AddEntryColumns < ActiveRecord::Migration[6.0]
   def change
-    change_table :fairs do |t|
+    change_table :entries do |t|
       t.boolean :in_person, default: true
       t.boolean :scored, default: true
       t.text :materials
