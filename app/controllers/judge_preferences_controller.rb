@@ -1,7 +1,12 @@
 class JudgePreferencesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_judge_preference, only: [:show, :edit, :update, :destroy]
+  before_action :set_judge_preference, only: [:show, :edit, :destroy]
   before_action :set_user
+  before_action :verify_user_preference
+
+  def verify_user_preference
+    authorize params[:user_id], :owns_preference?, policy_class: JudgePreferencePolicy
+  end
 
   # GET /judge_preferences
   # GET /judge_preferences.json
