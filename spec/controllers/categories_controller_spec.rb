@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe CategoriesController, type: :controller do
   describe 'authorization' do
     context "if the user is not logged in" do
-      let!(:category) { FactoryBot.create(:category, id: 1) }
+      let!(:category) { Category.first || FactoryBot.create(:category, id: 1) }
 
       include_examples "tells user to login", :index
       include_examples "tells user to login", :edit, {id: 1}
@@ -23,7 +23,7 @@ RSpec.describe CategoriesController, type: :controller do
     end
 
     context "if the user is in the correct group" do
-      let!(:category) { FactoryBot.create(:category, id: 1) }
+      let!(:category) { Category.first || FactoryBot.create(:category, id: 1) }
 
       before(:each) do
         login_admin

@@ -7,6 +7,7 @@
     <tr>
       <th>Judge</th>
       <th>Entry</th>
+      <th>Timeslot</th>
       <th>Assigned</th>
       <th>Shadow</th>
       <th colspan="3"></th>
@@ -18,6 +19,7 @@
       <tr>
         <td><%= judge_assign.user.email %></td>
         <td><%= judge_assign.entry.entry_name %></td>
+        <td><%= judge_assign.timeslot.description %></td>
         <td><%= judge_assign.assigned %></td>
         <td><%= judge_assign.shadow %></td>
         <td><%= link_to 'Show', judge_assign %></td>

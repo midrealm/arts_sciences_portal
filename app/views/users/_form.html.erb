@@ -21,6 +21,21 @@
     <%= form.select :region_id, Region.all.map{ |m| [m.name, m.id] }%>
   </div>
 
+  <div class="field">
+    <%= form.label :written %>
+    <%= form.check_box :written %>
+  </div>
+
+  <div class="field">
+    <%= form.label :digital %>
+    <%= form.check_box :digital %>
+  </div>
+
+  <div class="field">
+    <%= form.label :first_time %>
+    <%= form.check_box :first_time %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

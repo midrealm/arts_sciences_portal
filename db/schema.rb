@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_25_235122) do
+ActiveRecord::Schema.define(version: 2019_10_07_141533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 2019_09_25_235122) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.bigint "category_id", null: false
+    t.boolean "in_person", default: true
+    t.boolean "scored", default: true
+    t.text "materials"
+    t.string "culture"
+    t.string "time_period"
+    t.boolean "pentathlon", default: false
+    t.boolean "division", default: false
+    t.boolean "first_time", default: false
+    t.boolean "youth", default: false
     t.index ["category_id"], name: "index_entries_on_category_id"
     t.index ["user_id"], name: "index_entries_on_user_id"
   end
@@ -45,6 +54,9 @@ ActiveRecord::Schema.define(version: 2019_09_25_235122) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "region_id", null: false
+    t.string "name"
+    t.boolean "internet_access", default: true
+    t.text "comment"
     t.index ["region_id"], name: "index_fairs_on_region_id"
   end
 
@@ -59,6 +71,15 @@ ActiveRecord::Schema.define(version: 2019_09_25_235122) do
     t.index ["entry_id"], name: "index_judge_assigns_on_entry_id"
     t.index ["timeslot_id"], name: "index_judge_assigns_on_timeslot_id"
     t.index ["user_id"], name: "index_judge_assigns_on_user_id"
+  end
+
+  create_table "judge_preferences", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_judge_preferences_on_category_id"
+    t.index ["user_id"], name: "index_judge_preferences_on_user_id"
   end
 
   create_table "regions", force: :cascade do |t|
@@ -90,6 +111,9 @@ ActiveRecord::Schema.define(version: 2019_09_25_235122) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_role_id", null: false
     t.bigint "region_id", null: false
+    t.boolean "written", default: false
+    t.boolean "digital", default: false
+    t.boolean "first_time", default: false
     t.index ["region_id"], name: "index_users_on_region_id"
     t.index ["user_role_id"], name: "index_users_on_user_role_id"
   end
@@ -101,6 +125,8 @@ ActiveRecord::Schema.define(version: 2019_09_25_235122) do
   add_foreign_key "judge_assigns", "entries"
   add_foreign_key "judge_assigns", "timeslots"
   add_foreign_key "judge_assigns", "users"
+  add_foreign_key "judge_preferences", "categories"
+  add_foreign_key "judge_preferences", "users"
   add_foreign_key "users", "regions"
   add_foreign_key "users", "user_roles"
 end

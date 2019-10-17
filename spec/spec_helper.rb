@@ -26,6 +26,11 @@ def login_user
   sign_in FactoryBot.create(:user)
 end
 
+def login_existing_user(user)
+  @request.env["devise.mapping"] = Devise.mappings[:user]
+  sign_in user
+end
+
 def stub_login
   user = FactoryBot.create(:user, :admin)
   allow(request.env['warden']).to receive(:authenticate!).and_return(user)

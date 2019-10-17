@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   resources :entries
 
   scope "/admin" do
-    resources :users, except: :new
+    resources :users, except: :new do
+      resources :judge_preferences, only: [:new, :create, :index, :destroy]
+    end
     resources :user_roles
     resources :categories
     resources :divisions

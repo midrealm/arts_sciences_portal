@@ -1,0 +1,24 @@
+<%= form_with(model: [@user, judge_preference], local: true) do |form| %>
+  <% if judge_preference.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(judge_preference.errors.count, "error") %> prohibited this judge_preference from being saved:</h2>
+
+      <ul>
+        <% judge_preference.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.fields_for :judge_preferences do |j| %>
+    <div class="field">
+      <%= j.label :category %>
+      <%= j.select :category_id, Category.all.map{ |m| [m.name, m.id] }%>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

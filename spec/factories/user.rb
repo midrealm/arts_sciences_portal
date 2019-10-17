@@ -3,6 +3,7 @@ FactoryBot.define do
     email { "#{junk}@test.test" }
     password { 'reallylongpassword' }
     association :user_role, factory: :user_role
+    association :region, factory: :region
 
     trait :admin do
       after(:create) do |user|

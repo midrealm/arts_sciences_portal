@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Name:</strong>
+  <%= @fair.name %>
+</p>
+
+<p>
   <strong>Date:</strong>
   <%= @fair.date %>
 </p>
@@ -8,6 +13,16 @@
 <p>
   <strong>Region:</strong>
   <%= @fair.region.name %>
+</p>
+
+<p>
+  <strong>Internet Access:</strong>
+  <%= @fair.internet_access %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @fair.comment %>
 </p>
 
 <%= link_to 'Edit', edit_fair_path(@fair) %> |

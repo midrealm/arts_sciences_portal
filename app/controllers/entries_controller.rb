@@ -79,6 +79,19 @@ class EntriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def entry_params
-      params.require(:entry).permit(:entry_name, :description, :category_id).merge(:user_id => current_user.id)
+      params.require(:entry).permit(
+        :entry_name,
+        :description,
+        :category_id,
+        :in_person,
+        :scored,
+        :materials,
+        :culture,
+        :time_period,
+        :pentathlon,
+        :division,
+        :first_time,
+        :youth
+      ).merge(:user_id => current_user.id)
     end
 end

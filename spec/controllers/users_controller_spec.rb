@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   describe 'authorization' do
     context "if the user is not in the correct group" do
-      let!(:user) {FactoryBot.create(:user, id: 1)}
+      let!(:user) {User.first || FactoryBot.create(:user, id: 1)}
 
       before(:each) do
         login_user
@@ -28,7 +28,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context "if the user is in the correct group" do
-      let!(:user) {FactoryBot.create(:user, id: 1)}
+      let!(:user) {User.first || FactoryBot.create(:user, id: 1)}
 
       before(:each) do
         login_admin

@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :verify_admin
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :verify_admin, only: [:index, :destroy]
+  before_action :verify_user, only: [:show, :edit, :update]
+
+  def verify_user
+    authorize @user, :correct_user?
+  end
 
   # GET /user
   def index
@@ -46,6 +51,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :region_id)
+      params.require(:user).permit(:email, :region_id, :written, :digital, :first_time)
     end
 end
