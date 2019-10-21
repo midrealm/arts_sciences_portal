@@ -117,6 +117,11 @@ Rails.application.configure do
 
   first_inbox = JSON.parse(response)[0] # get first inbox
 
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default :charset => "utf-8"
+  config.action_mailer.default_url_options = { :host => 'https://a-and-s-portal.herokuapp.com' }
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :user_name => first_inbox['username'],
