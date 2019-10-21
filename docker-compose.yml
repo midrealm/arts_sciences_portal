@@ -18,6 +18,7 @@ services:
       - "4000:4000"
     links:
       - postgres
+      - mailcatcher
     command: ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
 
   postgres:
@@ -30,6 +31,15 @@ services:
       - internal
 #    ports:
 #      - "5432:5432"
+
+  mailcatcher:
+    image: tophfr/mailcatcher
+    container_name: mailcatcher
+    ports:
+      - "1080:80"
+      - "1025:25"
+    networks:
+      - internal
 
 networks:
   internal:
