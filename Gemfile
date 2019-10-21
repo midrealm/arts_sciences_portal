@@ -23,6 +23,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'pg'
 gem 'devise'
 gem 'pundit'
+gem 'rest-client'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
