@@ -1,0 +1,2 @@
+module CriteriaDescriptionsHelper
+end

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @category.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @category.description %>
+</p>
+
+<p>
+  <strong>Division:</strong>
+  <%= @category.division.name %>
+</p>
+
+<% CriteriaType.all.each do |criteria_type| %>
+  <p>
+    <strong><%= criteria_type.description %></strong>
+  </p>
+
+  <p><%= CriteriaDescription.description_for_category(criteria_type.id, @category.id) %></p>
+
+  <% Criterium.all.by_type(criteria_type.id).by_category(@category.id).each do |criteria| %>
+    <p><%= criteria.suggested_score %> - <%= criteria.description %></p>
+  <% end %>
+<% end %>
+
+<%= link_to 'Back', categories_path %>

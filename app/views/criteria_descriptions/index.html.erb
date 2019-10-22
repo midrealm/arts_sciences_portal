@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Criteria Descriptions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Criteria type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @criteria_descriptions.each do |criteria_description| %>
+      <tr>
+        <td><%= criteria_description.description %></td>
+        <td><%= criteria_description.category.name %></td>
+        <td><%= criteria_description.criteria_type.description %></td>
+        <td><%= link_to 'Show', criteria_description %></td>
+        <td><%= link_to 'Edit', edit_criteria_description_path(criteria_description) %></td>
+        <td><%= link_to 'Destroy', criteria_description, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Criteria Description', new_criteria_description_path %>
+<br><%= link_to 'Back', root_path %>
