@@ -8,8 +8,20 @@ Region.create(:name => 'Midlands')
 Region.create(:name => 'Pentamere')
 Region.create(:name => 'Out of Kingdom')
 
-User.create(:email => 'admin@test.com', :password => 'adminadmin', :password_confirmation => 'adminadmin', user_role: admin_role, region: region)
-User.create(:email => 'user@test.com', :password => 'useruser', :password_confirmation => 'useruser', user_role: user_role, region: region)
+User.create(
+  :email => 'admin@test.com',
+  :password => 'adminadmin',
+  :password_confirmation => 'adminadmin',
+  user_role: admin_role,
+  region: region,
+  confirmed_at: DateTime.now)
+User.create(
+  :email => 'user@test.com',
+  :password => 'useruser',
+  :password_confirmation => 'useruser',
+  user_role: user_role,
+  region: region,
+  confirmed_at: DateTime.now)
 
 Division.create(:name => 'Div 1 Performance Arts')
 Division.create(:name => 'Div 2 Textile Arts')
