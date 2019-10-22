@@ -21,6 +21,13 @@
     <%= form.select :region_id, Region.all.map{ |m| [m.name, m.id] }%>
   </div>
 
+  <% if current_user.admin? %>
+    <div class="field">
+      <%= form.label :user_role %>
+      <%= form.select :user_role_id, UserRole.all.map{ |m| [m.role_name, m.id] }%>
+    </div>
+  <% end %>
+
   <div class="field">
     <%= form.label :written %>
     <%= form.check_box :written %>
