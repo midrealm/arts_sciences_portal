@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :verify_admin
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_category, only: [:show, :edit, :update, :destroy, :scoresheet]
 
   # GET /categories
   # GET /categories.json
@@ -63,6 +63,9 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def scoresheet
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category
@@ -71,6 +74,6 @@ class CategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:name, :division_id)
+      params.require(:category).permit(:name, :description, :division_id)
     end
 end

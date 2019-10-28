@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @criteria_description.description %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @criteria_description.category.name %>
+</p>
+
+<p>
+  <strong>Criteria type:</strong>
+  <%= @criteria_description.criteria_type.description %>
+</p>
+
+<%= link_to 'Edit', edit_criteria_description_path(@criteria_description) %> |
+<%= link_to 'Back', criteria_descriptions_path %>

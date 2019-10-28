@@ -1,0 +1,27 @@
+<%= form_with(model: criteria_type, local: true) do |form| %>
+  <% if criteria_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(criteria_type.errors.count, "error") %> prohibited this criteria_type from being saved:</h2>
+
+      <ul>
+        <% criteria_type.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :max_score %>
+    <%= form.number_field :max_score %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @criterium.description %>
+</p>
+
+<p>
+  <strong>Criteria type:</strong>
+  <%= @criterium.criteria_type.description %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @criterium.category.name %>
+</p>
+
+<p>
+  <strong>Suggested Score:</strong>
+  <%= @criterium.suggested_score %>
+</p>
+
+<p>
+  <strong>Optional:</strong>
+  <%= @criterium.optional %>
+</p>
+
+<p>
+  <strong>Animal:</strong>
+  <%= @criterium.animal %>
+</p>
+
+<%= link_to 'Edit', edit_criterium_path(@criterium) %> |
+<%= link_to 'Back', criteria_path %>

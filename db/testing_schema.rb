@@ -17,10 +17,41 @@ ActiveRecord::Schema.define(version: 2019_10_23_123243) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
+    t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "division_id", null: false
     t.index ["division_id"], name: "index_categories_on_division_id"
+  end
+
+  create_table "criteria", force: :cascade do |t|
+    t.text "description"
+    t.bigint "criteria_type_id", null: false
+    t.bigint "category_id", null: false
+    t.integer "suggested_score"
+    t.boolean "optional"
+    t.boolean "animal"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_criteria_on_category_id"
+    t.index ["criteria_type_id"], name: "index_criteria_on_criteria_type_id"
+  end
+
+  create_table "criteria_descriptions", force: :cascade do |t|
+    t.text "description"
+    t.bigint "category_id", null: false
+    t.bigint "criteria_type_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_criteria_descriptions_on_category_id"
+    t.index ["criteria_type_id"], name: "index_criteria_descriptions_on_criteria_type_id"
+  end
+
+  create_table "criteria_types", force: :cascade do |t|
+    t.string "description"
+    t.integer "max_score"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "divisions", force: :cascade do |t|
@@ -126,6 +157,10 @@ ActiveRecord::Schema.define(version: 2019_10_23_123243) do
   end
 
   add_foreign_key "categories", "divisions"
+  add_foreign_key "criteria", "categories"
+  add_foreign_key "criteria", "criteria_types"
+  add_foreign_key "criteria_descriptions", "categories"
+  add_foreign_key "criteria_descriptions", "criteria_types"
   add_foreign_key "entries", "categories"
   add_foreign_key "entries", "fairs"
   add_foreign_key "entries", "timeslots"
