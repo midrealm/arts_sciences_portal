@@ -63,6 +63,10 @@ class FairsController < ApplicationController
     end
   end
 
+  def schedule
+    @entries = Entry.all.in_schedule_order
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fair

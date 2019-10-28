@@ -7,6 +7,6 @@ class CreateTimeslots < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_reference :judge_assigns, :timeslot, null: false, foreign_key: true
+    add_reference :entries, :timeslot, null: true, foreign_key: true
   end
 end

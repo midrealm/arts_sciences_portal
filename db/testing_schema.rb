@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_21_150320) do
+ActiveRecord::Schema.define(version: 2019_10_23_123243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2019_10_21_150320) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.bigint "category_id", null: false
+    t.bigint "timeslot_id"
     t.boolean "in_person", default: true
     t.boolean "scored", default: true
     t.text "materials"
@@ -45,7 +46,10 @@ ActiveRecord::Schema.define(version: 2019_10_21_150320) do
     t.boolean "division", default: false
     t.boolean "first_time", default: false
     t.boolean "youth", default: false
+    t.bigint "fair_id", null: false
     t.index ["category_id"], name: "index_entries_on_category_id"
+    t.index ["fair_id"], name: "index_entries_on_fair_id"
+    t.index ["timeslot_id"], name: "index_entries_on_timeslot_id"
     t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
@@ -67,9 +71,7 @@ ActiveRecord::Schema.define(version: 2019_10_21_150320) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.bigint "entry_id", null: false
-    t.bigint "timeslot_id", null: false
     t.index ["entry_id"], name: "index_judge_assigns_on_entry_id"
-    t.index ["timeslot_id"], name: "index_judge_assigns_on_timeslot_id"
     t.index ["user_id"], name: "index_judge_assigns_on_user_id"
   end
 
@@ -125,10 +127,11 @@ ActiveRecord::Schema.define(version: 2019_10_21_150320) do
 
   add_foreign_key "categories", "divisions"
   add_foreign_key "entries", "categories"
+  add_foreign_key "entries", "fairs"
+  add_foreign_key "entries", "timeslots"
   add_foreign_key "entries", "users"
   add_foreign_key "fairs", "regions"
   add_foreign_key "judge_assigns", "entries"
-  add_foreign_key "judge_assigns", "timeslots"
   add_foreign_key "judge_assigns", "users"
   add_foreign_key "judge_preferences", "categories"
   add_foreign_key "judge_preferences", "users"

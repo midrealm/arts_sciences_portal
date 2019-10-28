@@ -42,6 +42,16 @@
   </div>
 
   <div class="field">
+    <%= form.label :fair %>
+    <%= form.select :fair_id, Fair.all.map{ |m| [m.name, m.id] }%>
+  </div>
+
+  <div class="field">
+    <%= form.label :timeslot %>
+    <%= form.select :timeslot_id, Timeslot.all.in_order.map{ |m| [m.description, m.id] }%>
+  </div>
+
+  <div class="field">
     <%= form.label :in_person %>
     <%= form.check_box :in_person %>
   </div>

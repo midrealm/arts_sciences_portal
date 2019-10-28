@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe JudgeAssignsController, type: :controller do
   describe 'authorization' do
     context "if the user is not in the correct group" do
-      let!(:judge_assign) {FactoryBot.create(:judge_assign, id: 1)}
+      let!(:judge_assign) {JudgeAssign.first || FactoryBot.create(:judge_assign, id: 1)}
 
       before(:each) do
         login_user
@@ -30,7 +30,7 @@ RSpec.describe JudgeAssignsController, type: :controller do
     end
 
     context "if the user is in the correct group" do
-      let!(:judge_assign) {FactoryBot.create(:judge_assign, id: 1)}
+      let!(:judge_assign) {JudgeAssign.first || FactoryBot.create(:judge_assign, id: 1)}
 
       before(:each) do
         login_admin

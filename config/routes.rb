@@ -13,11 +13,10 @@ Rails.application.routes.draw do
     resources :categories
     resources :divisions
     resources :regions
-    resources :fairs
-    resources :timeslots
-
-    resources :judge_assigns do
+    resources :fairs do
       get 'schedule', on: :collection
     end
+    resources :timeslots
+    resources :judge_assigns
   end
 end

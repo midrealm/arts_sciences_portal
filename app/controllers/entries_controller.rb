@@ -91,7 +91,9 @@ class EntriesController < ApplicationController
         :pentathlon,
         :division,
         :first_time,
-        :youth
+        :youth,
+        :timeslot_id,
+        :fair_id
       ).merge(:user_id => current_user.id)
     end
 end

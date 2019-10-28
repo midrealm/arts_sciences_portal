@@ -9,7 +9,7 @@
       <th>Date</th>
       <th>Region</th>
       <th>Internet</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
@@ -20,6 +20,7 @@
         <td><%= fair.date %></td>
         <td><%= fair.region.name %></td>
         <td><%= fair.internet_access %></td>
+        <td><%= link_to 'View Schedule', schedule_fairs_path %></td>
         <td><%= link_to 'Show', fair %></td>
         <td><%= link_to 'Edit', edit_fair_path(fair) %></td>
         <td><%= link_to 'Destroy', fair, method: :delete, data: { confirm: 'Are you sure?' } %></td>
