@@ -22,11 +22,6 @@
   </div>
 
   <div class="field">
-    <%= form.label :timeslot %>
-    <%= form.select :timeslot_id, Timeslot.all.in_order.map{ |m| [m.description, m.id] }%>
-  </div>
-
-  <div class="field">
     <%= form.label :assigned %>
     <%= form.check_box :assigned %>
   </div>

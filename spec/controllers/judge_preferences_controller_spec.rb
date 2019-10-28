@@ -126,7 +126,6 @@ RSpec.describe JudgePreferencesController, type: :controller do
     end
 
     it 'lists out all judge preferences' do
-      puts judge_preference1.inspect
       expect(response.body).to include(category1.name)
       expect(response.body).to include(category2.name)
     end

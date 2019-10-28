@@ -119,7 +119,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'POST update' do
-    subject(:update) {post :update, params: {id: user.id, user: {email: 'updated@update.new'}}}
+    subject(:update) {post :update, params: {id: user.id, user: {first_time: true}}}
 
     let!(:user) {FactoryBot.create(:user)}
 
@@ -130,7 +130,7 @@ RSpec.describe UsersController, type: :controller do
 
     it 'updated the existing role name' do
       user.reload
-      expect(user.email).to eq 'updated@update.new'
+      expect(user.first_time).to eq true
     end
   end
 

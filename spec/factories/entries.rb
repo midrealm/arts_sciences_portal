@@ -5,5 +5,7 @@ FactoryBot.define do
 
     association :user, factory: :user
     association :category, factory: :category
+    association :timeslot, factory: :timeslot
+    association :fair, factory: :fair
   end
 end
