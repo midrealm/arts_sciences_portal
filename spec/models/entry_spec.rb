@@ -12,4 +12,52 @@ RSpec.describe Entry, type: :model do
       expect(entries).to_not include 'entry 2'
     end
   end
+
+  describe '.timeslot_description' do
+    context 'when timeslot is unassigned' do
+      let(:entry) {FactoryBoty.create(:entry, :unassigned)}
+      it 'returns unassigned' do
+        expect(entry.timeslot_description).to eq('Unassigned')
+      end
+    end
+
+    context 'when timeslot is assigned' do
+      let(:entry) {FactoryBoty.create(:entry)}
+      it 'returns the timeslot' do
+        expect(entry.timeslot_description).to eq('Unassigned')
+      end
+    end
+  end
+
+  describe '.scored_option' do
+    context 'when entry is scored' do
+      let(:entry) {FactoryBoty.create(:entry, scored: true)}
+      it 'returns scored' do
+        expect(entry.scored_option).to eq('Scored')
+      end
+    end
+
+    context 'when entry is not scored' do
+      let(:entry) {FactoryBoty.create(:entry, scored: false)}
+      it 'returns commentary only' do
+        expect(entry.scored_option).to eq('Commentary Only')
+      end
+    end
+  end
+
+  describe '.in_person_option' do
+    context 'when entry is in person' do
+      let(:entry) {FactoryBoty.create(:entry, in_person: true)}
+      it 'returns face to face' do
+        expect(entry.in_person_option).to eq('Face-to-face')
+      end
+    end
+
+    context 'when entry is not in person' do
+      let(:entry) {FactoryBoty.create(:entry, in_person: false)}
+      it 'returns not face to face' do
+        expect(entry.in_person_option).to eq('Not Face-to-face')
+      end
+    end
+  end
 end

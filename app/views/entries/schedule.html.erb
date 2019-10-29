@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Schedule</h1>
+<%= form_with scope: :schedule do |form| %>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Entry</th>
+      <% Timeslot.all.in_order.each do |timeslot| %>
+        <th><%= timeslot.description %></th>
+      <% end %>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @entries.each do |entry| %>
+      <tr>
+        <td><%= entry.description %></td>
+        <% Timeslot.all.in_order.each do |timeslot| %>
+          <td><%= form.radio_button(entry.id, timeslot.id) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <p>
+    <%= submit_tag("Submit") %>
+  </p>
+<% end %>
+
+<br>  <%= link_to 'Back', entries_path %>

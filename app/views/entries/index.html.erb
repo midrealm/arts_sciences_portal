@@ -7,6 +7,7 @@
     <tr>
       <th>Entry name</th>
       <th>Timeslot</th>
+      <th>Judging Options</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,7 +16,13 @@
     <% @entries.each do |entry| %>
       <tr>
         <td><%= entry.entry_name %></td>
-        <td><%= entry.timeslot.description %></td>
+        <td><%= entry.timeslot_description %></td>
+        <td>
+          <ul>
+            <li><%= entry.in_person_option  %></li>
+            <li><%= entry.scored_option %></li>
+          </ul>
+        </td>
         <td><%= link_to 'Show', entry %></td>
         <td><%= link_to 'Edit', edit_entry_path(entry) %></td>
         <td><%= link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -26,5 +33,6 @@
 
 <br>
 
+<%= link_to 'Assign Schedule', schedule_entries_path if current_user.admin? %><br>
 <%= link_to 'New Entry', new_entry_path %><br>
 <%= link_to 'Back', root_path %>

@@ -16,6 +16,11 @@
     <%= form.select :user_id, User.all.map{ |m| [m.email, m.id] }%>
   </div>
 
+<!--  <div class="field">-->
+    <%#= form.label :user %>
+    <%#= form.collection_check_boxes :user_id, User.all, :id, :email %>
+<!--  </div>-->
+
   <div class="field">
     <%= form.label :entry %>
     <%= form.select :entry_id, Entry.all.map{ |m| [m.entry_name, m.id] }%>

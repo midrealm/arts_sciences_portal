@@ -3,7 +3,10 @@ Rails.application.routes.draw do
 
   root 'pages#home'
 
-  resources :entries
+  resources :entries do
+    get 'schedule', on: :collection
+    post 'schedule', on: :collection, to: 'entries#submit_schedule'
+  end
 
   scope "/admin" do
     resources :users, except: :new do
