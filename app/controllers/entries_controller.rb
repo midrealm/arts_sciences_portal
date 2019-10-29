@@ -77,10 +77,8 @@ class EntriesController < ApplicationController
   end
 
   def submit_schedule
-    params[:schedule].each do |entry, timeslot|
-      Entry.find(entry).update(timeslot_id: timeslot)
-    end
-    redirect_to entries_schedule_url, notice: 'Schedule was successfully updated.'
+    Entry.update(params[:entries].keys, params[:entries].values)
+    redirect_to schedule_entries_url, notice: 'Schedule was successfully updated.'
   end
 
   private

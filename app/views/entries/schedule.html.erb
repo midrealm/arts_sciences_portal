@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Schedule</h1>
-<%= form_with scope: :schedule do |form| %>
+<%= form_tag schedule_entries_path, method: :post do |form| %>
 
   <table>
     <thead>
@@ -17,8 +17,8 @@
     <% @entries.each do |entry| %>
       <tr>
         <td><%= entry.description %></td>
-        <% Timeslot.all.in_order.each do |timeslot| %>
-          <td><%= form.radio_button(entry.id, timeslot.id) %></td>
+        <%= fields_for "entries[]", entry do |form| %>
+          <%= render partial: 'bulk_update_entry_timeslot', locals: {form: form, entry: entry} %>
         <% end %>
       </tr>
     <% end %>
