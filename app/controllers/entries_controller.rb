@@ -72,15 +72,6 @@ class EntriesController < ApplicationController
     end
   end
 
-  def schedule
-    @entries = Entry.all
-  end
-
-  def submit_schedule
-    Entry.update(params[:entries].keys, params[:entries].values)
-    redirect_to schedule_entries_url, notice: 'Schedule was successfully updated.'
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_entry

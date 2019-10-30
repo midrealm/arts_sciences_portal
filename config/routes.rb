@@ -3,10 +3,7 @@ Rails.application.routes.draw do
 
   root 'pages#home'
 
-  resources :entries do
-    get 'schedule', on: :collection
-    post 'schedule', on: :collection, to: 'entries#submit_schedule'
-  end
+  resources :entries
 
   scope "/admin" do
     resources :users, except: :new do
@@ -17,7 +14,9 @@ Rails.application.routes.draw do
     resources :divisions
     resources :regions
     resources :fairs do
-      get 'schedule', on: :collection
+      get 'view_schedule', on: :member, to: 'fairs#view_schedule'
+      post 'schedule', on: :member, to: 'fairs#submit_schedule'
+      get 'schedule', on: :member
     end
     resources :timeslots
     resources :judge_assigns
