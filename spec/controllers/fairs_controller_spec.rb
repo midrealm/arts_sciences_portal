@@ -8,6 +8,14 @@ RSpec.describe FairsController, type: :controller do
       include_examples "tells user to login", :index
       include_examples "tells user to login", :edit, {id: 1}
       include_examples "tells user to login", :show, {id: 1}
+      include_examples "tells user to login", :view_schedule, {id: 1}
+      include_examples "tells user to login", :schedule, {id: 1}
+
+      it 'denies user to update the schedule' do
+        post :schedule, params: {id: fair.id}
+        expect(response.status).to eq 302
+        expect(flash[:alert]).to eq "You need to sign in or sign up before continuing."
+      end
 
       it 'denies user to destroy fairs' do
         post :destroy, params: {id: fair.id}
