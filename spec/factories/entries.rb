@@ -7,5 +7,9 @@ FactoryBot.define do
     association :category, factory: :category
     association :timeslot, factory: :timeslot
     association :fair, factory: :fair
+
+    trait :unassigned do
+      timeslot { nil }
+    end
   end
 end

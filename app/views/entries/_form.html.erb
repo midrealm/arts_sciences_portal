@@ -47,18 +47,15 @@
   </div>
 
   <div class="field">
-    <%= form.label :timeslot %>
-    <%= form.select :timeslot_id, Timeslot.all.in_order.map{ |m| [m.description, m.id] }%>
+    <%= form.radio_button :in_person, true %> Face-to-face
+    <br>
+    <%= form.radio_button :in_person, false %> Not Face-to-face
   </div>
 
   <div class="field">
-    <%= form.label :in_person %>
-    <%= form.check_box :in_person %>
-  </div>
-
-  <div class="field">
-    <%= form.label :scored %>
-    <%= form.check_box :scored %>
+    <%= form.radio_button :scored, true %> Scored
+    <br>
+    <%= form.radio_button :scored, false %> Commentary Only
   </div>
 
   <div class="field">

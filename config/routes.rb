@@ -16,7 +16,9 @@ Rails.application.routes.draw do
     resources :divisions
     resources :regions
     resources :fairs do
-      get 'schedule', on: :collection
+      get 'view_schedule', on: :member, to: 'fairs#view_schedule'
+      post 'schedule', on: :member, to: 'fairs#submit_schedule'
+      get 'schedule', on: :member
     end
     resources :timeslots
     resources :criteria
