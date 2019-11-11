@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :scoresheets
+  resources :scores
   devise_for :users
 
   root 'pages#home'

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Score:</strong>
+  <%= @scoresheet.score_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @scoresheet.user_id %>
+</p>
+
+<p>
+  <strong>Entry:</strong>
+  <%= @scoresheet.entry_id %>
+</p>
+
+<%= link_to 'Edit', edit_scoresheet_path(@scoresheet) %> |
+<%= link_to 'Back', scoresheets_path %>
