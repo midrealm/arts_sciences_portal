@@ -15,7 +15,7 @@
   <tbody>
     <% @scores.each do |score| %>
       <tr>
-        <td><%= score.criteria_id %></td>
+        <td><%= score.criteria_type.description %></td>
         <td><%= score.comment %></td>
         <td><%= score.score %></td>
         <td><%= link_to 'Show', score %></td>
@@ -29,3 +29,4 @@
 <br>
 
 <%= link_to 'New Score', new_score_path %>
+<br><%= link_to 'Back', root_path %>

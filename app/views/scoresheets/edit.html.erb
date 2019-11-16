@@ -2,5 +2,5 @@
 
 <%= render 'form', scoresheet: @scoresheet %>
 
-<%= link_to 'Show', @scoresheet %> |
+<%= link_to 'Show', entry_scoresheet_path(@scoresheet.entry, @scoresheet) %> |
 <%= link_to 'Back', scoresheets_path %>

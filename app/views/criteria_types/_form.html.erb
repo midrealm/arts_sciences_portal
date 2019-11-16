@@ -21,6 +21,11 @@
     <%= form.number_field :max_score %>
   </div>
 
+  <div class="field">
+    <%= form.label :parent %>
+    <%= form.select :parent_id, CriteriaType.all.top_level.map{ |m| [m.description, m.id] } %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

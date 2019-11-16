@@ -23,7 +23,7 @@
   <p><%= CriteriaDescription.description_for_category(criteria_type.id, @category.id) %></p>
 
   <% Criterium.all.by_type(criteria_type.id).by_category(@category.id).each do |criteria| %>
-    <p><%= criteria.suggested_score %> - <%= criteria.description %></p>
+    <p><%= criteria.display() %></p>
   <% end %>
 <% end %>
 

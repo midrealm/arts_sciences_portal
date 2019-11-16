@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <% if current_user.admin? %>
+  <h3>Admin Management</h3>
+  <%= link_to 'Scoresheet Management', scoresheets_path %>
+  <br>
+  <%= link_to 'Score Management', scores_path %>
+  <br>
   <h3>User Management</h3>
   <%= link_to 'User Management', users_path %>
   <br>
@@ -21,6 +26,8 @@
   <%= link_to 'Criteria Description Management', criteria_descriptions_path %>
   <br>
   <%= link_to 'Criteria Management', criteria_path %>
+  <br>
+  <%= link_to 'Applicable Criteria Management', applicable_criteria_path %>
   <h3>Fair Management</h3>
   <%= link_to 'Fair Management', fairs_path %>
   <br>

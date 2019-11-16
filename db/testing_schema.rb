@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_23_123243) do
+ActiveRecord::Schema.define(version: 2019_11_11_232626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "applicable_criteria", force: :cascade do |t|
+    t.bigint "criteria_id", null: false
+    t.bigint "category_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_applicable_criteria_on_category_id"
+    t.index ["criteria_id"], name: "index_applicable_criteria_on_criteria_id"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -32,6 +41,7 @@ ActiveRecord::Schema.define(version: 2019_10_23_123243) do
     t.boolean "optional"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "name"
     t.index ["category_id"], name: "index_criteria_on_category_id"
     t.index ["criteria_type_id"], name: "index_criteria_on_criteria_type_id"
   end
@@ -120,6 +130,26 @@ ActiveRecord::Schema.define(version: 2019_10_23_123243) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "scores", force: :cascade do |t|
+    t.bigint "criteria_id", null: false
+    t.text "comment"
+    t.integer "score"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["criteria_id"], name: "index_scores_on_criteria_id"
+  end
+
+  create_table "scoresheets", force: :cascade do |t|
+    t.bigint "score_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "entry_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["entry_id"], name: "index_scoresheets_on_entry_id"
+    t.index ["score_id"], name: "index_scoresheets_on_score_id"
+    t.index ["user_id"], name: "index_scoresheets_on_user_id"
+  end
+
   create_table "timeslots", force: :cascade do |t|
     t.integer "order"
     t.string "description"
@@ -155,6 +185,8 @@ ActiveRecord::Schema.define(version: 2019_10_23_123243) do
     t.index ["user_role_id"], name: "index_users_on_user_role_id"
   end
 
+  add_foreign_key "applicable_criteria", "categories"
+  add_foreign_key "applicable_criteria", "criteria", column: "criteria_id"
   add_foreign_key "categories", "divisions"
   add_foreign_key "criteria", "categories"
   add_foreign_key "criteria", "criteria_types"
@@ -169,6 +201,10 @@ ActiveRecord::Schema.define(version: 2019_10_23_123243) do
   add_foreign_key "judge_assigns", "users"
   add_foreign_key "judge_preferences", "categories"
   add_foreign_key "judge_preferences", "users"
+  add_foreign_key "scores", "criteria", column: "criteria_id"
+  add_foreign_key "scoresheets", "entries"
+  add_foreign_key "scoresheets", "scores"
+  add_foreign_key "scoresheets", "users"
   add_foreign_key "users", "regions"
   add_foreign_key "users", "user_roles"
 end

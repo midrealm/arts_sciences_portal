@@ -43,9 +43,10 @@ Category.create(:name => 'Dance Performance', division: performance,
 docs = CriteriaType.create(description: 'Documentation', max_score: 4)
 CriteriaType.create(description: 'Methods and Materials', max_score: 4)
 CriteriaType.create(description: 'Scope', max_score: 6)
-CriteriaType.create(description: 'Skill', max_score: 6)
+skill = CriteriaType.create(description: 'Skill', max_score: 6)
 CriteriaType.create(description: 'Creativity', max_score: 4)
 CriteriaType.create(description: "Judge's Observation", max_score: 4)
+CriteriaType.create(description: 'Complexity', max_score: 4, parent_id: skill.id)
 
 CriteriaDescription.create(criteria_type_id: docs.id, category_id: performance.id,
                            description: "This primarily concerns performance of footwork and general use of the body in dance, as well as a defense of the reconstruction or choreography if applicable. For full points, the documentation must include the style of dance to which the entry belongs, the time(s) and place(s) that style was used, and the dance’s societal context (i.e., where it would have been performed, by whom, under what circumstances, for what purpose, etc.). It should also include a discussion of performance practices as they relate to the relevant historical period(s). It should also include a discussion of the piece’s difficulty as per the Scope category (see below). The judges must be provided with instructions for the dance, including expected floor patterns and descriptions of steps. This may include descriptions of footwork, reconstructions, or original choreography. Potential floor patterns should also be discussed.")

@@ -1,9 +1,11 @@
 class ScoresheetsController < ApplicationController
   before_action :set_scoresheet, only: [:show, :edit, :update, :destroy]
+  before_action :set_entry, only: [:create, :new, :edit, :update]
 
   # GET /scoresheets
   # GET /scoresheets.json
   def index
+    @entries = Entry.all.judge_assigned_entries(current_user)
     @scoresheets = Scoresheet.all
   end
 
@@ -15,6 +17,12 @@ class ScoresheetsController < ApplicationController
   # GET /scoresheets/new
   def new
     @scoresheet = Scoresheet.new
+
+    CriteriaType.all.each do |criteria_type|
+      @scoresheet.scores.build({criteria_type_id: criteria_type.id})
+    end
+    puts @scoresheet.scores.inspect
+
   end
 
   # GET /scoresheets/1/edit
@@ -26,13 +34,19 @@ class ScoresheetsController < ApplicationController
   def create
     @scoresheet = Scoresheet.new(scoresheet_params)
 
+    CriteriaType.all.each do |criteria_type|
+      @scoresheet.scores.build({criteria_type_id: criteria_type.id})
+    end
+
+    update_scores
+
     respond_to do |format|
       if @scoresheet.save
-        format.html { redirect_to @scoresheet, notice: 'Scoresheet was successfully created.' }
+        format.html { redirect_to [@scoresheet.entry, @scoresheet], notice: 'Scoresheet was successfully created.' }
         format.json { render :show, status: :created, location: @scoresheet }
       else
         format.html { render :new }
-        format.json { render json: @scoresheet.errors, status: :unprocessable_entity }
+        format.json { render json: [@scoresheet.entry, @scoresheet.error], status: :unprocessable_entity }
       end
     end
   end
@@ -40,13 +54,15 @@ class ScoresheetsController < ApplicationController
   # PATCH/PUT /scoresheets/1
   # PATCH/PUT /scoresheets/1.json
   def update
+    Score.update(params[:scoresheet][:scores].keys, params[:scoresheet][:scores].values)
+
     respond_to do |format|
       if @scoresheet.update(scoresheet_params)
-        format.html { redirect_to @scoresheet, notice: 'Scoresheet was successfully updated.' }
+        format.html { redirect_to [@scoresheet.entry, @scoresheet], notice: 'Scoresheet was successfully updated.' }
         format.json { render :show, status: :ok, location: @scoresheet }
       else
         format.html { render :edit }
-        format.json { render json: @scoresheet.errors, status: :unprocessable_entity }
+        format.json { render json: [@scoresheet.entry, @scoresheet].errors, status: :unprocessable_entity }
       end
     end
   end
@@ -67,8 +83,26 @@ class ScoresheetsController < ApplicationController
       @scoresheet = Scoresheet.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def scoresheet_params
-      params.require(:scoresheet).permit(:score_id, :user_id, :entry_id)
+  def set_entry
+    @entry = Entry.find(params[:entry_id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def scoresheet_params
+    params.permit(:entry_id).merge(user_id: current_user.id)
+  end
+
+  def score_params(params)
+    params.permit(:criteria_type, :score)
+  end
+
+  def update_scores
+    scores = params[:scoresheet][:scores]
+
+    scores.each do |score|
+      score_record = @scoresheet.scores.select{|n| n.criteria_type_id == score[:criteria_type_id].to_i}.first
+      score_record.update(score_params(score))
+      score_record.save
     end
+  end
 end
