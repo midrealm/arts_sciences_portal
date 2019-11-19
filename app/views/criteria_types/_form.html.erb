@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :parent %>
-    <%= form.select :parent_id, CriteriaType.all.top_level.map{ |m| [m.description, m.id] } %>
+    <%= form.select :parent_id, CriteriaType.all.top_level.map{ |m| [m.description, m.id] }.push(["No Parent", nil]) %>
   </div>
 
   <div class="actions">

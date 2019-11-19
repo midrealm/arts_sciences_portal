@@ -41,7 +41,6 @@ ActiveRecord::Schema.define(version: 2019_11_11_232626) do
     t.boolean "optional"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.text "name"
     t.index ["category_id"], name: "index_criteria_on_category_id"
     t.index ["criteria_type_id"], name: "index_criteria_on_criteria_type_id"
   end
@@ -61,6 +60,10 @@ ActiveRecord::Schema.define(version: 2019_11_11_232626) do
     t.integer "max_score"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "criteria_type_id"
+    t.bigint "parent_id"
+    t.index ["criteria_type_id"], name: "index_criteria_types_on_criteria_type_id"
+    t.index ["parent_id"], name: "index_criteria_types_on_parent_id"
   end
 
   create_table "divisions", force: :cascade do |t|
@@ -131,22 +134,22 @@ ActiveRecord::Schema.define(version: 2019_11_11_232626) do
   end
 
   create_table "scores", force: :cascade do |t|
-    t.bigint "criteria_id", null: false
+    t.bigint "criteria_type_id", null: false
     t.text "comment"
     t.integer "score"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["criteria_id"], name: "index_scores_on_criteria_id"
+    t.bigint "scoresheet_id", null: false
+    t.index ["criteria_type_id"], name: "index_scores_on_criteria_type_id"
+    t.index ["scoresheet_id"], name: "index_scores_on_scoresheet_id"
   end
 
   create_table "scoresheets", force: :cascade do |t|
-    t.bigint "score_id", null: false
     t.bigint "user_id", null: false
     t.bigint "entry_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["entry_id"], name: "index_scoresheets_on_entry_id"
-    t.index ["score_id"], name: "index_scoresheets_on_score_id"
     t.index ["user_id"], name: "index_scoresheets_on_user_id"
   end
 
@@ -201,9 +204,9 @@ ActiveRecord::Schema.define(version: 2019_11_11_232626) do
   add_foreign_key "judge_assigns", "users"
   add_foreign_key "judge_preferences", "categories"
   add_foreign_key "judge_preferences", "users"
-  add_foreign_key "scores", "criteria", column: "criteria_id"
+  add_foreign_key "scores", "criteria_types"
+  add_foreign_key "scores", "scoresheets"
   add_foreign_key "scoresheets", "entries"
-  add_foreign_key "scoresheets", "scores"
   add_foreign_key "scoresheets", "users"
   add_foreign_key "users", "regions"
   add_foreign_key "users", "user_roles"

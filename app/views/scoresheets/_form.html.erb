@@ -28,7 +28,7 @@
     <%= @entry.category.division.name %>
   </p>
 
-  <% CriteriaType.all.each do |criteria_type| %>
+  <% CriteriaType.all.top_level.each do |criteria_type| %>
     <p>
       <strong><%= criteria_type.description %></strong>
     </p>
@@ -39,10 +39,26 @@
       <p><%= "#{criteria.suggested_score} - #{criteria.description}" %></p>
     <% end %>
 
+    <% CriteriaType.all.children_for(criteria_type).each do |child_criteria| %>
+      <strong><%= child_criteria.description %></strong>
+      <%= form.fields_for 'scores[]', @scoresheet.scores.select{|n| n.criteria_type_id == child_criteria.id}.first do |score_fields| %>
+        <%= score_fields.hidden_field(:criteria_type_id, :value => child_criteria.id) %>
+        <p>Score:
+          <%= score_fields.number_field :score %></p>
+        <p>Comments:
+          <%= score_fields.text_area :comment %></p>
+      <% end %>
+      <hr>
+    <% end %>
+
     <%= form.fields_for 'scores[]', @scoresheet.scores.select{|n| n.criteria_type_id == criteria_type.id}.first do |score_fields| %>
       <%= score_fields.hidden_field(:criteria_type_id, :value => criteria_type.id) %>
-      <%= score_fields.number_field :score %>
+      <p>Score:
+      <%= score_fields.number_field :score %></p>
+      <p>Comments:
+      <%= score_fields.text_area :comment %></p>
     <% end %>
+    <hr>
   <% end %>
 
   <div class="actions">

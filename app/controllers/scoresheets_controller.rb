@@ -21,8 +21,6 @@ class ScoresheetsController < ApplicationController
     CriteriaType.all.each do |criteria_type|
       @scoresheet.scores.build({criteria_type_id: criteria_type.id})
     end
-    puts @scoresheet.scores.inspect
-
   end
 
   # GET /scoresheets/1/edit
@@ -93,7 +91,7 @@ class ScoresheetsController < ApplicationController
   end
 
   def score_params(params)
-    params.permit(:criteria_type, :score)
+    params.permit(:criteria_type, :score, :comment)
   end
 
   def update_scores
