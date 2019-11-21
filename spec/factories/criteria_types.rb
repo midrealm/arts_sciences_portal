@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :criteria_type do
-    string { "" }
+    description { "Description" }
+    max_score { 4 }
   end
 end

@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 2019_10_23_123243) do
     t.bigint "category_id", null: false
     t.integer "suggested_score"
     t.boolean "optional"
-    t.boolean "animal"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_criteria_on_category_id"

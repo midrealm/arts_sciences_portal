@@ -50,8 +50,8 @@ CriteriaType.create(description: "Judge's Observation", max_score: 4)
 CriteriaDescription.create(criteria_type_id: docs.id, category_id: performance.id,
                            description: "This primarily concerns performance of footwork and general use of the body in dance, as well as a defense of the reconstruction or choreography if applicable. For full points, the documentation must include the style of dance to which the entry belongs, the time(s) and place(s) that style was used, and the dance’s societal context (i.e., where it would have been performed, by whom, under what circumstances, for what purpose, etc.). It should also include a discussion of performance practices as they relate to the relevant historical period(s). It should also include a discussion of the piece’s difficulty as per the Scope category (see below). The judges must be provided with instructions for the dance, including expected floor patterns and descriptions of steps. This may include descriptions of footwork, reconstructions, or original choreography. Potential floor patterns should also be discussed.")
 
-Criterium.create(optional: false, animal: false, suggested_score: 0, criteria_type_id: docs.id, category_id: performance.id,
+Criterium.create(optional: false, suggested_score: 0, criteria_type_id: docs.id, category_id: performance.id,
                  description: "No documentation provided with entry. Face-to-face judging adds very little information.")
 
-Criterium.create(optional: false, animal: false, suggested_score: 1, criteria_type_id: docs.id, category_id: performance.id,
+Criterium.create(optional: false, suggested_score: 1, criteria_type_id: docs.id, category_id: performance.id,
                  description: "Minimal information is provided for time, place and style. Face-to-face judging adds some background information.")

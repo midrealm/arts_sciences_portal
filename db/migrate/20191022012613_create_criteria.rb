@@ -6,7 +6,6 @@ class CreateCriteria < ActiveRecord::Migration[6.0]
       t.belongs_to :category, null: false, foreign_key: true
       t.integer :suggested_score
       t.boolean :optional
-      t.boolean :animal
 
       t.timestamps
     end
