@@ -1,4 +1,4 @@
-<%= form_with(model: judge_assign, local: true) do |form| %>
+<%= form_with(model: [@fair, judge_assign], local: true) do |form| %>
   <% if judge_assign.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(judge_assign.errors.count, "error") %> prohibited this judge_assign from being saved:</h2>
@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :user %>
-    <%= form.select :user_id, User.all.map{ |m| [m.email, m.id] }%>
+    <%= form.select :user_id, User.volunteered(@fair).map{ |m| [m.email, m.id] }%>
   </div>
 
 <!--  <div class="field">-->
@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :entry %>
-    <%= form.select :entry_id, Entry.all.map{ |m| [m.entry_name, m.id] }%>
+    <%= form.select :entry_id, Entry.fair_entries(@fair).map{ |m| [m.entry_name, m.id] }%>
   </div>
 
   <div class="field">

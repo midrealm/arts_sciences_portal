@@ -2,11 +2,12 @@ class JudgeAssignsController < ApplicationController
   before_action :authenticate_user!
   before_action :verify_admin
   before_action :set_judge_assign, only: [:show, :edit, :update, :destroy]
+  before_action :set_fair
 
   # GET /judge_assigns
   # GET /judge_assigns.json
   def index
-    @judge_assigns = JudgeAssign.all
+    @judge_assigns = JudgeAssign.for_fair(@fair)
   end
 
   # GET /judge_assigns/1
@@ -30,7 +31,7 @@ class JudgeAssignsController < ApplicationController
 
     respond_to do |format|
       if @judge_assign.save
-        format.html { redirect_to @judge_assign, notice: 'Judge assign was successfully created.' }
+        format.html { redirect_to [@fair, @judge_assign], notice: 'Judge assign was successfully created.' }
         format.json { render :show, status: :created, location: @judge_assign }
       else
         format.html { render :new }
@@ -44,7 +45,7 @@ class JudgeAssignsController < ApplicationController
   def update
     respond_to do |format|
       if @judge_assign.update(judge_assign_params)
-        format.html { redirect_to @judge_assign, notice: 'Judge assign was successfully updated.' }
+        format.html { redirect_to [@fair, @judge_assign], notice: 'Judge assign was successfully updated.' }
         format.json { render :show, status: :ok, location: @judge_assign }
       else
         format.html { render :edit }
@@ -58,7 +59,7 @@ class JudgeAssignsController < ApplicationController
   def destroy
     @judge_assign.destroy
     respond_to do |format|
-      format.html { redirect_to judge_assigns_url, notice: 'Judge assign was successfully destroyed.' }
+      format.html { redirect_to fair_judge_assigns_url(@fair), notice: 'Judge assign was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -68,6 +69,10 @@ class JudgeAssignsController < ApplicationController
     def set_judge_assign
       @judge_assign = JudgeAssign.find(params[:id])
     end
+
+  def set_fair
+    @fair = Fair.find(params[:fair_id])
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def judge_assign_params

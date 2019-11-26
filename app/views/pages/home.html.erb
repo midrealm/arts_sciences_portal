@@ -12,6 +12,8 @@
   <%= link_to 'User Role Management', user_roles_path %>
   <br>
   <%= link_to 'User Settings', current_user %>
+  <br>
+  <%= link_to 'Volunteer for a Fair', judge_fairs_path %>
   <h3>System Management</h3>
   <%= link_to 'Category Management', categories_path %>
   <br>
@@ -32,15 +34,14 @@
   <%= link_to 'Fair Management', fairs_path %>
   <br>
   <%= link_to 'Entry Management', entries_path %>
-  <br>
-  <%= link_to 'Judge Assignment Management', judge_assigns_path %>
-
 <% else %>
   <%= link_to 'Scoresheet Management', scoresheets_path %>
   <br>
   <%= link_to 'Entry Management', entries_path %>
   <br>
   <%= link_to 'User Settings', current_user %>
+  <br>
+  <%= link_to 'Volunteer for a Fair', judge_fairs_path %>
   <br>
 <% end %>
 

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Fairs Volunteered For</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Fair</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @judge_fairs.each do |judge_fair| %>
+      <tr>
+        <td><%= judge_fair.user.email %></td>
+        <td><%= judge_fair.fair.name %></td>
+        <td><%= link_to 'Show', judge_fair %></td>
+        <td><%= link_to 'Destroy', judge_fair, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Volunteer', new_judge_fair_path %>
+<br><%= link_to 'Back', root_path %>

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @judge_fair.user.email %>
+</p>
+
+<p>
+  <strong>Fair:</strong>
+  <%= @judge_fair.fair.name %>
+</p>
+
+<%= link_to 'Edit', edit_judge_fair_path(@judge_fair) %> |
+<%= link_to 'Back', judge_fairs_path %>

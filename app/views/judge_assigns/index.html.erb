@@ -20,9 +20,9 @@
         <td><%= judge_assign.entry.entry_name %></td>
         <td><%= judge_assign.assigned %></td>
         <td><%= judge_assign.shadow %></td>
-        <td><%= link_to 'Show', judge_assign %></td>
-        <td><%= link_to 'Edit', edit_judge_assign_path(judge_assign) %></td>
-        <td><%= link_to 'Destroy', judge_assign, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', fair_judge_assign_path(@fair, judge_assign) %></td>
+        <td><%= link_to 'Edit', edit_fair_judge_assign_path(@fair, judge_assign) %></td>
+        <td><%= link_to 'Destroy', [@fair, judge_assign], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,5 +30,5 @@
 
 <br>
 
-<%= link_to 'New Judge Assign', new_judge_assign_path %>
-<br>  <%= link_to 'Back', root_path %>
+<%= link_to 'New Judge Assign', new_fair_judge_assign_path(@fair) %>
+<br>  <%= link_to 'Back', fairs_path %>
