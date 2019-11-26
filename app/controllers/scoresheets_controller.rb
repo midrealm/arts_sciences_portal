@@ -6,7 +6,11 @@ class ScoresheetsController < ApplicationController
   # GET /scoresheets.json
   def index
     @entries = Entry.all.judge_assigned_entries(current_user)
-    @scoresheets = Scoresheet.all
+    if current_user.admin?
+      @scoresheets = Scoresheet.all
+    else
+      @scoresheets = Scoresheet.for_user(current_user)
+    end
   end
 
   # GET /scoresheets/1
