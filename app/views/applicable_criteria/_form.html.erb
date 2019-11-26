@@ -12,8 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :criteria %>
-    <%= form.select :criteria_id, Criterium.all.sub_criteria.map{ |m| [m.name, m.id] }%>
+    <%= form.label :criteria_type %>
+    <%= form.select :criteria_type_id, CriteriaType.all.children.map{ |m| [m.description, m.id] }%>
   </div>
 
   <div class="field">

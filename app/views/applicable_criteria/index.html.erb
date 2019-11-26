@@ -5,8 +5,8 @@
 <table>
   <thead>
     <tr>
-      <th>Criteria</th>
-      <th>Criteria type</th>
+      <th>Criteria Type</th>
+      <th>Category</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,8 +14,8 @@
   <tbody>
     <% @applicable_criteria.each do |applicable_criterium| %>
       <tr>
-        <td><%= applicable_criterium.criteria_id %></td>
-        <td><%= applicable_criterium.criteria_type_id %></td>
+        <td><%= applicable_criterium.criteria_type.description %></td>
+        <td><%= applicable_criterium.category.name %></td>
         <td><%= link_to 'Show', applicable_criterium %></td>
         <td><%= link_to 'Edit', edit_applicable_criterium_path(applicable_criterium) %></td>
         <td><%= link_to 'Destroy', applicable_criterium, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -27,3 +27,4 @@
 <br>
 
 <%= link_to 'New Applicable Criterium', new_applicable_criterium_path %>
+<br><%= link_to 'Back', root_path %>

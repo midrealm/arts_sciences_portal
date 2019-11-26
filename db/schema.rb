@@ -16,12 +16,12 @@ ActiveRecord::Schema.define(version: 2019_11_11_232626) do
   enable_extension "plpgsql"
 
   create_table "applicable_criteria", force: :cascade do |t|
-    t.bigint "criteria_id", null: false
+    t.bigint "criteria_type_id", null: false
     t.bigint "category_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_applicable_criteria_on_category_id"
-    t.index ["criteria_id"], name: "index_applicable_criteria_on_criteria_id"
+    t.index ["criteria_type_id"], name: "index_applicable_criteria_on_criteria_type_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -189,7 +189,7 @@ ActiveRecord::Schema.define(version: 2019_11_11_232626) do
   end
 
   add_foreign_key "applicable_criteria", "categories"
-  add_foreign_key "applicable_criteria", "criteria", column: "criteria_id"
+  add_foreign_key "applicable_criteria", "criteria_types"
   add_foreign_key "categories", "divisions"
   add_foreign_key "criteria", "categories"
   add_foreign_key "criteria", "criteria_types"

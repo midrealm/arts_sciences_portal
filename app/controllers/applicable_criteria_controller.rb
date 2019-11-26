@@ -69,6 +69,6 @@ class ApplicableCriteriaController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def applicable_criterium_params
-      params.require(:applicable_criterium).permit(:criteria_id, :criteria_type_id)
+      params.require(:applicable_criterium).permit(:category_id, :criteria_type_id)
     end
 end
