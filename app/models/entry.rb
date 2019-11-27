@@ -7,6 +7,7 @@ class Entry < ApplicationRecord
   has_many :judge_assigns
 
   scope :user_entries, -> (user) { where('user_id = ?', user.id) }
+  scope :judge_assigned_entries, -> (user) { joins(:judge_assigns).where('judge_assigns.user_id = ?', user.id) }
   scope :fair_entries, -> (fair) { where('fair_id = ?', fair.id) }
   scope :in_schedule_order, -> { joins(:timeslot).order(order: :asc) }
 

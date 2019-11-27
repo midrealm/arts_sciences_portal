@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   root 'pages#home'
 
-  resources :entries
+  resources :entries do
+    resources :scoresheets, only: [:new, :create, :show, :update, :edit, :destroy]
+  end
 
   scope "/admin" do
     resources :users, except: :new do
@@ -25,5 +27,8 @@ Rails.application.routes.draw do
     resources :criteria_types
     resources :criteria_descriptions
     resources :judge_assigns
+    resources :applicable_criteria
+    resources :scoresheets, only: [:index]
+    resources :scores
   end
 end

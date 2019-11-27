@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Criteria Type:</strong>
+  <%= @applicable_criterium.criteria_type.description %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @applicable_criterium.category.name %>
+</p>
+
+<%= link_to 'Edit', edit_applicable_criterium_path(@applicable_criterium) %> |
+<%= link_to 'Back', applicable_criteria_path %>
