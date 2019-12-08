@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :score do
-    criteria { nil }
     comment { "MyText" }
     score { 1 }
+
+    association :criteria_type, factory: :criteria_type
   end
 end
