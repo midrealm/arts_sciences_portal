@@ -1,0 +1,22 @@
+<%= form_with(model: judge_fair, local: true) do |form| %>
+  <% if judge_fair.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(judge_fair.errors.count, "error") %> prohibited this judge_fair from being saved:</h2>
+
+      <ul>
+        <% judge_fair.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :fair_id %>
+    <%= form.select :fair_id, Fair.all.map{ |m| [m.name, m.id] }%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

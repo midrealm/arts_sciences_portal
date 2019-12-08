@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :scoresheet do
-    score { nil }
-    user { nil }
-    entry { nil }
+    association :user, factory: :user
+    association :entry, factory: :entry
   end
 end

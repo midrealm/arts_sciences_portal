@@ -22,6 +22,7 @@
         <td><%= fair.internet_access %></td>
         <td><%= link_to 'View Schedule', view_schedule_fair_path(fair) %></td>
         <td><%= link_to 'Assign Schedule', schedule_fair_path(fair) %></td>
+        <td><%= link_to 'Assign Judges', fair_judge_assigns_path(fair) %></td>
         <td><%= link_to 'Show', fair %></td>
         <td><%= link_to 'Edit', edit_fair_path(fair) %></td>
         <td><%= link_to 'Destroy', fair, method: :delete, data: { confirm: 'Are you sure?' } %></td>

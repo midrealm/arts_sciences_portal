@@ -11,6 +11,10 @@ class User < ApplicationRecord
   has_many :entries
   has_many :judge_assigns
   has_many :judge_preferences
+  has_many :judge_fairs
+
+  scope :volunteered, -> (fair) { joins(:judge_fairs).where('judge_fairs.fair_id = ?', fair.id) }
+  scope :judge_assigned_entries, -> (user) { joins(:judge_assigns).where('judge_assigns.user_id = ?', user.id) }
 
   def initialize(attributes=nil)
     attr_with_role = attributes.nil? ? nil : {:user_role => UserRole.default_user}.merge(attributes)

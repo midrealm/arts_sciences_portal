@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_11_232626) do
+ActiveRecord::Schema.define(version: 2019_11_26_012035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,15 @@ ActiveRecord::Schema.define(version: 2019_11_11_232626) do
     t.index ["user_id"], name: "index_judge_assigns_on_user_id"
   end
 
+  create_table "judge_fairs", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "fair_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["fair_id"], name: "index_judge_fairs_on_fair_id"
+    t.index ["user_id"], name: "index_judge_fairs_on_user_id"
+  end
+
   create_table "judge_preferences", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -202,6 +211,8 @@ ActiveRecord::Schema.define(version: 2019_11_11_232626) do
   add_foreign_key "fairs", "regions"
   add_foreign_key "judge_assigns", "entries"
   add_foreign_key "judge_assigns", "users"
+  add_foreign_key "judge_fairs", "fairs"
+  add_foreign_key "judge_fairs", "users"
   add_foreign_key "judge_preferences", "categories"
   add_foreign_key "judge_preferences", "users"
   add_foreign_key "scores", "criteria_types"
