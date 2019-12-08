@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   resources :entries do
     resources :scoresheets, only: [:new, :create, :show, :update, :edit, :destroy]
   end
-  resources :judge_fairs
 
   scope "/admin" do
     resources :users, except: :new do
@@ -31,5 +30,6 @@ Rails.application.routes.draw do
     resources :applicable_criteria
     resources :scoresheets, only: [:index]
     resources :scores
+    resources :judge_fairs, except: [:show, :update, :edit]
   end
 end

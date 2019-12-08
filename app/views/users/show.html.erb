@@ -16,16 +16,18 @@
 </p>
 
 <p>
-  <strong>Prefers digital entries?</strong>
-  <%= @user.digital %>
-</p>
-
-<p>
   <strong>First time judge?</strong>
   <%= @user.first_time %>
 </p>
 
-<%= link_to 'Edit Judging Preferences', user_judge_preferences_path(@user) %>
-<br>
+<p>If you will be judging, you can also specify what catagories of entries you'd prefer to judge.</p>
+<%= link_to 'Manage your judging preferences', user_judge_preferences_path(@user) %>
+
+<hr>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<% if current_user.admin? %>
+  <%= link_to 'Back', users_path %>
+<% else %>
+  <%= link_to 'Back', root_path %>
+<% end %>

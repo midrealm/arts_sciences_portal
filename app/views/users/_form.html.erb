@@ -28,19 +28,18 @@
     </div>
   <% end %>
 
+  <hr>
+
+  <p>If you will not be judging entries, you may ignore these questions.</p>
+
   <div class="field">
-    <%= form.label :written %>
     <%= form.check_box :written %>
+    <%= form.label 'I prefer to not judge entries face-to-face.' %>
   </div>
 
   <div class="field">
-    <%= form.label :digital %>
-    <%= form.check_box :digital %>
-  </div>
-
-  <div class="field">
-    <%= form.label :first_time %>
     <%= form.check_box :first_time %>
+    <%= form.label 'This will be my first time as a judge.' %>
   </div>
 
   <div class="actions">

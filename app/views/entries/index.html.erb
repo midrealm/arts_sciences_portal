@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Entries</h1>
+<h1>Your entries</h1>
 
 <table>
   <thead>
@@ -23,9 +23,11 @@
             <li><%= entry.scored_option %></li>
           </ul>
         </td>
-        <td><%= link_to 'Show', entry %></td>
+        <td><%= link_to 'View Details', entry %></td>
         <td><%= link_to 'Edit', edit_entry_path(entry) %></td>
-        <td><%= link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if current_user.admin? %>
+          <td><%= link_to 'Delete Entry', entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -33,5 +35,5 @@
 
 <br>
 
-<%= link_to 'New Entry', new_entry_path %><br>
+<%= link_to 'Submit a New Entry', new_entry_path %><br>
 <%= link_to 'Back', root_path %>

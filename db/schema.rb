@@ -186,7 +186,6 @@ ActiveRecord::Schema.define(version: 2019_11_26_012035) do
     t.bigint "user_role_id", null: false
     t.bigint "region_id", null: false
     t.boolean "written", default: false
-    t.boolean "digital", default: false
     t.boolean "first_time", default: false
     t.string "confirmation_token"
     t.datetime "confirmed_at"

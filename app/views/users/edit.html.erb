@@ -2,5 +2,8 @@
 
 <%= render 'form', user: @user %>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+<% if current_user.admin? %>
+  <%= link_to 'Back', users_path %>
+<% else %>
+  <%= link_to 'Back', current_user %>
+<% end %>

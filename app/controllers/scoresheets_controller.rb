@@ -5,7 +5,7 @@ class ScoresheetsController < ApplicationController
   # GET /scoresheets
   # GET /scoresheets.json
   def index
-    @entries = Entry.all.judge_assigned_entries(current_user)
+    @entries = filter_unjudged(Entry.all.judge_assigned_entries(current_user))
     if current_user.admin?
       @scoresheets = Scoresheet.all
     else
@@ -105,6 +105,12 @@ class ScoresheetsController < ApplicationController
       score_record = @scoresheet.scores.select{|n| n.criteria_type_id == score[:criteria_type_id].to_i}.first
       score_record.update(score_params(score))
       score_record.save
+    end
+  end
+
+  def filter_unjudged(entries)
+    entries.reject do |entry|
+      !Scoresheet.find_by(entry_id: entry.id).nil?
     end
   end
 end
