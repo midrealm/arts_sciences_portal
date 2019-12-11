@@ -1,6 +1,6 @@
 class ScoresheetsController < ApplicationController
   before_action :set_scoresheet, only: [:show, :edit, :update, :destroy]
-  before_action :set_entry, only: [:create, :new, :edit, :update]
+  before_action :set_entry, only: [:create, :new, :edit, :update, :show]
 
   # GET /scoresheets
   # GET /scoresheets.json

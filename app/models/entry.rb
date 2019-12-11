@@ -23,4 +23,8 @@ class Entry < ApplicationRecord
   def scored_option
     self.scored ? "Scored" : "Commentary Only"
   end
+
+  def judge_name_or_unnassigned
+    self.judge_assigns.empty? ? 'Unassigned' : self.judge_assigns.last.user.email
+  end
 end
