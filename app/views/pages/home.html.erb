@@ -35,14 +35,13 @@
   <br>
   <%= link_to 'Entry Management', entries_path %>
 <% else %>
-  <%= link_to 'Scoresheet Management', scoresheets_path %>
-  <br>
-  <%= link_to 'Entry Management', entries_path %>
-  <br>
-  <%= link_to 'User Settings', current_user %>
+  <%= link_to 'Submit an Entry', entries_path %>
   <br>
   <%= link_to 'Volunteer for a Fair', judge_fairs_path %>
   <br>
+  <%= link_to 'Submit a Scoresheet', scoresheets_path %>
+  <br>
+  <%= link_to 'User Preferences', current_user %>
 <% end %>
 
 <br><br>

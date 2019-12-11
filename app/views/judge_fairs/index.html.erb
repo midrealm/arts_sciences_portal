@@ -4,22 +4,25 @@
 
 <table>
   <thead>
-    <tr>
+  <tr>
+    <% if current_user.admin? %>
       <th>User</th>
-      <th>Fair</th>
-      <th colspan="3"></th>
-    </tr>
+    <% end %>
+    <th>Fair</th>
+    <th colspan="2"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @judge_fairs.each do |judge_fair| %>
-      <tr>
+  <% @judge_fairs.each do |judge_fair| %>
+    <tr>
+      <% if current_user.admin? %>
         <td><%= judge_fair.user.email %></td>
-        <td><%= judge_fair.fair.name %></td>
-        <td><%= link_to 'Show', judge_fair %></td>
-        <td><%= link_to 'Destroy', judge_fair, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+      <% end %>
+      <td><%= judge_fair.fair.name_with_warning %></td>
+      <td><%= link_to 'Un-volunteer', judge_fair, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+    </tr>
+  <% end %>
   </tbody>
 </table>
 

@@ -4,64 +4,47 @@ class JudgeFairsController < ApplicationController
   # GET /judge_fairs
   # GET /judge_fairs.json
   def index
-    @judge_fairs = JudgeFair.all
+    if current_user.admin?
+      @judge_fairs = JudgeFair.all
+    else
+      @judge_fairs = JudgeFair.for_user(current_user)
+    end
   end
 
-  # GET /judge_fairs/1
-  # GET /judge_fairs/1.json
-  def show
-  end
+    # GET /judge_fairs/new
+    def new
+      @judge_fair = JudgeFair.new
+    end
 
-  # GET /judge_fairs/new
-  def new
-    @judge_fair = JudgeFair.new
-  end
+    # POST /judge_fairs
+    # POST /judge_fairs.json
+    def create
+      @judge_fair = JudgeFair.new(judge_fair_params)
 
-  # GET /judge_fairs/1/edit
-  def edit
-  end
-
-  # POST /judge_fairs
-  # POST /judge_fairs.json
-  def create
-    @judge_fair = JudgeFair.new(judge_fair_params)
-
-    respond_to do |format|
-      if @judge_fair.save
-        format.html { redirect_to @judge_fair, notice: 'Judge fair was successfully created.' }
-        format.json { render :show, status: :created, location: @judge_fair }
-      else
-        format.html { render :new }
-        format.json { render json: @judge_fair.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @judge_fair.save
+          format.html { redirect_to judge_fairs_path, notice: 'Judge fair was successfully created.' }
+          format.json { render :show, status: :created, location: @judge_fair }
+        else
+          format.html { render :new }
+          format.json { render json: @judge_fair.errors, status: :unprocessable_entity }
+        end
       end
     end
-  end
 
-  # PATCH/PUT /judge_fairs/1
-  # PATCH/PUT /judge_fairs/1.json
-  def update
-    respond_to do |format|
-      if @judge_fair.update(judge_fair_params)
-        format.html { redirect_to @judge_fair, notice: 'Judge fair was successfully updated.' }
-        format.json { render :show, status: :ok, location: @judge_fair }
-      else
-        format.html { render :edit }
-        format.json { render json: @judge_fair.errors, status: :unprocessable_entity }
+
+    # DELETE /judge_fairs/1
+    # DELETE /judge_fairs/1.json
+    def destroy
+      @judge_fair.destroy
+      respond_to do |format|
+        format.html { redirect_to judge_fairs_url, notice: 'Judge fair was successfully destroyed.' }
+        format.json { head :no_content }
       end
     end
-  end
 
-  # DELETE /judge_fairs/1
-  # DELETE /judge_fairs/1.json
-  def destroy
-    @judge_fair.destroy
-    respond_to do |format|
-      format.html { redirect_to judge_fairs_url, notice: 'Judge fair was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+    private
 
-  private
     # Use callbacks to share common setup or constraints between actions.
     def set_judge_fair
       @judge_fair = JudgeFair.find(params[:id])
@@ -71,4 +54,4 @@ class JudgeFairsController < ApplicationController
     def judge_fair_params
       params.require(:judge_fair).permit(:fair_id).merge(user_id: current_user.id)
     end
-end
+  end

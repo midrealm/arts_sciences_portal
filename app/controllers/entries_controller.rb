@@ -2,7 +2,6 @@ class EntriesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
   before_action :verify_user_entry, only: [:show, :edit, :update, :destroy]
-  before_action :verify_admin, only: [:schedule]
 
   def verify_user_entry
     authorize @entry, :owns_entry?

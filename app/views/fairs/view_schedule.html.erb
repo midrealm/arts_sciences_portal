@@ -17,7 +17,7 @@
     <tbody>
     <% @entries.select { |x| x.timeslot == timeslot }.each do |entry| %>
       <tr>
-        <td><%= entry.judge_assigns.last.user.email %></td>
+        <td><%= entry.judge_name_or_unnassigned %></td>
         <td><%= entry.entry_name %></td>
       </tr>
     <% end %>
