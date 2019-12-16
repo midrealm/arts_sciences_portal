@@ -113,22 +113,36 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
-  response = RestClient.get "https://mailtrap.io/api/v1/inboxes.json?api_token=#{ENV['MAILTRAP_API_TOKEN']}"
-
-  first_inbox = JSON.parse(response)[0] # get first inbox
-
-  config.action_mailer.perform_deliveries = true
+  # MAIL TRAP
+  # response = RestClient.get "https://mailtrap.io/api/v1/inboxes.json?api_token=#{ENV['MAILTRAP_API_TOKEN']}"
+  #
+  # first_inbox = JSON.parse(response)[0] # get first inbox
+  #
+  # config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"
   config.action_mailer.default_url_options = { :host => 'https://a-and-s-portal.herokuapp.com' }
+  #
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   :user_name => first_inbox['username'],
+  #   :password => first_inbox['password'],
+  #   :address => first_inbox['domain'],
+  #   :domain => first_inbox['domain'],
+  #   :port => first_inbox['smtp_ports'][0],
+  #   :authentication => :plain
+  # }
 
+  # SEND GRID
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
   config.action_mailer.smtp_settings = {
-    :user_name => first_inbox['username'],
-    :password => first_inbox['password'],
-    :address => first_inbox['domain'],
-    :domain => first_inbox['domain'],
-    :port => first_inbox['smtp_ports'][0],
-    :authentication => :plain
+      :user_name => ENV['SENDGRID_USERNAME'],
+      :password => ENV['SENDGRID_PASSWORD'],
+      :domain => 'herokuapp.com',
+      :address => 'smtp.sendgrid.net',
+      :port => 587,
+      :authentication => :plain,
+      :enable_starttls_auto => true
   }
 end
