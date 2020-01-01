@@ -12,11 +12,6 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div class="field">
     <%= form.label :region %>
     <%= form.select :region_id, Region.all.map{ |m| [m.name, m.id] }%>
   </div>
@@ -45,4 +40,6 @@
   <div class="actions">
     <%= form.submit %>
   </div>
+
+  <%= link_to "Change your password", edit_user_registration_path %>
 <% end %>
