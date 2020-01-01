@@ -38,6 +38,7 @@ class EntriesController < ApplicationController
 
     respond_to do |format|
       if @entry.save
+        UserEntry.create!(user_id: current_user.id, entry_id: @entry.id)
         format.html { redirect_to @entry, notice: 'Entry was successfully created.' }
         format.json { render :show, status: :created, location: @entry }
       else
@@ -93,6 +94,6 @@ class EntriesController < ApplicationController
         :first_time,
         :youth,
         :fair_id
-      ).merge(:user_id => current_user.id)
+      )
     end
 end

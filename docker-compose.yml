@@ -12,6 +12,7 @@ services:
       DB_PASSWORD: password
       DB_DATABASE: dev
       PORT: 4000
+      RAILS_ENV: development
     networks:
       - internal
     ports:

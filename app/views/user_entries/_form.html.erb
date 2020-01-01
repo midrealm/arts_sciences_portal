@@ -1,0 +1,24 @@
+<%= form_with(model: [@entry, user_entry], local: true) do |form| %>
+  <% if user_entry.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user_entry.errors.count, "error") %> prohibited this user_entry from being saved:</h2>
+
+      <ul>
+        <% user_entry.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.fields_for :user_entries do |j| %>
+    <div class="field">
+      <%= j.label :user %>
+      <%= j.select :user_id, User.all.reject{|record| record.id == current_user.id}.map{ |m| [m.email, m.id] }%>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -5,6 +5,6 @@ class EntryPolicy < ApplicationPolicy
   end
 
   def owns_entry?
-    @user == @entry.user || @user.admin?
+    @user.admin? || UserEntry.entrants(@entry).include?(@user)
   end
 end
