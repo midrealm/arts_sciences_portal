@@ -26,6 +26,11 @@
     <%= form.select :division_id, Division.all.map{ |m| [m.name, m.id] }%>
   </div>
 
+  <div class="field">
+    <%= form.label :mail_in %>
+    <%= form.check_box :mail_in %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

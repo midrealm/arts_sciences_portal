@@ -8,7 +8,7 @@ class User < ApplicationRecord
   belongs_to :user_role
   belongs_to :region
 
-  has_many :entries
+  has_many :user_entries
   has_many :judge_assigns
   has_many :judge_preferences
   has_many :judge_fairs

@@ -38,7 +38,12 @@
 
   <div class="field">
     <%= form.label :category %>
-    <%= form.select :category_id, Category.all.map{ |m| [m.name, m.id] }%>
+    <%= form.select :category_id, Category.all.default_order.map{ |m| ["#{m.division.name} - #{m.name}", m.id] }%>
+  </div>
+
+  <div id="entry_category_desc">
+    <p><%= simple_format Category.default_order.first.description %></p>
+    <p id="mail_in_warning"></p>
   </div>
 
   <div class="field">

@@ -1,8 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>User:</strong>
-  <%= @entry.user.email  %>
+  <strong>Entrants:</strong>
+  <br>
+  <% UserEntry.entrants(@entry).each do |user| %>
+    <%= user.email %><br>
+  <% end %>
 </p>
 
 <hr>

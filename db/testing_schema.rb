@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_26_012035) do
+ActiveRecord::Schema.define(version: 2019_12_31_163729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2019_11_26_012035) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "division_id", null: false
+    t.boolean "mail_in", default: false
     t.index ["division_id"], name: "index_categories_on_division_id"
   end
 
@@ -77,7 +78,6 @@ ActiveRecord::Schema.define(version: 2019_11_26_012035) do
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id", null: false
     t.bigint "category_id", null: false
     t.bigint "timeslot_id"
     t.boolean "in_person", default: true
@@ -93,7 +93,6 @@ ActiveRecord::Schema.define(version: 2019_11_26_012035) do
     t.index ["category_id"], name: "index_entries_on_category_id"
     t.index ["fair_id"], name: "index_entries_on_fair_id"
     t.index ["timeslot_id"], name: "index_entries_on_timeslot_id"
-    t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
   create_table "fairs", force: :cascade do |t|
@@ -169,6 +168,15 @@ ActiveRecord::Schema.define(version: 2019_11_26_012035) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "user_entries", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.bigint "entry_id", null: false
+    t.index ["entry_id"], name: "index_user_entries_on_entry_id"
+    t.index ["user_id"], name: "index_user_entries_on_user_id"
+  end
+
   create_table "user_roles", force: :cascade do |t|
     t.string "role_name"
     t.datetime "created_at", precision: 6, null: false
@@ -206,7 +214,6 @@ ActiveRecord::Schema.define(version: 2019_11_26_012035) do
   add_foreign_key "entries", "categories"
   add_foreign_key "entries", "fairs"
   add_foreign_key "entries", "timeslots"
-  add_foreign_key "entries", "users"
   add_foreign_key "fairs", "regions"
   add_foreign_key "judge_assigns", "entries"
   add_foreign_key "judge_assigns", "users"
@@ -218,6 +225,8 @@ ActiveRecord::Schema.define(version: 2019_11_26_012035) do
   add_foreign_key "scores", "scoresheets"
   add_foreign_key "scoresheets", "entries"
   add_foreign_key "scoresheets", "users"
+  add_foreign_key "user_entries", "entries"
+  add_foreign_key "user_entries", "users"
   add_foreign_key "users", "regions"
   add_foreign_key "users", "user_roles"
 end
