@@ -11,7 +11,7 @@ class JudgePreferencesController < ApplicationController
   # GET /judge_preferences
   # GET /judge_preferences.json
   def index
-    @judge_preferences = JudgePreference.all
+    @judge_preferences = JudgePreference.for_user(current_user)
   end
 
   # GET /judge_preferences/1
