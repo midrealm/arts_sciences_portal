@@ -13,7 +13,6 @@
     <% @judge_preferences.each do |judge_preference| %>
       <tr>
         <td><%= judge_preference.category.name %></td>
-        <td><%= link_to 'Remove Preference', [@user, judge_preference], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -21,5 +20,5 @@
 
 <br>
 
-<%= link_to 'Add a new preference', new_user_judge_preference_path(@user) %>
+<%= link_to 'Edit preferences', new_user_judge_preference_path(@user) %>
 <br><%= link_to 'Back', @user %>

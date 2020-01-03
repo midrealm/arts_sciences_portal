@@ -24,4 +24,8 @@ class User < ApplicationRecord
   def admin?
     self.user_role.role_name == "admin"
   end
+
+  def selected_categories
+    JudgePreference.where(user_id: self.id).pluck(:category_id)
+  end
 end
