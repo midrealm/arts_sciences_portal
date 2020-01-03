@@ -1,6 +1,6 @@
 class JudgePreferencesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_judge_preference, only: [:show, :edit, :destroy]
+  before_action :set_judge_preference, only: [:show, :edit]
   before_action :set_user
   before_action :verify_user_preference
 
@@ -31,16 +31,19 @@ class JudgePreferencesController < ApplicationController
   # POST /judge_preferences
   # POST /judge_preferences.json
   def create
-    @judge_preference = JudgePreference.new(judge_preference_params)
+    selected_categories = params[:user][:selected_categories].drop(1)
+    #destroy all unselected categories
+    current_user.selected_categories.each do |category_id|
+      JudgePreference.find_by(user_id: current_user.id, category_id: category_id).destroy unless selected_categories.include?(category_id.to_s)
+    end
+
+    selected_categories.each do |category_id|
+      JudgePreference.find_or_create_by({user_id: current_user.id, category_id: category_id})
+    end
 
     respond_to do |format|
-      if @judge_preference.save
-        format.html { redirect_to user_judge_preferences_url, notice: 'Judge preference was successfully created.' }
-        format.json { render :show, status: :created, location: @judge_preference }
-      else
-        format.html { render :new }
-        format.json { render json: @judge_preference.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to user_judge_preferences_url, notice: 'Judge preference was successfully created.' }
+      format.json { render :show, status: :created, location: @judge_preference }
     end
   end
 
@@ -60,14 +63,14 @@ class JudgePreferencesController < ApplicationController
 
   # DELETE /judge_preferences/1
   # DELETE /judge_preferences/1.json
-  def destroy
-    @judge_preferences = JudgePreference.all
-    @judge_preference.destroy
-    respond_to do |format|
-      format.html { redirect_to user_judge_preferences_url, notice: 'Judge preference was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+  # def destroy
+  #   @judge_preferences = JudgePreference.all
+  #   @judge_preference.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to user_judge_preferences_url, notice: 'Judge preference was successfully destroyed.' }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

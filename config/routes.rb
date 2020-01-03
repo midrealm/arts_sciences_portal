@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   scope "/admin" do
     resources :users, except: :new do
-      resources :judge_preferences, only: [:new, :create, :index, :destroy]
+      resources :judge_preferences, only: [:new, :create, :index]
     end
     resources :user_roles
     resources :categories do
