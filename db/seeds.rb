@@ -9,21 +9,21 @@ Region.create(name: 'Pentamere')
 Region.create(name: 'Out of Kingdom')
 
 admin = User.create(
-  :email => 'seanchain@gmail.com',
+  :email => 'admin@test.com',
   :password => 'adminadmin',
   :password_confirmation => 'adminadmin',
   user_role: admin_role,
   region: region,
   confirmed_at: DateTime.now)
-# user = User.create(
-#   :email => 'user@test.com',
-#   :password => 'useruser',
-#   :password_confirmation => 'useruser',
-#   user_role: user_role,
-#   region: region,
-#   confirmed_at: DateTime.now)
+user = User.create(
+  :email => 'user@test.com',
+  :password => 'useruser',
+  :password_confirmation => 'useruser',
+  user_role: user_role,
+  region: region,
+  confirmed_at: DateTime.now)
 
-# fair = Fair.create(date: Date.today, region: region, name: 'Generic Fair', internet_access: true)
+fair = Fair.create(date: Date.today, region: region, name: 'Generic Fair', internet_access: true)
 
 Timeslot.create(order: 1, description: 'Section 1')
 Timeslot.create(order: 2, description: 'Section 2')
@@ -37,7 +37,7 @@ technical = Division.create(name: "Div 3 Technical Arts")
 studio = Division.create(name: "Div 4 Studio Arts")
 domestic = Division.create(name: "Div 5 Domestic Arts")
 
-Category.create(name: 'Animal Accouterments', division: domestic, description: "This category includes any furniture, tack, or trappings put on an animal for usefulness, protection, or decoration. Photographs of the entry on the animal must be included as part of the documentation, unless the animal can be present at the A&S Faire. Photographs must be clear. Close-ups showing the details of fit should be used where possible. Some equine accouterments were severe and cruel in period. Any device that inflicts pain or severe discomfort to the animal is strictly forbidden, even if the device is period. Entries should state the period practice and the modern, humane substitute.")
+category = Category.create(name: 'Animal Accouterments', division: domestic, description: "This category includes any furniture, tack, or trappings put on an animal for usefulness, protection, or decoration. Photographs of the entry on the animal must be included as part of the documentation, unless the animal can be present at the A&S Faire. Photographs must be clear. Close-ups showing the details of fit should be used where possible. Some equine accouterments were severe and cruel in period. Any device that inflicts pain or severe discomfort to the animal is strictly forbidden, even if the device is period. Entries should state the period practice and the modern, humane substitute.")
 Category.create(name: 'Animal Husbandry: Birds - Birds of Prey', division: domestic, description: "This category is for the breeding and training of birds of prey. There are many different birds of prey, each with its own style of hunting and preferred prey. Entrant should show knowledge of their own bird and how it differs from others as well as knowledge of training the bird, the equipment used, and its particular health concerns. Period training techniques may range into the unacceptable and cruel. Knowledge of, rather than practice of, these techniques and acceptable substitutes should be stressed. The scoring under the Skill category should reflect the appropriate use and choice of animals for a given time or place. Consideration must also be given to the legality of owning certain species, namely raptors. A video of the performance must also be submitted either as a link to an online video or as an mp4 file. If the video is longer than 10 minutes, it must be submitted as a mail-in entry. Check the current rules on the A&S Faire website or the Middle Kingdom newsletter, The Pale, for the deadline. No late entries will be accepted. THE KMOAS RECOMMENDS THAT YOU EMAIL YOUR ENTRY. Post-mail entries are accepted if they are postmarked by the deadline, but will be scanned in and delivered via email to judges. This category is eligible for Regional Faires. If the video is under 10 minutes, the entrant will need to supply equipment to play the video without internet connection during judging.")
 Category.create(name: 'Animal Husbandry: Birds - Game Birds', division: domestic, description: "This category is for the breeding and training of game birds. Birds included in this category include quail, partridge, ptarmigan, pheasant, and peafowl. All were used for hunting, egg production, and eating. The entrant should show knowledge of the species and breeds as well as the habitat, food sources and ways of hunting the entry. Period training techniques may range into the unacceptable and cruel. Knowledge of, rather than practice of, these techniques and acceptable substitutes should be stressed. The scoring under the Skill category should reflect the appropriate use and choice of animals for a given time or place. Consideration must also be given to the legality of owning certain species. A video of the performance must also be submitted either as a link to an online video or as an mp4 file. If the video is longer than 10 minutes, it must be submitted as a mail-in entry. Check the current rules on the A&S Faire website or the Middle Kingdom newsletter, The Pale, for the deadline. No late entries will be accepted. THE KMOAS RECOMMENDS THAT YOU EMAIL YOUR ENTRY. Post-mail entries are accepted if they are postmarked by the deadline, but will be scanned in and delivered via email to judges. This category is eligible for Regional Faires. If the video is under 10 minutes, the entrant will need to supply equipment to play the video without internet connection during judging.")
 Category.create(name: 'Animal Husbandry: Birds - Poultry', division: domestic, description: "This category is for the breeding and training of poultry. The entrant should show knowledge of the breeds they are entering, where they originated, how location may have affected the birds, and some of the difference between poultry in period and modern poultry (egg size, meat yield). They should also show knowledge of appropriate feed, housing, and health concerns. Entry may consist of adult birds, chicks, or eggs. Period training techniques may range into the unacceptable and cruel. Knowledge of, rather than practice of, these techniques and acceptable substitutes should be stressed. The scoring under the Skill category should reflect the appropriate use and choice of animals for a given time or place. Consideration must also be given to the legality of owning certain species. A video of the performance must also be submitted either as a link to an online video or as an mp4 file. If the video is longer than 10 minutes, it must be submitted as a mail-in entry. Check the current rules on the A&S Faire website or the Middle Kingdom newsletter, The Pale, for the deadline. No late entries will be accepted. THE KMOAS RECOMMENDS THAT YOU EMAIL YOUR ENTRY. Post-mail entries are accepted if they are postmarked by the deadline, but will be scanned in and delivered via email to judges. This category is eligible for Regional Faires. If the video is under 10 minutes, the entrant will need to supply equipment to play the video without internet connection during judging.")
@@ -147,16 +147,16 @@ CriteriaType.create(description: 'Creativity', max_score: 4)
 CriteriaType.create(description: "Judge's Observation", max_score: 4)
 CriteriaType.create(description: 'Complexity', max_score: 4, parent_id: skill.id)
 
-# CriteriaDescription.create(criteria_type_id: docs.id, category_id: performance.id,
-#                            description: "This primarily concerns performance of footwork and general use of the body in dance, as well as a defense of the reconstruction or choreography if applicable. For full points, the documentation must include the style of dance to which the entry belongs, the time(s) and place(s) that style was used, and the dance’s societal context (i.e., where it would have been performed, by whom, under what circumstances, for what purpose, etc.). It should also include a discussion of performance practices as they relate to the relevant historical period(s). It should also include a discussion of the piece’s difficulty as per the Scope category (see below). The judges must be provided with instructions for the dance, including expected floor patterns and descriptions of steps. This may include descriptions of footwork, reconstructions, or original choreography. Potential floor patterns should also be discussed.")
+CriteriaDescription.create(criteria_type_id: docs.id, category_id: performance.id,
+                           description: "This primarily concerns performance of footwork and general use of the body in dance, as well as a defense of the reconstruction or choreography if applicable. For full points, the documentation must include the style of dance to which the entry belongs, the time(s) and place(s) that style was used, and the dance’s societal context (i.e., where it would have been performed, by whom, under what circumstances, for what purpose, etc.). It should also include a discussion of performance practices as they relate to the relevant historical period(s). It should also include a discussion of the piece’s difficulty as per the Scope category (see below). The judges must be provided with instructions for the dance, including expected floor patterns and descriptions of steps. This may include descriptions of footwork, reconstructions, or original choreography. Potential floor patterns should also be discussed.")
 
-# Criterium.create(optional: false, suggested_score: 0, criteria_type_id: docs.id, category_id: performance.id,
-#                  description: "No documentation provided with entry. Face-to-face judging adds very little information.")
+Criterium.create(optional: false, suggested_score: 0, criteria_type_id: docs.id, category_id: performance.id,
+                 description: "No documentation provided with entry. Face-to-face judging adds very little information.")
 
-# Criterium.create(optional: false, suggested_score: 1, criteria_type_id: docs.id, category_id: performance.id,
-#                  description: "Minimal information is provided for time, place and style. Face-to-face judging adds some background information.")
+Criterium.create(optional: false, suggested_score: 1, criteria_type_id: docs.id, category_id: performance.id,
+                 description: "Minimal information is provided for time, place and style. Face-to-face judging adds some background information.")
 
 
-# entry = Entry.create(entry_name: 'test entry', description: 'test entry description', category_id: category.id, fair_id: fair.id)
-# JudgeAssign.create(user_id: admin.id, entry_id: entry.id)
-# UserEntry.create(entry_id: entry.id, user_id: admin.id)
+entry = Entry.create(entry_name: 'test entry', description: 'test entry description', category_id: category.id, fair_id: fair.id)
+JudgeAssign.create(user_id: admin.id, entry_id: entry.id)
+UserEntry.create(entry_id: entry.id, user_id: admin.id)

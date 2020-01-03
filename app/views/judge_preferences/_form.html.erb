@@ -11,12 +11,12 @@
     </div>
   <% end %>
 
-  <%= form.fields_for :judge_preferences do |j| %>
-    <div class="field">
-      <%= j.label :category %>
-      <%= j.select :category_id, Category.all.map{ |m| [m.name, m.id] }%>
-    </div>
-  <% end %>
+  <div class="field">
+    <%= collection_check_boxes(:user, :selected_categories, Category.all, :id, :name) do |b| %>
+      <br>
+      <%= b.label(class: "checkbox-inline", :"data-value" => b.value) { b.check_box + b.text } %>
+    <% end %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>
