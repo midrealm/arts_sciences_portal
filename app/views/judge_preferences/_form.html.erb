@@ -11,6 +11,12 @@
     </div>
   <% end %>
 
+  <% if current_user.admin? && @user.id != current_user.id %>
+    <div class="alert alert-danger">
+      <h4>You are currently in admin mode and are viewing a user other than yourself.</h4>
+    </div>
+  <% end %>
+
   <div class="field">
     <%= collection_check_boxes(:user, :selected_categories, Category.all, :id, :name) do |b| %>
       <br>
@@ -19,6 +25,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Update Preferences" %>
   </div>
 <% end %>
