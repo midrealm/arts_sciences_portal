@@ -11,12 +11,22 @@
     </div>
   <% end %>
 
+  <% if Fair.all.empty? %>
+    <div class="alert alert-danger">
+      <h4>There are no active fairs at this time.  You will not be able to volunteer.</h4>
+    </div>
+  <% end %>
+
   <div class="field">
     <%= form.label :fair_id %>
     <%= form.select :fair_id, Fair.all.map{ |m| [m.name_with_warning, m.id] }%>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <% if Fair.all.empty? %>
+      <%= form.submit "Volunteer", disabled: true%>
+    <% else %>
+      <%= form.submit "Volunteer" %>
+    <% end %>
   </div>
 <% end %>
