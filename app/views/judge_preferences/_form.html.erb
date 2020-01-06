@@ -1,6 +1,6 @@
 <%= form_with(model: [@user, judge_preference], local: true) do |form| %>
   <% if judge_preference.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(judge_preference.errors.count, "error") %> prohibited this judge_preference from being saved:</h2>
 
       <ul>
@@ -18,8 +18,12 @@
   <% end %>
 
   <div class="field">
-    <%= collection_check_boxes(:user, :selected_categories, Category.all, :id, :name) do |b| %>
+    <%= collection_check_boxes(:user, :selected_categories, Category.all.default_order, :id, :name) do |b| %>
       <br>
+      <% if @prior_division_name != b.object.division.name %>
+        <h3><%= b.object.division.name %></h3>
+        <% @prior_division_name = b.object.division.name %>
+      <% end %>
       <%= b.label(class: "checkbox-inline", :"data-value" => b.value) { b.check_box + b.text } %>
     <% end %>
   </div>

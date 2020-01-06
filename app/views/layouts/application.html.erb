@@ -12,6 +12,17 @@
   <body>
     <h2>Midrealm Arts and Sciences Fair Portal</h2>
     <hr>
+
+    <% flash.each do |name, msg| %>
+      <% if msg.class == Array %>
+        <% msg.each do |message| %>
+          <%= content_tag :div, message, id: "flash_#{name}", class: "alert alert-#{name}" %>
+        <% end %>
+      <% else %>
+        <%= content_tag :div, msg, id: "flash_#{name}", class: "alert alert-#{name}" %>
+      <% end %>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

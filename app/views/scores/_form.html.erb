@@ -1,6 +1,6 @@
 <%= form_with(model: score, local: true) do |form| %>
   <% if score.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(score.errors.count, "error") %> prohibited this score from being saved:</h2>
 
       <ul>

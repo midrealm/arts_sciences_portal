@@ -1,6 +1,6 @@
 <%= form_with(model: timeslot, local: true) do |form| %>
   <% if timeslot.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(timeslot.errors.count, "error") %> prohibited this timeslot from being saved:</h2>
 
       <ul>
