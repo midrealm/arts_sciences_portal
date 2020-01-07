@@ -9,7 +9,9 @@
   <br>
   <%= link_to 'User Role Management', user_roles_path %>
   <br>
-  <%= link_to 'User Settings', current_user %>
+  <%= link_to 'User Preferences', current_user %>
+  <br>
+  <%= link_to 'Manage your judging preferences', user_judge_preferences_path(current_user) %>
   <br>
   <%= link_to 'Volunteer for a Fair', judge_fairs_path %>
   <h3>System Management</h3>
@@ -40,6 +42,8 @@
   <%#= link_to 'Submit a Scoresheet', scoresheets_path %>
   <br>
   <%= link_to 'User Preferences', current_user %>
+  <br>
+  <%= link_to 'Manage your judging preferences', user_judge_preferences_path(current_user) %>
 <% end %>
 
 <br><br>
