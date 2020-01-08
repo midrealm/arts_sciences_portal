@@ -22,6 +22,11 @@
     <%= form.select :fair_id, Fair.all.map{ |m| [m.name_with_warning, m.id] }%>
   </div>
 
+  <div class="field">
+    <%= form.label "Volunteer as a shadow judge?" %>
+    <%= form.check_box :shadow_judge %>
+  </div>
+
   <div class="actions">
     <% if Fair.all.empty? %>
       <%= form.submit "Volunteer", disabled: true%>

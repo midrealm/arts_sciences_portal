@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_07_034908) do
+ActiveRecord::Schema.define(version: 2020_01_08_163335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(version: 2020_01_07_034908) do
     t.bigint "fair_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "shadow_judge", default: false
     t.index ["fair_id"], name: "index_judge_fairs_on_fair_id"
     t.index ["user_id"], name: "index_judge_fairs_on_user_id"
   end
