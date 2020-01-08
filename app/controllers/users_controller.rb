@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   # GET /user
   def index
-    @users = User.all
+    @users = User.all.order(:email)
   end
 
   # GET /user

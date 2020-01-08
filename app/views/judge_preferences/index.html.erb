@@ -15,6 +15,12 @@
 
   <tbody>
     <% @judge_preferences.each do |judge_preference| %>
+    <% if @prior_division_name != judge_preference.category.division.name %>
+      <tr>
+        <td><h3><%= judge_preference.category.division.name %></h3></td>
+      </tr>
+      <% @prior_division_name = judge_preference.category.division.name %>
+    <% end %>
       <tr>
         <td><%= judge_preference.category.name %></td>
       </tr>

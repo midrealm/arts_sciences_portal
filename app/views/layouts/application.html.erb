@@ -24,5 +24,15 @@
     <% end %>
 
     <%= yield %>
+
+    <% unless current_user.nil? %>
+      <br><br>
+
+      <div>
+        <%= link_to 'Home', root_path %>
+        <br>
+        <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+      </div>
+    <% end %>
   </body>
 </html>

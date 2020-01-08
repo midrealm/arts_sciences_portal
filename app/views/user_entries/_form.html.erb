@@ -14,7 +14,7 @@
   <%= form.fields_for :user_entries do |j| %>
     <div class="field">
       <%= j.label :user %>
-      <%= j.select :user_id, User.all.reject{|record| record.id == current_user.id}.map{ |m| [m.email, m.id] }%>
+      <%= j.select :user_id, User.all.reject{|record| record.id == current_user.id}.map{ |m| ["#{m.email} - #{m.sca_name}", m.id] }%>
     </div>
   <% end %>
 

@@ -45,9 +45,3 @@
   <br>
   <%= link_to 'Manage your judging preferences', user_judge_preferences_path(current_user) %>
 <% end %>
-
-<br><br>
-
-<%= link_to 'Login', new_user_session_path %>
-<br>
-<%= link_to 'Logout', destroy_user_session_path, method: :delete %>

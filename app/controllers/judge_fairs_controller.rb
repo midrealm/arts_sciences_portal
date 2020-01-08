@@ -5,7 +5,7 @@ class JudgeFairsController < ApplicationController
   # GET /judge_fairs.json
   def index
     if current_user.admin?
-      @judge_fairs = JudgeFair.all
+      @judge_fairs = JudgeFair.all.order(:fair_id)
     else
       @judge_fairs = JudgeFair.for_user(current_user)
     end

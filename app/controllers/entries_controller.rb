@@ -10,7 +10,7 @@ class EntriesController < ApplicationController
   # GET /entries
   # GET /entries.json
   def index
-    @entries = Entry.user_entries(current_user)
+    @entries = Entry.user_entries(current_user).order(:fair_id, :entry_name)
   end
 
   # GET /entries/1

@@ -13,9 +13,9 @@ class JudgePreferencesController < ApplicationController
   def index
     if current_user.admin?
       @user = User.find(params[:user_id])
-      @judge_preferences = JudgePreference.for_user(User.find(params[:user_id]))
+      @judge_preferences = JudgePreference.for_user(User.find(params[:user_id])).default_order
     else
-      @judge_preferences = JudgePreference.for_user(current_user)
+      @judge_preferences = JudgePreference.for_user(current_user).default_order
     end
   end
 
