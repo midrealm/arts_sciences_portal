@@ -29,11 +29,6 @@
   <%= @user.written %>
 </p>
 
-<p>
-  <strong>First time judge?</strong>
-  <%= @user.first_time %>
-</p>
-
 <% if current_user.admin? %>
   <%= link_to 'Manage judging preferences', user_judge_preferences_path(@user) %>
 <% end %>

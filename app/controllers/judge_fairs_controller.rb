@@ -68,6 +68,6 @@ class JudgeFairsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def judge_fair_params
-    params.require(:judge_fair).permit(:fair_id, :shadow_judge).merge(user_id: current_user.id)
+    params.require(:judge_fair).permit(:fair_id, :shadow_judge, :first_time).merge(user_id: current_user.id)
   end
 end

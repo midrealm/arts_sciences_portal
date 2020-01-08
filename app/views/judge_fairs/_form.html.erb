@@ -27,6 +27,11 @@
     <%= form.check_box :shadow_judge %>
   </div>
 
+  <div class="field">
+    <%= form.label "This will be my first time as a judge." %>
+    <%= form.check_box :first_time %>
+  </div>
+
   <div class="actions">
     <% if Fair.all.empty? %>
       <%= form.submit "Volunteer", disabled: true%>
