@@ -66,8 +66,16 @@ class JudgeFairsController < ApplicationController
     @judge_fair = JudgeFair.find(params[:id])
   end
 
+  def get_user
+    if current_user.admin? && !@judge_fair.nil?
+      User.find(@judge_fair.user.id) #TODO: this is hacky, change this
+    else
+      current_user
+    end
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def judge_fair_params
-    params.require(:judge_fair).permit(:fair_id, :shadow_judge, :first_time).merge(user_id: current_user.id)
+    params.require(:judge_fair).permit(:fair_id, :shadow_judge, :first_time).merge(user_id: get_user.id)
   end
 end
