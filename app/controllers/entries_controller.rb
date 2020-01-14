@@ -10,11 +10,7 @@ class EntriesController < ApplicationController
   # GET /entries
   # GET /entries.json
   def index
-    if current_user.admin?
-      @entries = Entry.all()
-    else
-      @entries = Entry.user_entries(current_user)
-    end
+    @entries = Entry.user_entries(current_user).order(:fair_id, :entry_name)
   end
 
   # GET /entries/1

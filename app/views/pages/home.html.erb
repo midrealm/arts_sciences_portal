@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <% if current_user.admin? %>
   <h3>Admin Management</h3>
   <%= link_to 'Scoresheet Management', scoresheets_path %>
@@ -11,7 +9,9 @@
   <br>
   <%= link_to 'User Role Management', user_roles_path %>
   <br>
-  <%= link_to 'User Settings', current_user %>
+  <%= link_to 'User Preferences', current_user %>
+  <br>
+  <%= link_to 'Manage your judging preferences', user_judge_preferences_path(current_user) %>
   <br>
   <%= link_to 'Volunteer for a Fair', judge_fairs_path %>
   <h3>System Management</h3>
@@ -42,10 +42,6 @@
   <%#= link_to 'Submit a Scoresheet', scoresheets_path %>
   <br>
   <%= link_to 'User Preferences', current_user %>
+  <br>
+  <%= link_to 'Manage your judging preferences', user_judge_preferences_path(current_user) %>
 <% end %>
-
-<br><br>
-
-<%= link_to 'Login', new_user_session_path %>
-<br>
-<%= link_to 'Logout', destroy_user_session_path, method: :delete %>

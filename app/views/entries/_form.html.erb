@@ -1,6 +1,6 @@
 <%= form_with(model: entry, local: true) do |form| %>
   <% if entry.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
 
       <ul>
@@ -11,30 +11,38 @@
     </div>
   <% end %>
 
+  <% if Fair.all.empty? %>
+    <div class="alert alert-danger">
+      <h4>There are no active fairs at this time.  You will not be able to submit an entry.</h4>
+    </div>
+  <% end %>
+
   <div class="field">
     <%= form.label :entry_name %>
-    <%= form.text_field :entry_name %>
+    <%= form.text_field :entry_name, size: "50x1" %>
   </div>
 
   <div class="field">
-    <%= form.label :description %>
-    <%= form.text_field :description %>
+    <%= form.label :description %><br>
+    <%= form.text_area :description, size: "80x10"  %>
   </div>
 
   <div class="field">
-    <%= form.label :materials_used %>
-    <%= form.text_field :materials %>
+    <%= form.label :materials_used %><br>
+    <%= form.text_field :materials, size: "80x1" %>
   </div>
 
   <div class="field">
-    <%= form.label :culture %>
-    <%= form.text_field :culture %>
+    <%= form.label :culture %><br>
+    <%= form.text_field :culture, size: "80x1" %>
   </div>
 
   <div class="field">
-    <%= form.label :time_period %>
-    <%= form.text_field :time_period %>
+    <%= form.label :time_period %><br>
+    <%= form.text_field :time_period, size: "80x1" %>
   </div>
+
+  <br>
 
   <div class="field">
     <%= form.label :category %>
@@ -52,38 +60,42 @@
   </div>
 
   <div class="field">
-    <%= form.radio_button :in_person, true %> Face-to-face
-    <br>
-    <%= form.radio_button :in_person, false %> Not Face-to-face
+    <p><%= form.radio_button :in_person, true %> Face-to-face
+      <br>
+    <%= form.radio_button :in_person, false %> Not Face-to-face</p>
   </div>
 
   <div class="field">
-    <%= form.radio_button :scored, true %> Scored
+    <p><%= form.radio_button :scored, true %> Scored
     <br>
-    <%= form.radio_button :scored, false %> Commentary Only
+      <%= form.radio_button :scored, false %> Commentary Only</p>
   </div>
 
   <div class="field">
-    <%= form.label :pentathlon %>
     <%= form.check_box :pentathlon %>
+    <%= form.label :pentathlon %>
   </div>
 
   <div class="field">
-    <%= form.label :division %>
     <%= form.check_box :division %>
+    <%= form.label :division %>
   </div>
 
   <div class="field">
-    <%= form.label :first_time %>
     <%= form.check_box :first_time %>
+    <%= form.label :first_time %>
   </div>
 
   <div class="field">
-    <%= form.label :youth %>
     <%= form.check_box :youth %>
+    <%= form.label :youth %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <% if Fair.all.empty? %>
+      <%= form.submit disabled: true%>
+  <% else %>
+      <%= form.submit %>
+    <% end %>
   </div>
 <% end %>

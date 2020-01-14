@@ -1,6 +1,6 @@
 <%= form_with(model: criteria_description, local: true) do |form| %>
   <% if criteria_description.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(criteria_description.errors.count, "error") %> prohibited this criteria_description from being saved:</h2>
 
       <ul>

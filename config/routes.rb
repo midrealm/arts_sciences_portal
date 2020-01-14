@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "registrations" }
 
   root 'pages#home'
 
@@ -31,6 +31,6 @@ Rails.application.routes.draw do
     resources :applicable_criteria
     resources :scoresheets, only: [:index]
     resources :scores
-    resources :judge_fairs, except: [:show, :update, :edit]
+    resources :judge_fairs, except: [:show]
   end
 end

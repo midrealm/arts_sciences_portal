@@ -1,8 +1,22 @@
-<p id="notice"><%= notice %></p>
+<% if current_user.admin? && @user.id != current_user.id %>
+  <div class="alert alert-danger">
+    <h4>You are currently in admin mode and are viewing a user other than yourself.</h4>
+  </div>
+<% end %>
 
 <p>
   <strong>Email:</strong>
   <%= @user.email %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>SCA Name:</strong>
+  <%= @user.sca_name %>
 </p>
 
 <p>
@@ -15,13 +29,9 @@
   <%= @user.written %>
 </p>
 
-<p>
-  <strong>First time judge?</strong>
-  <%= @user.first_time %>
-</p>
-
-<p>If you will be judging, you can also specify what catagories of entries you'd prefer to judge.</p>
-<%= link_to 'Manage your judging preferences', user_judge_preferences_path(@user) %>
+<% if current_user.admin? %>
+  <%= link_to 'Manage judging preferences', user_judge_preferences_path(@user) %>
+<% end %>
 
 <hr>
 

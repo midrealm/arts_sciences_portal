@@ -11,7 +11,12 @@ class JudgePreferencesController < ApplicationController
   # GET /judge_preferences
   # GET /judge_preferences.json
   def index
-    @judge_preferences = JudgePreference.for_user(current_user)
+    if current_user.admin?
+      @user = User.find(params[:user_id])
+      @judge_preferences = JudgePreference.for_user(User.find(params[:user_id])).default_order
+    else
+      @judge_preferences = JudgePreference.for_user(current_user).default_order
+    end
   end
 
   # GET /judge_preferences/1
@@ -21,6 +26,7 @@ class JudgePreferencesController < ApplicationController
 
   # GET /judge_preferences/new
   def new
+    @user = User.find(params[:user_id]) if current_user.admin?
     @judge_preference = JudgePreference.new
   end
 
@@ -31,14 +37,15 @@ class JudgePreferencesController < ApplicationController
   # POST /judge_preferences
   # POST /judge_preferences.json
   def create
+    user = current_user.admin? ? User.find(params[:user_id]) : @user
     selected_categories = params[:user][:selected_categories].drop(1)
     #destroy all unselected categories
-    current_user.selected_categories.each do |category_id|
-      JudgePreference.find_by(user_id: current_user.id, category_id: category_id).destroy unless selected_categories.include?(category_id.to_s)
+    user.selected_categories.each do |category_id|
+      JudgePreference.find_by(user_id: user.id, category_id: category_id).destroy unless selected_categories.include?(category_id.to_s)
     end
 
     selected_categories.each do |category_id|
-      JudgePreference.find_or_create_by({user_id: current_user.id, category_id: category_id})
+      JudgePreference.find_or_create_by({user_id: user.id, category_id: category_id})
     end
 
     respond_to do |format|

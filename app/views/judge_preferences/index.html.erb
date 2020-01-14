@@ -1,16 +1,26 @@
-<p id="notice"><%= notice %></p>
+<% if current_user.admin? && @user.id != current_user.id %>
+  <div class="alert alert-danger">
+    <h4>You are currently in admin mode and are viewing a user other than yourself.</h4>
+  </div>
+<% end %>
 
 <h1>Your preferences as a judge</h1>
 
 <table>
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @judge_preferences.each do |judge_preference| %>
+    <% if @prior_division_name != judge_preference.category.division.name %>
+      <tr>
+        <td><h3><%= judge_preference.category.division.name %></h3></td>
+      </tr>
+      <% @prior_division_name = judge_preference.category.division.name %>
+    <% end %>
       <tr>
         <td><%= judge_preference.category.name %></td>
       </tr>
@@ -21,4 +31,4 @@
 <br>
 
 <%= link_to 'Edit preferences', new_user_judge_preference_path(@user) %>
-<br><%= link_to 'Back', @user %>
+<br><%= link_to 'Back', root_path %>

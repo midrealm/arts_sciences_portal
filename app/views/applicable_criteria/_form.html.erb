@@ -1,6 +1,6 @@
 <%= form_with(model: applicable_criterium, local: true) do |form| %>
   <% if applicable_criterium.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(applicable_criterium.errors.count, "error") %> prohibited this applicable_criterium from being saved:</h2>
 
       <ul>

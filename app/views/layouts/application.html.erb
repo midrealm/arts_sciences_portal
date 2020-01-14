@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ArtsSciencesPortal</title>
+    <title>Midrealm Arts and Sciences Fair Portal</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,29 @@
   </head>
 
   <body>
+    <h2>Midrealm Arts and Sciences Fair Portal</h2>
+    <hr>
+
+    <% flash.each do |name, msg| %>
+      <% if msg.class == Array %>
+        <% msg.each do |message| %>
+          <%= content_tag :div, message, id: "flash_#{name}", class: "alert alert-#{name}" %>
+        <% end %>
+      <% else %>
+        <%= content_tag :div, msg, id: "flash_#{name}", class: "alert alert-#{name}" %>
+      <% end %>
+    <% end %>
+
     <%= yield %>
+
+    <% unless current_user.nil? %>
+      <br><br>
+
+      <div>
+        <%= link_to 'Home', root_path %>
+        <br>
+        <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+      </div>
+    <% end %>
   </body>
 </html>

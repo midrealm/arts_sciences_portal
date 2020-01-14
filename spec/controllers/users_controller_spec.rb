@@ -119,7 +119,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'POST update' do
-    subject(:update) {post :update, params: {id: user.id, user: {first_time: true}}}
+    subject(:update) {post :update, params: {id: user.id, user: {written: true}}}
 
     let!(:user) {FactoryBot.create(:user)}
 

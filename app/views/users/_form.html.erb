@@ -1,6 +1,12 @@
+<% if current_user.admin? && @user.id != current_user.id %>
+  <div class="alert alert-danger">
+    <h4>You are currently in admin mode and are viewing a user other than yourself.</h4>
+  </div>
+<% end %>
+
 <%= form_with(model: user, local: true) do |form| %>
   <% if user.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(user_role.errors.count, "error") %> prohibited this user from being saved:</h2>
 
       <ul>
@@ -23,6 +29,16 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sca_name %>
+    <%= form.text_field :sca_name %>
+  </div>
+
   <hr>
 
   <p>If you will not be judging entries, you may ignore these questions.</p>
@@ -30,11 +46,6 @@
   <div class="field">
     <%= form.check_box :written %>
     <%= form.label 'I prefer to not judge entries face-to-face.' %>
-  </div>
-
-  <div class="field">
-    <%= form.check_box :first_time %>
-    <%= form.label 'This will be my first time as a judge.' %>
   </div>
 
   <div class="actions">

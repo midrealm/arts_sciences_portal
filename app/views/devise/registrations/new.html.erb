@@ -21,10 +21,24 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
+  <br>
+
   <div class="field">
-    <%= f.label :region %>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :sca_name %><br />
+    <%= f.text_field :sca_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :region %><br />
     <%= f.select :region_id, Region.all.map{ |m| [m.name, m.id] }%>
   </div>
+
+  <br>
 
   <div class="actions">
     <%= f.submit "Sign up" %>

@@ -1,10 +1,8 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Entrants:</strong>
   <br>
   <% UserEntry.entrants(@entry).each do |user| %>
-    <%= user.email %><br>
+    <%= user.email %> - <%= user.sca_name %><br>
   <% end %>
 </p>
 
@@ -17,7 +15,7 @@
 
 <p>
   <strong>Description:</strong>
-  <%= @entry.description %>
+  <%= simple_format @entry.description %>
 </p>
 
 <p>
@@ -30,6 +28,10 @@
   <%= @entry.timeslot_description %>
 </p>
 
+<p>
+  <strong>Fair:</strong>
+  <%= @entry.fair.name %>
+</p>
 
 <p>
   <strong>Materials:</strong>
