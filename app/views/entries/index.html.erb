@@ -26,7 +26,7 @@
       <td><%= link_to 'View Details', entry %></td>
       <td><%= link_to 'Edit', edit_entry_path(entry) %></td>
       <% if current_user.admin? %>
-        <td><%= link_to 'Delete Entry', entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete Entry', entry, method: :delete, data: { confirm: 'This will delete all associated judge assignments, group entrants, and scoresheets.  Are you sure?' } %></td>
       <% end %>
       <td><%= link_to 'Add Group Entrants', entry_user_entries_path(entry) %></td>
     </tr>
