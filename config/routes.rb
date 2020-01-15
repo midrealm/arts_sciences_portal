@@ -32,5 +32,6 @@ Rails.application.routes.draw do
     resources :scoresheets, only: [:index]
     resources :scores
     resources :judge_fairs, except: [:show]
+    resources :locations
   end
 end

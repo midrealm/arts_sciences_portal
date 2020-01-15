@@ -17,6 +17,21 @@
         <td><%= entry.entry_name %></td>
         <%= fields_for "entries[]", entry do |form| %>
           <%= render partial: 'bulk_update_entry_timeslot', locals: {form: form, entry: entry} %>
+          <td>
+            <div class="field">
+              <%= form.select :location_id, Location.for_fair(entry.fair).map{ |m| [m.description, m.id] }%>
+            </div>
+          </td>
+          <td>
+            <% User.volunteered(entry.fair).each do |user| %>
+              <%= check_box_tag "#{entry.id}_entry_#{user.id}", user.id %>
+              <%= user.email %>
+            <% end %>
+            <%# @entry = entry %>
+            <%#= form.collection_check_boxes(:assigned, User.volunteered(entry.fair), :id, :email) do |b| %>
+              <%#= b.label(class: "checkbox-inline", :"data-value" => b.value) { b.check_box + b.text } %>
+            <%# end %>
+          </td>
         <% end %>
       </tr>
     <% end %>

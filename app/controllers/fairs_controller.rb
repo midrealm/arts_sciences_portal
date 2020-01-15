@@ -72,6 +72,7 @@ class FairsController < ApplicationController
   end
 
   def submit_schedule
+    puts params.inspect
     Entry.update(params[:entries].keys, params[:entries].values)
     redirect_to schedule_fair_url, notice: 'Schedule was successfully updated.'
   end

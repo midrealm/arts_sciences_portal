@@ -6,8 +6,9 @@
   <table>
     <thead>
     <tr>
-      <th>Judge</th>
       <th>Entry</th>
+      <th>Judges</th>
+      <th>Room</th>
       <th colspan="3"></th>
     </tr>
     </thead>
@@ -15,8 +16,9 @@
     <tbody>
     <% @entries.select { |x| x.timeslot == timeslot }.each do |entry| %>
       <tr>
-        <td><%= entry.judge_name_or_unnassigned %></td>
-        <td><%= entry.entry_name %></td>
+        <td><%= simple_format entry.entry_name %></td>
+        <td><%= simple_format entry.judge_name_or_unnassigned %></td>
+        <td><%= simple_format entry.location_description %></td>
       </tr>
     <% end %>
     </tbody>
