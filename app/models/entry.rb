@@ -3,9 +3,9 @@ class Entry < ApplicationRecord
   belongs_to :timeslot, optional: true
   belongs_to :fair
 
-  has_many :user_entries
-  has_many :judge_assigns
-  has_many :scoresheets
+  has_many :user_entries, dependent: :destroy
+  has_many :judge_assigns, dependent: :destroy
+  has_many :scoresheets, dependent: :destroy
 
   validates_presence_of :entry_name
 
