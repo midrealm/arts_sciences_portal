@@ -139,23 +139,13 @@ Category.create(name: 'Bookbinding', division: studio, description: "The working
 Category.create(name: 'Glasswork Lampwork Beads', division: studio, description: "This category includes all lampwork beads, made on a torch or in a period furnace. Substitution of materials because of prohibitive cost or unsuitability should be explained in the documentation and should not be counted against the entrant.")
 Category.create(name: 'Brewing Vinting Cordials', division: domestic, description: "This category includes cordials, liqueurs, and other beverages flavored with fruit, spices, or herbs and have a higher alcohol content than beer, wine, or mead. Any herbs and spices used in the beverage must be listed in the documentation with their Latin botanical names and must comply with the Prohibited and Restricted Herbs list. Documentation for entries in this category must include a copy of the recipe used and a description of the method used to produce the entry. There is no penalty for the use of modern methods or ingredients if such use ensures the health and/or safety of the judge and the reasons for such are included in the documentation. The use of modern distilled-alcohol bases will not be penalized due to modern laws against distilling.\n\rCertain materials are required for judging this category and must be provided:\n\rClear glasses for tasting (shot glasses or other small glasses are acceptable).\n\rA white tablecloth, either plastic or cloth.\n\rTaper candle with matches.\n\rLemon slices, fresh white bread, and/or unsalted crackers.\n\rDistilled water and water glasses.\n\rBucket for disposal of excess liquids.\n\rCorkscrew or bottle opener (if needed).\n\rThe judges do not permit smoking during the judging period or in the judging area. The judges do not need to swallow the samples during judging. Any Brewing & Vinting judge must be 21 years of age and be able to provide proof of age.")
 
-docs = CriteriaType.create(description: 'Documentation', max_score: 4)
-CriteriaType.create(description: 'Methods and Materials', max_score: 4)
+CriteriaType.create(description: 'Research and Supporting Evidence', max_score: 4)
+CriteriaType.create(description: 'Materials and Methods', max_score: 4)
 CriteriaType.create(description: 'Scope', max_score: 6)
-skill = CriteriaType.create(description: 'Skill', max_score: 6)
-CriteriaType.create(description: 'Creativity', max_score: 4)
+CriteriaType.create(description: 'Skill', max_score: 6)
+CriteriaType.create(description: 'Ingenuity', max_score: 4)
 CriteriaType.create(description: "Judge's Observation", max_score: 4)
 CriteriaType.create(description: 'Complexity', max_score: 4, parent_id: skill.id)
-
-CriteriaDescription.create(criteria_type_id: docs.id, category_id: performance.id,
-                           description: "This primarily concerns performance of footwork and general use of the body in dance, as well as a defense of the reconstruction or choreography if applicable. For full points, the documentation must include the style of dance to which the entry belongs, the time(s) and place(s) that style was used, and the dance’s societal context (i.e., where it would have been performed, by whom, under what circumstances, for what purpose, etc.). It should also include a discussion of performance practices as they relate to the relevant historical period(s). It should also include a discussion of the piece’s difficulty as per the Scope category (see below). The judges must be provided with instructions for the dance, including expected floor patterns and descriptions of steps. This may include descriptions of footwork, reconstructions, or original choreography. Potential floor patterns should also be discussed.")
-
-Criterium.create(optional: false, suggested_score: 0, criteria_type_id: docs.id, category_id: performance.id,
-                 description: "No documentation provided with entry. Face-to-face judging adds very little information.")
-
-Criterium.create(optional: false, suggested_score: 1, criteria_type_id: docs.id, category_id: performance.id,
-                 description: "Minimal information is provided for time, place and style. Face-to-face judging adds some background information.")
-
 
 entry = Entry.create(entry_name: 'test entry', description: 'test entry description', category_id: category.id, fair_id: fair.id)
 JudgeAssign.create(user_id: admin.id, entry_id: entry.id)
