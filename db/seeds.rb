@@ -145,7 +145,6 @@ CriteriaType.create(description: 'Scope', max_score: 6)
 CriteriaType.create(description: 'Skill', max_score: 6)
 CriteriaType.create(description: 'Ingenuity', max_score: 4)
 CriteriaType.create(description: "Judge's Observation", max_score: 4)
-CriteriaType.create(description: 'Complexity', max_score: 4, parent_id: skill.id)
 
 entry = Entry.create(entry_name: 'test entry', description: 'test entry description', category_id: category.id, fair_id: fair.id)
 JudgeAssign.create(user_id: admin.id, entry_id: entry.id)
