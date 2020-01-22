@@ -35,11 +35,10 @@ class Entry < ApplicationRecord
     if self.judge_assigns.empty?
       'Unassigned'
     else
-      self.judge_assigns.joins(:user).pluck(:sca_name).join("<br>")
+      judges = self.judge_assigns.map do |judge|
+        judge.user.email_or_name
+      end
+      judges.join("<br>")
     end
-  end
-
-  def assigned
-    JudgeAssign.where(entry_id: self.id).pluck(:user_id)
   end
 end

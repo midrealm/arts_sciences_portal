@@ -1,6 +1,5 @@
 <h1>Schedule</h1>
-<%= form_tag schedule_fair_path, method: :post do |form| %>
-
+  <%= form_for :entries, :url => schedule_fair_path do |form| %>
   <table>
     <thead>
     <tr>
@@ -15,22 +14,20 @@
     <% @entries.each do |entry| %>
       <tr>
         <td><%= entry.entry_name %></td>
-        <%= fields_for "entries[]", entry do |form| %>
-          <%= render partial: 'bulk_update_entry_timeslot', locals: {form: form, entry: entry} %>
+        <%= fields_for "entries[]", entry do |f| %>
+          <%= render partial: 'bulk_update_entry_timeslot', locals: {form: f, entry: entry} %>
           <td>
             <div class="field">
-              <%= form.select :location_id, Location.for_fair(entry.fair).map{ |m| [m.description, m.id] }%>
+              <%= f.select :location_id, Location.for_fair(entry.fair).map{ |m| [m.description, m.id] }%>
             </div>
           </td>
           <td>
-            <% User.volunteered(entry.fair).each do |user| %>
-              <%= check_box_tag "#{entry.id}_entry_#{user.id}", user.id %>
-              <%= user.email %>
+            <%= f.fields_for "judge_assigns[]", entry do |ff| %>
+              <% User.volunteered(entry.fair).each do |user| %>
+                <%= check_box_tag 'judge_assigns[]', "#{entry.id}_#{user.id}", user.judging_entry?(entry) %>
+                <%= user.email_or_name %>
+              <% end %>
             <% end %>
-            <%# @entry = entry %>
-            <%#= form.collection_check_boxes(:assigned, User.volunteered(entry.fair), :id, :email) do |b| %>
-              <%#= b.label(class: "checkbox-inline", :"data-value" => b.value) { b.check_box + b.text } %>
-            <%# end %>
           </td>
         <% end %>
       </tr>
