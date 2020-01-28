@@ -1,7 +1,7 @@
 class FairsController < ApplicationController
   before_action :authenticate_user!
   before_action :verify_admin
-  before_action :set_fair, only: [:show, :edit, :update, :destroy, :schedule, :view_schedule]
+  before_action :set_fair, only: [:show, :edit, :update, :destroy, :schedule, :view_schedule, :submit_schedule]
 
   # GET /fairs
   # GET /fairs.json
@@ -72,7 +72,10 @@ class FairsController < ApplicationController
   end
 
   def submit_schedule
+    update_assignments(params[:judge_assigns])
+
     Entry.update(params[:entries].keys, params[:entries].values)
+
     redirect_to schedule_fair_url, notice: 'Schedule was successfully updated.'
   end
 
@@ -86,4 +89,30 @@ class FairsController < ApplicationController
     def fair_params
       params.require(:fair).permit(:date, :region_id, :name, :comment, :internet_access)
     end
+
+  def update_assignments(judge_assignments)
+    # this is so hacky but I give up I'll make this not terrible some other day
+    # I miss Elixir
+    assignments = {}
+    unless judge_assignments.nil?
+      judge_assignments.each do |key|
+        entry = key.split("_").first
+        judge = key.split("_").last.to_i
+        assignments.has_key?(entry) ? assignments[entry].push(judge) : assignments[entry] = [judge]
+      end
+    end
+
+    Entry.where(fair_id: @fair.id).each do |entry|
+      selections = assignments.has_key?(entry.id) ? assigments[entry.id] : []
+      JudgeAssign.where(entry_id: entry.id).each do |judge|
+        judge.destroy unless selections.include?(judge.user_id)
+      end
+    end
+
+    assignments.each do |entry, selections|
+      selections.each do |new_judge|
+        JudgeAssign.create(user_id: new_judge, entry_id: entry) if JudgeAssign.find_by(user_id: new_judge, entry_id: entry).nil?
+      end
+    end
+  end
 end

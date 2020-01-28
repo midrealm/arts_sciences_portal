@@ -2,6 +2,7 @@ class Entry < ApplicationRecord
   belongs_to :category
   belongs_to :timeslot, optional: true
   belongs_to :fair
+  belongs_to :location, optional: true
 
   has_many :user_entries, dependent: :destroy
   has_many :judge_assigns, dependent: :destroy
@@ -18,6 +19,10 @@ class Entry < ApplicationRecord
     self.timeslot.nil? ? "Unassigned" : self.timeslot.description
   end
 
+  def location_description
+    self.location.nil? ? "Unassigned" : self.location.description
+  end
+
   def in_person_option
     self.in_person ? "Face-to-face" : "Not face-to-face"
   end
@@ -27,6 +32,13 @@ class Entry < ApplicationRecord
   end
 
   def judge_name_or_unnassigned
-    self.judge_assigns.empty? ? 'Unassigned' : self.judge_assigns.last.user.email
+    if self.judge_assigns.empty?
+      'Unassigned'
+    else
+      judges = self.judge_assigns.map do |judge|
+        judge.user.email_or_name
+      end
+      judges.join("<br>")
+    end
   end
 end

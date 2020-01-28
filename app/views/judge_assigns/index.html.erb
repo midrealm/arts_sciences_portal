@@ -14,7 +14,7 @@
   <tbody>
     <% @judge_assigns.each do |judge_assign| %>
       <tr>
-        <td><%= judge_assign.user.email %></td>
+        <td><%= judge_assign.user.email_or_name %></td>
         <td><%= judge_assign.entry.entry_name %></td>
         <td><%= judge_assign.assigned %></td>
         <td><%= judge_assign.shadow %></td>
