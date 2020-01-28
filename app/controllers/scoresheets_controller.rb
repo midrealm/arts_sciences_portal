@@ -22,7 +22,11 @@ class ScoresheetsController < ApplicationController
   def new
     @scoresheet = Scoresheet.new
 
-    CriteriaType.all.each do |criteria_type|
+    CriteriaType.applicable(@entry.category).each do |criteria_type|
+      @scoresheet.scores.build({criteria_type_id: criteria_type.id})
+    end
+
+    CriteriaType.all.top_level.each do |criteria_type|
       @scoresheet.scores.build({criteria_type_id: criteria_type.id})
     end
   end
@@ -36,7 +40,11 @@ class ScoresheetsController < ApplicationController
   def create
     @scoresheet = Scoresheet.new(scoresheet_params)
 
-    CriteriaType.all.each do |criteria_type|
+    CriteriaType.applicable(@entry.category).each do |criteria_type|
+      @scoresheet.scores.build({criteria_type_id: criteria_type.id})
+    end
+
+    CriteriaType.all.top_level.each do |criteria_type|
       @scoresheet.scores.build({criteria_type_id: criteria_type.id})
     end
 
