@@ -42,8 +42,14 @@ class FairsController < ApplicationController
   # PATCH/PUT /fairs/1
   # PATCH/PUT /fairs/1.json
   def update
+    puts "----------------"
+    puts params.inspect
+    puts "----------------"
     respond_to do |format|
       if @fair.update(fair_params)
+        puts "----------------"
+        puts @fair.inspect
+        puts "----------------"
         format.html { redirect_to @fair, notice: 'Fair was successfully updated.' }
         format.json { render :show, status: :ok, location: @fair }
       else
