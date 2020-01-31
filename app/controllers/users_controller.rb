@@ -23,7 +23,6 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /user/1
   def update
-    puts params.inspect
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
