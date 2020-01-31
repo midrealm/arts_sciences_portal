@@ -23,6 +23,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /user/1
   def update
+    puts params.inspect
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
@@ -51,6 +52,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:region_id, :written, :user_role_id, :name, :sca_name)
+      params.require(:user).permit(:region_id, :written, :user_role_id, :name, :sca_name, {:peerage_ids => []})
     end
 end

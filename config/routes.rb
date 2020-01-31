@@ -33,7 +33,6 @@ Rails.application.routes.draw do
     resources :scores
     resources :judge_fairs, except: [:show]
     resources :locations
-    resources :user_peerages
     resources :peerages
   end
 end

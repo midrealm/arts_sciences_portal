@@ -25,6 +25,14 @@
 </p>
 
 <p>
+  <strong>Peerage(s):</strong>
+  <br>
+  <% @user.peerages.each do |peerage| %>
+    <%= peerage.description %><br>
+  <% end %>
+</p>
+
+<p>
   <strong>Prefers written entries?</strong>
   <%= @user.written %>
 </p>
