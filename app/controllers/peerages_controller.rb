@@ -1,4 +1,6 @@
 class PeeragesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :verify_admin
   before_action :set_peerage, only: [:show, :edit, :update, :destroy]
 
   # GET /peerages
