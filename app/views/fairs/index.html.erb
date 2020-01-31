@@ -7,6 +7,7 @@
       <th>Date</th>
       <th>Region</th>
       <th>Internet</th>
+      <th>Entries Allowed</th>
       <th colspan="5"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= fair.date %></td>
         <td><%= fair.region.name %></td>
         <td><%= fair.internet_access %></td>
+        <td><%= fair.entries_allowed %></td>
         <td><%= link_to 'View Schedule', view_schedule_fair_path(fair) %></td>
         <td><%= link_to 'Assign Schedule', schedule_fair_path(fair) %></td>
         <td><%= link_to 'Assign Judges', fair_judge_assigns_path(fair) %></td>

@@ -56,7 +56,7 @@
 
   <div class="field">
     <%= form.label :fair %>
-    <%= form.select :fair_id, Fair.all.map{ |m| [m.name, m.id] }%>
+    <%= form.select :fair_id, Fair.allowed.map{ |m| [m.name, m.id] }%>
   </div>
 
   <div class="field">

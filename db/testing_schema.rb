@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_31_204115) do
+ActiveRecord::Schema.define(version: 2020_01_31_220810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 2020_01_31_204115) do
     t.string "name"
     t.boolean "internet_access", default: true
     t.text "comment"
+    t.boolean "entries_allowed", default: false
     t.index ["region_id"], name: "index_fairs_on_region_id"
   end
 
@@ -162,7 +163,7 @@ ActiveRecord::Schema.define(version: 2020_01_31_204115) do
   create_table "scores", force: :cascade do |t|
     t.bigint "criteria_type_id", null: false
     t.text "comment"
-    t.integer "score"
+    t.decimal "score"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "scoresheet_id", null: false
