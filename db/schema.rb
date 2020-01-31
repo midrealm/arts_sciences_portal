@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_14_010851) do
+ActiveRecord::Schema.define(version: 2020_01_31_204115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,6 +147,12 @@ ActiveRecord::Schema.define(version: 2020_01_14_010851) do
     t.index ["fair_id"], name: "index_locations_on_fair_id"
   end
 
+  create_table "peerages", force: :cascade do |t|
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "regions", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -187,6 +193,15 @@ ActiveRecord::Schema.define(version: 2020_01_14_010851) do
     t.bigint "entry_id", null: false
     t.index ["entry_id"], name: "index_user_entries_on_entry_id"
     t.index ["user_id"], name: "index_user_entries_on_user_id"
+  end
+
+  create_table "user_peerages", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "peerage_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["peerage_id"], name: "index_user_peerages_on_peerage_id"
+    t.index ["user_id"], name: "index_user_peerages_on_user_id"
   end
 
   create_table "user_roles", force: :cascade do |t|
@@ -242,6 +257,8 @@ ActiveRecord::Schema.define(version: 2020_01_14_010851) do
   add_foreign_key "scoresheets", "users"
   add_foreign_key "user_entries", "entries"
   add_foreign_key "user_entries", "users"
+  add_foreign_key "user_peerages", "peerages"
+  add_foreign_key "user_peerages", "users"
   add_foreign_key "users", "regions"
   add_foreign_key "users", "user_roles"
 end

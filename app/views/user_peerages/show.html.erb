@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @user_peerage.user_id %>
+</p>
+
+<p>
+  <strong>Peerage:</strong>
+  <%= @user_peerage.peerage_id %>
+</p>
+
+<%= link_to 'Edit', edit_user_peerage_path(@user_peerage) %> |
+<%= link_to 'Back', user_peerages_path %>

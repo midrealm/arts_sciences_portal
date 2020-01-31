@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>User Peerages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Peerage</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_peerages.each do |user_peerage| %>
+      <tr>
+        <td><%= user_peerage.user_id %></td>
+        <td><%= user_peerage.peerage_id %></td>
+        <td><%= link_to 'Show', user_peerage %></td>
+        <td><%= link_to 'Edit', edit_user_peerage_path(user_peerage) %></td>
+        <td><%= link_to 'Destroy', user_peerage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User Peerage', new_user_peerage_path %>

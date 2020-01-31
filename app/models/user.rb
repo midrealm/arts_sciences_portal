@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :judge_assigns
   has_many :judge_preferences
   has_many :judge_fairs
+  has_many :peerages, through: :user_peerage
 
   scope :volunteered, -> (fair) { joins(:judge_fairs).where('judge_fairs.fair_id = ?', fair.id) }
   scope :judge_assigned_entries, -> (user) { joins(:judge_assigns).where('judge_assigns.user_id = ?', user.id) }
