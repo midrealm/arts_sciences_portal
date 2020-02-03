@@ -18,7 +18,7 @@
  * Copyright 2013-2019 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
  */
-body {
+.body {
   margin: 5em;
 }
 
@@ -36,6 +36,13 @@ td {
 
 .blue {
   color: cornflowerblue;
+}
+
+.banner {
+  width: 100%;
+  padding: 4em;
+  background-color: #445e86;
+  color: white;
 }
 
 //body {

@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => { :registrations => "registrations" }
 
-  root 'pages#home'
+  unauthenticated :user do
+    root to: "pages#home", as: :unauthorized_root_path
+  end
+
+  authenticated :user do
+    root to: 'dashboard#index'
+  end
 
   resources :entries do
     resources :user_entries, only: [:new, :create, :index, :destroy]
