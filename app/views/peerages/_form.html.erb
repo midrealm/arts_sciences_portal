@@ -1,0 +1,22 @@
+<%= form_with(model: peerage, local: true) do |form| %>
+  <% if peerage.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(peerage.errors.count, "error") %> prohibited this peerage from being saved:</h2>
+
+      <ul>
+        <% peerage.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

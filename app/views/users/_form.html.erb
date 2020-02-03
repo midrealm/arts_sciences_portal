@@ -39,6 +39,17 @@
     <%= form.text_field :sca_name %>
   </div>
 
+  <div class="field">
+    <%= form.label "Peerages:" %>
+    <br>
+    <%= form.collection_check_boxes(:peerage_ids, Peerage.all, :id, :description) do |b| %>
+      <span>
+        <%= b.check_box %>
+        <%= b.label %>
+      </span>
+    <% end %>
+  </div>
+
   <hr>
 
   <p>If you will not be judging entries, you may ignore these questions.</p>

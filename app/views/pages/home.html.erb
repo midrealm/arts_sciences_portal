@@ -1,49 +1,5 @@
-<% if current_user.admin? %>
-  <h3>Admin Management</h3>
-  <%= link_to 'Scoresheet Management', scoresheets_path %>
-  <br>
-  <%= link_to 'Score Management', scores_path %>
-  <br>
-  <h3>User Management</h3>
-  <%= link_to 'User Management', users_path %>
-  <br>
-  <%= link_to 'User Role Management', user_roles_path %>
-  <br>
-  <%= link_to 'User Preferences', current_user %>
-  <br>
-  <%= link_to 'Manage your judging preferences', user_judge_preferences_path(current_user) %>
-  <br>
-  <%= link_to 'Volunteer for a Fair', judge_fairs_path %>
-  <h3>System Management</h3>
-  <%= link_to 'Category Management', categories_path %>
-  <br>
-  <%= link_to 'Division Management', divisions_path %>
-  <br>
-  <%= link_to 'Region Management', regions_path %>
-  <br>
-  <%= link_to 'Timeslot Management', timeslots_path %>
-  <br>
-  <%= link_to 'Criteria Type Management', criteria_types_path %>
-  <br>
-  <%= link_to 'Criteria Description Management', criteria_descriptions_path %>
-  <br>
-  <%= link_to 'Criteria Management', criteria_path %>
-  <br>
-  <%= link_to 'Applicable Criteria Management', applicable_criteria_path %>
-  <h3>Fair Management</h3>
-  <%= link_to 'Fair Management', fairs_path %>
-  <br>
-  <%= link_to 'Room Location Management', locations_url %>
-  <br>
-  <%= link_to 'Entry Management', entries_path %>
-<% else %>
-  <%= link_to 'Manage Your Entries', entries_path %>
-  <br>
-  <%= link_to 'Volunteer for a Fair', judge_fairs_path %>
-<!--  <br>-->
-  <%#= link_to 'Submit a Scoresheet', scoresheets_path %>
-  <br>
-  <%= link_to 'User Preferences', current_user %>
-  <br>
-  <%= link_to 'Manage your judging preferences', user_judge_preferences_path(current_user) %>
-<% end %>
+<p>Welcome to the NEW Midrealm A&S Registration System!</p>
+<p>This is where you can register to be an entrant, as well as a judge for the Middle Kingdom's annual A&S Faire - for both the Regional and Kingdom Faires!</p>
+<p>PLEASE NOTE:  If you have not registered for a new account as of January 1st, 2020, you will be prompted to do so.  Old user accounts from the other system will not be recognized here.</p>
+<hr>
+<%= link_to('Login', new_user_session_path) %> | <%= link_to('Register', new_user_registration_path) %>

@@ -28,25 +28,26 @@
     <%= @entry.category.division.name %>
   </p>
 
-  <% CriteriaType.all.top_level.each do |criteria_type| %>
+  <% CriteriaType.all.top_level.in_order.each do |criteria_type| %>
     <p>
       <strong><%= criteria_type.description %></strong>
     </p>
 
     <p><%= CriteriaDescription.description_for_category(criteria_type.id, @entry.category.id) %></p>
 
-    <% Criterium.all.by_type(criteria_type.id).by_category(@entry.category.id).each do |criteria| %>
+    <% Criterium.all.by_type(criteria_type.id).by_category(@entry.category.id).order(:suggested_score).each do |criteria| %>
       <p><%= "#{criteria.suggested_score} - #{criteria.description}" %></p>
     <% end %>
 
     <% CriteriaType.all.children_for(criteria_type).applicable(@entry.category).each do |child_criteria| %>
       <strong><%= child_criteria.description %></strong>
       <%= form.fields_for 'scores[]', @scoresheet.scores.select {|n| n.criteria_type_id == child_criteria.id}.first do |score_fields| %>
-        <%= render partial: 'scoresheet', locals: {form: score_fields, criteria: child_criteria} %>
+        <%= render partial: 'sub_criteria_scoresheet', locals: {form: score_fields, criteria: child_criteria} %>
       <% end %>
       <hr>
     <% end %>
 
+    <b><%= "Total Score for #{criteria_type.description}" %></b>
     <%= form.fields_for 'scores[]', @scoresheet.scores.select {|n| n.criteria_type_id == criteria_type.id}.first do |score_fields| %>
       <%= render partial: 'scoresheet', locals: {form: score_fields, criteria: criteria_type} %>
     <% end %>

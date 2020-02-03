@@ -41,4 +41,10 @@ class Entry < ApplicationRecord
       judges.join("<br>")
     end
   end
+
+  def color_class
+    return "blue" if self.division
+    return "red" if self.pentathlon
+    ""
+  end
 end

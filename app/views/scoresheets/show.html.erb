@@ -22,13 +22,13 @@
 
     <p><%= CriteriaDescription.description_for_category(criteria_type.id, @entry.category.id) %></p>
 
-    <% Criterium.all.by_type(criteria_type.id).by_category(@entry.category.id).each do |criteria| %>
+    <% Criterium.all.by_type(criteria_type.id).by_category(@entry.category.id).order(:suggested_score).each do |criteria| %>
       <p><%= "#{criteria.suggested_score} - #{criteria.description}" %></p>
     <% end %>
 
     <% CriteriaType.all.children_for(criteria_type).applicable(@entry.category).each do |child_criteria| %>
       <strong><%= child_criteria.description %></strong>
-    <%= render partial: 'score', locals: {score: @scoresheet.scores.find_by(criteria_type_id: criteria_type.id)} %>
+    <%= render partial: 'sub_criteria_score', locals: {score: @scoresheet.scores.find_by(criteria_type_id: child_criteria.id)} %>
     <hr>
     <% end %>
 

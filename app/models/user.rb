@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :judge_assigns
   has_many :judge_preferences
   has_many :judge_fairs
+  has_many :user_peerages
+  has_many :peerages, through: :user_peerages
 
   scope :volunteered, -> (fair) { joins(:judge_fairs).where('judge_fairs.fair_id = ?', fair.id) }
   scope :judge_assigned_entries, -> (user) { joins(:judge_assigns).where('judge_assigns.user_id = ?', user.id) }
@@ -35,5 +37,10 @@ class User < ApplicationRecord
 
   def judging_entry?(entry)
     !JudgeAssign.find_by(entry_id: entry.id, user_id: self.id).nil?
+  end
+
+  def color_class(entry)
+    return "blue" unless self.judge_preferences.where(category_id: entry.category_id).empty?
+    ""
   end
 end

@@ -13,7 +13,7 @@
     <tbody>
     <% @entries.each do |entry| %>
       <tr>
-        <td><%= entry.entry_name %></td>
+        <td><div class=<%= entry.color_class %>><%= entry.entry_name %></div></td>
         <%= fields_for "entries[]", entry do |f| %>
           <%= render partial: 'bulk_update_entry_timeslot', locals: {form: f, entry: entry} %>
           <td>
@@ -24,9 +24,11 @@
           <td>
             <%= f.fields_for "judge_assigns[]", entry do |ff| %>
               <% User.volunteered(entry.fair).each do |user| %>
-                <%= check_box_tag 'judge_assigns[]', "#{entry.id}_#{user.id}", user.judging_entry?(entry) %>
-                <%= user.email_or_name %>
-              <% end %>
+                <div class=<%= user.color_class(entry) %>>
+                  <%= check_box_tag 'judge_assigns[]', "#{entry.id}_#{user.id}", user.judging_entry?(entry) %>
+                  <%= user.email_or_name %>
+                </div>
+          <% end %>
             <% end %>
           </td>
         <% end %>

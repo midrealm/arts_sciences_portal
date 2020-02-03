@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Midrealm Arts and Sciences Fair Portal</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Midrealm Arts and Sciences Fair Portal</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
-    <h2>Midrealm Arts and Sciences Fair Portal</h2>
-    <hr>
+<body>
+<div class="banner">
+  <h1>Midrealm Arts and Sciences Fair Portal</h1>
+</div>
 
-    <% flash.each do |name, msg| %>
-      <% if msg.class == Array %>
-        <% msg.each do |message| %>
-          <%= content_tag :div, message, id: "flash_#{name}", class: "alert alert-#{name}" %>
-        <% end %>
-      <% else %>
-        <%= content_tag :div, msg, id: "flash_#{name}", class: "alert alert-#{name}" %>
+<div class="body">
+  <% flash.each do |name, msg| %>
+    <% if msg.class == Array %>
+      <% msg.each do |message| %>
+        <%= content_tag :div, message, id: "flash_#{name}", class: "alert alert-#{name}" %>
       <% end %>
+    <% else %>
+      <%= content_tag :div, msg, id: "flash_#{name}", class: "alert alert-#{name}" %>
     <% end %>
+  <% end %>
 
-    <%= yield %>
+  <%= yield %>
 
-    <% unless current_user.nil? %>
-      <br><br>
+  <% if user_signed_in? %>
+    <br><br>
 
-      <div>
-        <%= link_to 'Home', root_path %>
-        <br>
-        <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
-      </div>
-    <% end %>
-  </body>
+    <div>
+      <%= link_to 'Home', root_path %>
+      <br>
+      <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+    </div>
+  <% end %>
+</div>
+</body>
 </html>
