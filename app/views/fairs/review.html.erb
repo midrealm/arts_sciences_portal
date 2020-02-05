@@ -1,0 +1,114 @@
+<h2>Entries</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Entry</th>
+    <th>Entrants</th>
+    <th>Category</th>
+    <th>Score</th>
+<!--    <th colspan="6"></th>-->
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @entries.each do |entry| %>
+    <tr>
+      <td><%= entry.entry_name %></td>
+      <td>
+        <% UserEntry.entrants(entry).each do |user| %>
+          <%= user.email %> - <%= user.sca_name %><br>
+        <% end %>
+      </td>
+      <td><%= entry.category.name %></td>
+      <td>
+        <%= entry.final_score %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<p>Total entries: <%= @entries.count %></p>
+
+<hr>
+
+<h2>Pentathlons</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Entry</th>
+    <th>Entrants</th>
+    <th>Category</th>
+    <th>Score</th>
+    <!--    <th colspan="6"></th>-->
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @pents.pluck(:users).each do |user| %>
+  <% puts user.inspect %>
+  <% @pents.select {|n| n.users.pluck(:id).include?(user.id)}.each do |pent| %>
+    hi
+  <% end %>
+  <% end %>
+  <% @pents.each do |entry| %>
+    <tr>
+      <td><%= entry.entry_name %></td>
+      <td>
+        <% UserEntry.entrants(entry).each do |user| %>
+          <%= user.email %> - <%= user.sca_name %><br>
+        <% end %>
+      </td>
+      <td><%= entry.category.name %></td>
+      <td>
+        <%= entry.final_score %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+include total for all entries for person
+
+<p>Total entries: <%= @pents.count %></p>
+
+<hr>
+
+<h2>Divisionals</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Entry</th>
+    <th>Entrants</th>
+    <th>Category</th>
+    <th>Score</th>
+    <!--    <th colspan="6"></th>-->
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @divs.each do |entry| %>
+    <tr>
+      <td><%= entry.entry_name %></td>
+      <td>
+        <% UserEntry.entrants(entry).each do |user| %>
+          <%= user.email %> - <%= user.sca_name %><br>
+        <% end %>
+      </td>
+      <td><%= entry.category.name %></td>
+      <td>
+        <%= entry.final_score %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+include top three total for person
+
+<p>Total entries: <%= @divs.count %></p>
+
+<%= link_to 'Back', fairs_path %>

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       get 'view_schedule', on: :member, to: 'fairs#view_schedule'
       post 'schedule', on: :member, to: 'fairs#submit_schedule'
       get 'schedule', on: :member
+      get 'review', on: :member
       resources :judge_assigns
     end
     resources :timeslots

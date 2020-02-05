@@ -118,7 +118,7 @@ class ScoresheetsController < ApplicationController
 
   def filter_unjudged(entries)
     entries.reject do |entry|
-      !Scoresheet.find_by(entry_id: entry.id).nil?
+      !Scoresheet.find_by(entry_id: entry.id, user_id: current_user.id).nil?
     end
   end
 end

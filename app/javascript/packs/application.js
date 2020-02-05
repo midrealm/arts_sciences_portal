@@ -23,7 +23,7 @@ require("channels")
 
 import $ from 'jquery';
 
-$(document).on( "change", "#entry_category_id", function() {
+$(document).on("change", "#entry_category_id", function() {
     var entryCategoryDesc = $("#entry_category_desc");
 
     $.get("/admin/categories/" + $('#entry_category_id').val() + ".json", function(data) {
@@ -35,4 +35,50 @@ $(document).on( "change", "#entry_category_id", function() {
             $('#mail_in_warning').text("")
         }
     });
+});
+
+// $(document).on("change", "#scoresheet_scores__score", function() {
+//     if ($(this).parents('div#children_for_Scope').length > 0) {
+//         var collection = $("#children_for_Scope > input");
+//         var total = 0;
+//         $.each(collection, function(index, object) {
+//            alert($(object).text());
+//         });
+//     }
+// });
+
+$(document).on("change", ".children_for_Scope", function() {
+    var collection = $(".children_for_Scope");
+    var total = 0;
+    var tmp = 0;
+
+    $.each(collection, function(index, object) {
+        tmp = parseFloat($(object).val());
+        if (isNaN(tmp)) {
+            tmp = 0;
+        }
+        total = total + tmp;
+    });
+
+    total = (total / collection.length).toFixed(2);
+
+    $(".total_for_Scope").val(total);
+});
+
+$(document).on("change", ".children_for_Skill", function() {
+    var collection = $(".children_for_Skill");
+    var total = 0;
+    var tmp = 0;
+
+    $.each(collection, function(index, object) {
+        tmp = parseFloat($(object).val());
+        if (isNaN(tmp)) {
+            tmp = 0;
+        }
+        total = total + tmp;
+    });
+
+    total = (total / collection.length).toFixed(2);
+
+    $(".total_for_Skill").val(total);
 });

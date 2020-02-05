@@ -5,6 +5,7 @@ class Entry < ApplicationRecord
   belongs_to :location, optional: true
 
   has_many :user_entries, dependent: :destroy
+  has_many :users, through: :user_entries
   has_many :judge_assigns, dependent: :destroy
   has_many :scoresheets, dependent: :destroy
 
@@ -14,6 +15,9 @@ class Entry < ApplicationRecord
   scope :judge_assigned_entries, -> (user) { joins(:judge_assigns).where('judge_assigns.user_id = ?', user.id) }
   scope :fair_entries, -> (fair) { where('fair_id = ?', fair.id) }
   scope :in_schedule_order, -> { joins(:timeslot).order(order: :asc) }
+  scope :basic_entries, -> (fair) { where(pentathlon: false, division: false).where('fair_id = ?', fair.id) }
+  scope :pentathlons, -> (fair) { where(pentathlon: true).where('fair_id = ?', fair.id) }
+  scope :divisions, -> (fair) { where(division: true).where('fair_id = ?', fair.id) }
 
   def timeslot_description
     self.timeslot.nil? ? "Unassigned" : self.timeslot.description
@@ -46,5 +50,17 @@ class Entry < ApplicationRecord
     return "blue" if self.division
     return "red" if self.pentathlon
     ""
+  end
+
+  def final_score
+    return 0 if self.scoresheets.empty?
+    entry_scoresheets = self.scoresheets
+
+    sum = 0
+    entry_scoresheets.map do |scoresheet|
+      sum = sum + scoresheet.total_score
+    end
+
+    sum / entry_scoresheets.count
   end
 end
