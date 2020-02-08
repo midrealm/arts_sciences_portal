@@ -17,6 +17,11 @@
     </div>
   <% end %>
 
+  <p>Here you can volunteer to judge at an upcoming Fair.  If you wish to shadow judge or this is your first time judging,
+  please check the applicable boxes.  Otherwise, just select your fair and hit "Volunteer"!</p>
+
+  <hr>
+
   <div class="field">
     <%= form.label :fair_id %>
     <%= form.select :fair_id, Fair.all.map{ |m| [m.name_with_warning, m.id] }%>
