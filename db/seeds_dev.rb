@@ -157,19 +157,19 @@ pent1 = Entry.create(entry_name: 'pent1', description: 'description', category_i
 JudgeAssign.create(user_id: admin.id, entry_id: pent1.id)
 UserEntry.create(entry_id: pent1.id, user_id: admin.id)
 
-pent2 = Entry.create(entry_name: 'pent2', description: 'description', category_id: category1.id, fair_id: fair.id, pentathlon: true)
+pent2 = Entry.create(entry_name: 'pent2', description: 'description', category_id: category2.id, fair_id: fair.id, pentathlon: true)
 JudgeAssign.create(user_id: admin.id, entry_id: pent2.id)
 UserEntry.create(entry_id: pent2.id, user_id: admin.id)
 
-pent3 = Entry.create(entry_name: 'pent3', description: 'description', category_id: category1.id, fair_id: fair.id, pentathlon: true)
+pent3 = Entry.create(entry_name: 'pent3', description: 'description', category_id: category3.id, fair_id: fair.id, pentathlon: true)
 JudgeAssign.create(user_id: admin.id, entry_id: pent3.id)
 UserEntry.create(entry_id: pent3.id, user_id: admin.id)
 
-pent4 = Entry.create(entry_name: 'pent4', description: 'description', category_id: category1.id, fair_id: fair.id, pentathlon: true)
+pent4 = Entry.create(entry_name: 'pent4', description: 'description', category_id: category4.id, fair_id: fair.id, pentathlon: true)
 JudgeAssign.create(user_id: admin.id, entry_id: pent4.id)
 UserEntry.create(entry_id: pent4.id, user_id: admin.id)
 
-pent5 = Entry.create(entry_name: 'pent5', description: 'description', category_id: category1.id, fair_id: fair.id, pentathlon: true)
+pent5 = Entry.create(entry_name: 'pent5', description: 'description', category_id: category5.id, fair_id: fair.id, pentathlon: true)
 JudgeAssign.create(user_id: admin.id, entry_id: pent5.id)
 UserEntry.create(entry_id: pent5.id, user_id: admin.id)
 
@@ -177,15 +177,15 @@ div1 = Entry.create(entry_name: 'div1', description: 'description', category_id:
 JudgeAssign.create(user_id: admin.id, entry_id: div1.id)
 UserEntry.create(entry_id: div1.id, user_id: admin.id)
 
-div2 = Entry.create(entry_name: 'div2', description: 'description', category_id: category1.id, fair_id: fair.id, division: true)
+div2 = Entry.create(entry_name: 'div2', description: 'description', category_id: category2.id, fair_id: fair.id, division: true)
 JudgeAssign.create(user_id: admin.id, entry_id: div2.id)
 UserEntry.create(entry_id: div2.id, user_id: admin.id)
 
-div3 = Entry.create(entry_name: 'div3', description: 'description', category_id: category1.id, fair_id: fair.id, division: true)
+div3 = Entry.create(entry_name: 'div3', description: 'description', category_id: category3.id, fair_id: fair.id, division: true)
 JudgeAssign.create(user_id: admin.id, entry_id: div3.id)
 UserEntry.create(entry_id: div3.id, user_id: admin.id)
 
-div4 = Entry.create(entry_name: 'div4', description: 'description', category_id: category1.id, fair_id: fair.id, division: true)
+div4 = Entry.create(entry_name: 'div4', description: 'description', category_id: category4.id, fair_id: fair.id, division: true)
 JudgeAssign.create(user_id: admin.id, entry_id: div4.id)
 UserEntry.create(entry_id: div4.id, user_id: admin.id)
 

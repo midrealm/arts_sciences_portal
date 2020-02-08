@@ -83,7 +83,6 @@ class FairsController < ApplicationController
     @entries = Entry.basic_entries(@fair).sort {|a,b| b.final_score <=> a.final_score}
     @pents = Entry.pentathlons(@fair).sort {|a,b| b.final_score <=> a.final_score}
     @divs = Entry.divisions(@fair).sort {|a,b| b.final_score <=> a.final_score}
-    puts @pents.inspect
   end
 
   private

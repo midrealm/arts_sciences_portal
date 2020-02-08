@@ -17,7 +17,7 @@
       <td><%= entry.entry_name %></td>
       <td>
         <% UserEntry.entrants(entry).each do |user| %>
-          <%= user.email %> - <%= user.sca_name %><br>
+          <%= user.sca_name %><br>
         <% end %>
       </td>
       <td><%= entry.category.name %></td>
@@ -47,30 +47,22 @@
   </thead>
 
   <tbody>
-  <% @pents.pluck(:users).each do |user| %>
-  <% puts user.inspect %>
-  <% @pents.select {|n| n.users.pluck(:id).include?(user.id)}.each do |pent| %>
-    hi
-  <% end %>
-  <% end %>
-  <% @pents.each do |entry| %>
+  <% Entry.pentathlons(@fair).joins(:users).pluck(:'users.id').uniq.each do |user_id| %>
+    <tr><td><h3><%= User.find(user_id).sca_name %></h3></td></tr>
+    <% @pents.select {|n| n.users.pluck(:id).include?(user_id)}.each do |pent| %>
+      <tr>
+        <td><%= pent.entry_name %></td>
+        <td><%= pent.users.first.sca_name %></td>
+        <td><%= pent.category.name %></td>
+        <td><%= pent.final_score %></td>
+      </tr>
+    <% end %>
     <tr>
-      <td><%= entry.entry_name %></td>
-      <td>
-        <% UserEntry.entrants(entry).each do |user| %>
-          <%= user.email %> - <%= user.sca_name %><br>
-        <% end %>
-      </td>
-      <td><%= entry.category.name %></td>
-      <td>
-        <%= entry.final_score %>
-      </td>
+      <td>Final score for <%= User.find(user_id).sca_name %>: <%= pent_score_for(User.find(user_id), @fair) %></td>
     </tr>
   <% end %>
   </tbody>
 </table>
-
-include total for all entries for person
 
 <p>Total entries: <%= @pents.count %></p>
 
@@ -90,24 +82,22 @@ include total for all entries for person
   </thead>
 
   <tbody>
-  <% @divs.each do |entry| %>
+  <% Entry.divisions(@fair).joins(:users).pluck(:'users.id').uniq.each do |user_id| %>
+    <tr><td><h3><%= User.find(user_id).sca_name %></h3></td></tr>
+    <% @divs.select {|n| n.users.pluck(:id).include?(user_id)}.each do |div| %>
+      <tr>
+        <td><%= div.entry_name %></td>
+        <td><%= div.users.first.sca_name %></td>
+        <td><%= div.category.name %></td>
+        <td><%= div.final_score %></td>
+      </tr>
+    <% end %>
     <tr>
-      <td><%= entry.entry_name %></td>
-      <td>
-        <% UserEntry.entrants(entry).each do |user| %>
-          <%= user.email %> - <%= user.sca_name %><br>
-        <% end %>
-      </td>
-      <td><%= entry.category.name %></td>
-      <td>
-        <%= entry.final_score %>
-      </td>
+      <td>Final score for <%= User.find(user_id).sca_name %>: <%= div_score_for(User.find(user_id), @fair) %></td>
     </tr>
   <% end %>
   </tbody>
 </table>
-
-include top three total for person
 
 <p>Total entries: <%= @divs.count %></p>
 

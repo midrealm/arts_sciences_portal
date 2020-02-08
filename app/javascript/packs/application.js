@@ -51,16 +51,20 @@ $(document).on("change", ".children_for_Scope", function() {
     var collection = $(".children_for_Scope");
     var total = 0;
     var tmp = 0;
+    var size = 0;
 
     $.each(collection, function(index, object) {
         tmp = parseFloat($(object).val());
         if (isNaN(tmp)) {
             tmp = 0;
         }
+        else {
+            size++;
+        }
         total = total + tmp;
     });
 
-    total = (total / collection.length).toFixed(2);
+    total = (total / size).toFixed(2);
 
     $(".total_for_Scope").val(total);
 });
@@ -69,16 +73,20 @@ $(document).on("change", ".children_for_Skill", function() {
     var collection = $(".children_for_Skill");
     var total = 0;
     var tmp = 0;
+    var size = 0;
 
     $.each(collection, function(index, object) {
         tmp = parseFloat($(object).val());
         if (isNaN(tmp)) {
             tmp = 0;
         }
+        else {
+            size++;
+        }
         total = total + tmp;
     });
 
-    total = (total / collection.length).toFixed(2);
+    total = (total / size).toFixed(2);
 
     $(".total_for_Skill").val(total);
 });
