@@ -23,15 +23,15 @@
   <%= @entry.category.name  %>
 </p>
 
-<!--<p>-->
-<!--  <strong>Timeslot:</strong>-->
-  <%#= @entry.timeslot_description %>
-<!--</p>-->
+<p>
+  <strong>Timeslot:</strong>
+  <%= @entry.fair.scheduling_visible ? @entry.timeslot_description : "Not Assigned Yet" %>
+</p>
 
-<!--<p>-->
-<!--  <strong>Room:</strong>-->
-  <%#= @entry.location_description %>
-<!--</p>-->
+<p>
+  <strong>Room:</strong>
+  <%= @entry.fair.scheduling_visible ? @entry.location_description : "Not Assigned Yet" %>
+</p>
 
 <p>
   <strong>Fair:</strong>

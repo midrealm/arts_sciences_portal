@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_31_220810) do
+ActiveRecord::Schema.define(version: 2020_02_08_185102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 2020_01_31_220810) do
     t.boolean "internet_access", default: true
     t.text "comment"
     t.boolean "entries_allowed", default: false
+    t.boolean "scheduling_visible", default: false
     t.index ["region_id"], name: "index_fairs_on_region_id"
   end
 

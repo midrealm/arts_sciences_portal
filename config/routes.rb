@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     root to: 'dashboard#index'
   end
 
+  get 'review', to: 'dashboard#review', as: 'review'
+
   resources :entries do
     resources :user_entries, only: [:new, :create, :index, :destroy]
     resources :scoresheets, only: [:new, :create, :show, :update, :edit, :destroy]
