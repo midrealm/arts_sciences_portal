@@ -1,0 +1,73 @@
+<h2>Your Final Schedule</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Entry Name</th>
+    <th>Timeslot</th>
+    <th>Room</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @everything.each do |entry| %>
+    <tr>
+      <td><%= entry.entry_name %></td>
+      <td><%= entry.timeslot.description %></td>
+      <td><%= entry.location.description %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>Your Judging Assignments</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Entry Name</th>
+    <th>Timeslot</th>
+    <th>Room</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @judging.each do |entry| %>
+    <tr>
+      <td><%= entry.entry_name %></td>
+      <td><%= entry.timeslot.description %></td>
+      <td><%= entry.location.description %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>Your Entries</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Entry Name</th>
+    <th>Timeslot</th>
+    <th>Room</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @entries.each do |entry| %>
+    <tr>
+      <td><%= entry.entry_name %></td>
+      <td><%= entry.timeslot.description %></td>
+      <td><%= entry.location.description %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<br><%= link_to 'Back', root_path %>
