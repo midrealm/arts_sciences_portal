@@ -8,7 +8,7 @@
       <th>Region</th>
       <th>Internet</th>
       <th>Entries Allowed</th>
-      <th colspan="5"></th>
+      <th colspan="6"></th>
     </tr>
   </thead>
 
@@ -23,6 +23,7 @@
         <td><%= link_to 'View Schedule', view_schedule_fair_path(fair) %></td>
         <td><%= link_to 'Assign Schedule', schedule_fair_path(fair) %></td>
         <td><%= link_to 'Assign Judges', fair_judge_assigns_path(fair) %></td>
+        <td><%= link_to 'Final Review', review_fair_path(fair) %></td>
         <td><%= link_to 'Show', fair %></td>
         <td><%= link_to 'Edit', edit_fair_path(fair) %></td>
         <td><%= link_to 'Destroy', fair, method: :delete, data: { confirm: 'Are you sure?' } %></td>

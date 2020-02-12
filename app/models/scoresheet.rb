@@ -6,4 +6,10 @@ class Scoresheet < ApplicationRecord
   accepts_nested_attributes_for :scores
 
   scope :for_user, -> (user) { where("user_id = ?", user.id)}
+
+  def total_score
+    top_level_criteria = CriteriaType.top_level.pluck(:id)
+    all_relevant_scores = self.scores.where(criteria_type_id: top_level_criteria).pluck(:score)
+    all_relevant_scores.reduce(:+)
+  end
 end

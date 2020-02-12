@@ -1,0 +1,104 @@
+<h2>Entries</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Entry</th>
+    <th>Entrants</th>
+    <th>Category</th>
+    <th>Score</th>
+<!--    <th colspan="6"></th>-->
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @entries.each do |entry| %>
+    <tr>
+      <td><%= entry.entry_name %></td>
+      <td>
+        <% UserEntry.entrants(entry).each do |user| %>
+          <%= user.sca_name %><br>
+        <% end %>
+      </td>
+      <td><%= entry.category.name %></td>
+      <td>
+        <%= entry.final_score %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<p>Total entries: <%= @entries.count %></p>
+
+<hr>
+
+<h2>Pentathlons</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Entry</th>
+    <th>Entrants</th>
+    <th>Category</th>
+    <th>Score</th>
+    <!--    <th colspan="6"></th>-->
+  </tr>
+  </thead>
+
+  <tbody>
+  <% Entry.pentathlons(@fair).joins(:users).pluck(:'users.id').uniq.each do |user_id| %>
+    <tr><td><h3><%= User.find(user_id).sca_name %></h3></td></tr>
+    <% @pents.select {|n| n.users.pluck(:id).include?(user_id)}.each do |pent| %>
+      <tr>
+        <td><%= pent.entry_name %></td>
+        <td><%= pent.users.first.sca_name %></td>
+        <td><%= pent.category.name %></td>
+        <td><%= pent.final_score %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td>Final score for <%= User.find(user_id).sca_name %>: <%= pent_score_for(User.find(user_id), @fair) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<p>Total entries: <%= @pents.count %></p>
+
+<hr>
+
+<h2>Divisionals</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Entry</th>
+    <th>Entrants</th>
+    <th>Category</th>
+    <th>Score</th>
+    <!--    <th colspan="6"></th>-->
+  </tr>
+  </thead>
+
+  <tbody>
+  <% Entry.divisions(@fair).joins(:users).pluck(:'users.id').uniq.each do |user_id| %>
+    <tr><td><h3><%= User.find(user_id).sca_name %></h3></td></tr>
+    <% @divs.select {|n| n.users.pluck(:id).include?(user_id)}.each do |div| %>
+      <tr>
+        <td><%= div.entry_name %></td>
+        <td><%= div.users.first.sca_name %></td>
+        <td><%= div.category.name %></td>
+        <td><%= div.final_score %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td>Final score for <%= User.find(user_id).sca_name %>: <%= div_score_for(User.find(user_id), @fair) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<p>Total entries: <%= @divs.count %></p>
+
+<%= link_to 'Back', fairs_path %>

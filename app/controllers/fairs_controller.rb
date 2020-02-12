@@ -1,7 +1,7 @@
 class FairsController < ApplicationController
   before_action :authenticate_user!
   before_action :verify_admin
-  before_action :set_fair, only: [:show, :edit, :update, :destroy, :schedule, :view_schedule, :submit_schedule]
+  before_action :set_fair, only: [:show, :edit, :update, :destroy, :schedule, :view_schedule, :submit_schedule, :review]
 
   # GET /fairs
   # GET /fairs.json
@@ -77,6 +77,12 @@ class FairsController < ApplicationController
     Entry.update(params[:entries].keys, params[:entries].values)
 
     redirect_to schedule_fair_url, notice: 'Schedule was successfully updated.'
+  end
+
+  def review
+    @entries = Entry.basic_entries(@fair).sort {|a,b| b.final_score <=> a.final_score}
+    @pents = Entry.pentathlons(@fair).sort {|a,b| b.final_score <=> a.final_score}
+    @divs = Entry.divisions(@fair).sort {|a,b| b.final_score <=> a.final_score}
   end
 
   private
