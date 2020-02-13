@@ -37,16 +37,6 @@ $(document).on("change", "#entry_category_id", function() {
     });
 });
 
-// $(document).on("change", "#scoresheet_scores__score", function() {
-//     if ($(this).parents('div#children_for_Scope').length > 0) {
-//         var collection = $("#children_for_Scope > input");
-//         var total = 0;
-//         $.each(collection, function(index, object) {
-//            alert($(object).text());
-//         });
-//     }
-// });
-
 $(document).on("change", ".children_for_Scope", function() {
     var collection = $(".children_for_Scope");
     var total = 0;

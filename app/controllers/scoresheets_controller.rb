@@ -5,7 +5,14 @@ class ScoresheetsController < ApplicationController
   # GET /scoresheets
   # GET /scoresheets.json
   def index
-    @entries = filter_unjudged(Entry.all.judge_assigned_entries(current_user))
+    next_fair = Fair.all.order(date: :asc).reject { |fair| fair.date < Date.today }.first
+
+    if next_fair.mail_in_scoresheets_allowed && !next_fair.scoresheets_allowed
+      @entries = filter_unjudged(Entry.fair_entries(next_fair).judge_assigned_entries(current_user).joins(:category).where('mail_in = ?', true))
+    else
+      @entries = filter_unjudged(Entry.fair_entries(next_fair).judge_assigned_entries(current_user))
+    end
+
     if current_user.admin?
       @scoresheets = Scoresheet.all
     else
