@@ -52,6 +52,11 @@
   </div>
 
   <div class="field">
+    <%= form.label 'Finalize fair?' %>
+    <%= form.check_box :finalized %>
+  </div>
+
+  <div class="field">
     <%= form.label :comment %>
     <%= form.text_field :comment %>
   </div>

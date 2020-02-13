@@ -1,3 +1,5 @@
+include FairsHelper
+
 class DashboardController < ApplicationController
   before_action :authenticate_user!
   before_action :assign_next_fair
@@ -14,6 +16,6 @@ class DashboardController < ApplicationController
 
   private
   def assign_next_fair
-    @next_fair = Fair.all.order(date: :asc).reject { |fair| fair.date < Date.today }.first
+    @next_fair = next_fair
   end
 end

@@ -4,7 +4,24 @@
   <br>
   <%= link_to 'Score Management', scores_path %>
   <br>
-  <%= render partial: 'user_index', locals: {next_fair: @next_fair} %>
+  <h3>User Management</h3>
+  <%= link_to 'User Management', users_path %>
+  <br>
+  <%= link_to 'User Role Management', user_roles_path %>
+  <br>
+  <%= link_to 'User Preferences', current_user %>
+  <br>
+  <%= link_to 'Manage your judging preferences', user_judge_preferences_path(current_user) %>
+  <br>
+  <%= link_to 'Volunteer for a Fair', judge_fairs_path %>
+  <% if @next_fair.scheduling_visible %>
+    <br>
+    <%= link_to 'Review your Schedule', review_path %>
+  <% end %>
+  <% if scoresheets_visible?(@next_fair, current_user)  %>
+    <br>
+    <%= link_to 'Submit a Scoresheet', scoresheets_path %>
+  <% end %>
   <h3>System Management</h3>
   <%= link_to 'Category Management', categories_path %>
   <br>
@@ -30,5 +47,19 @@
   <br>
   <%= link_to 'Entry Management', entries_path %>
 <% else %>
-  <%= render partial: 'user_index', locals: {next_fair: @next_fair} %>
+  <%= link_to 'Manage Your Entries', entries_path %>
+  <br>
+  <%= link_to 'Volunteer for a Fair', judge_fairs_path %>
+  <br>
+  <%= link_to 'User Preferences', current_user %>
+  <br>
+  <%= link_to 'Manage your judging preferences', user_judge_preferences_path(current_user) %>
+  <% if @next_fair.scheduling_visible %>
+    <br>
+    <%= link_to 'Review your Schedule', review_path %>
+  <% end %>
+  <% if scoresheets_visible?(@next_fair, current_user)  %>
+    <br>
+    <%= link_to 'Submit a Scoresheet', scoresheets_path %>
+  <% end %>
 <% end %>
