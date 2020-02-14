@@ -46,9 +46,9 @@ class Entry < ApplicationRecord
     end
   end
 
-  def color_class
-    return "blue" if self.division
-    return "red" if self.pentathlon
+  def pent_or_div
+    return "Division | " if self.division
+    return "Pentathlon | " if self.pentathlon
     ""
   end
 
