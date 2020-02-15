@@ -1,5 +1,5 @@
 <h1>Schedule</h1>
-  <%= form_for :entries, :url => schedule_fair_path do |form| %>
+<%= form_for :entries, :url => schedule_fair_path do |form| %>
   <table>
     <thead>
     <tr>
@@ -7,6 +7,7 @@
       <% Timeslot.all.in_order.each do |timeslot| %>
         <th><%= timeslot.description %></th>
       <% end %>
+      <th>Room</th>
     </tr>
     </thead>
 
@@ -18,21 +19,21 @@
           <%= render partial: 'bulk_update_entry_timeslot', locals: {form: f, entry: entry} %>
           <td>
             <div class="field">
-              <%= f.select :location_id, Location.for_fair(entry.fair).map{ |m| [m.description, m.id] }%>
+              <%= f.select :location_id, Location.for_fair(entry.fair).map { |m| [m.description, m.id] } %>
             </div>
           </td>
-          <td>
-            <%= f.fields_for "judge_assigns[]", entry do |ff| %>
-              <% order_by_preference(User.volunteered(entry.fair), entry).each do |user| %>
-                <div class=<%= user.color_class(entry) %>>
+          </tr>
+          <tr>
+            <td colspan="6">
+              <%= f.fields_for "judge_assigns[]", entry do |ff| %>
+                <% order_by_preference(User.volunteered(entry.fair), entry).each do |user| %>
                   <%= check_box_tag 'judge_assigns[]', "#{entry.id}_#{user.id}", user.judging_entry?(entry) %>
-                  <%= user.email_or_name %>
-                </div>
-          <% end %>
-            <% end %>
-          </td>
+                  <label class=<%= user.color_class(entry) %>><%= user.email_or_name %></label>
+                <% end %>
+              <% end %>
+            </td>
         <% end %>
-      </tr>
+        </tr>
     <% end %>
     </tbody>
   </table>
