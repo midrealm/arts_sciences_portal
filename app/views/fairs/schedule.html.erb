@@ -24,7 +24,7 @@
           </td>
           </tr>
           <tr>
-            <td colspan="6">
+            <td colspan="7">
               <%= f.fields_for "judge_assigns[]", entry do |ff| %>
                 <% order_by_preference(User.volunteered(entry.fair), entry).each do |user| %>
                   <%= check_box_tag 'judge_assigns[]', "#{entry.id}_#{user.id}", user.judging_entry?(entry) %>
