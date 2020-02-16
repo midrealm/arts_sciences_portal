@@ -41,6 +41,13 @@ class User < ApplicationRecord
 
   def color_class(entry)
     return "blue" unless self.judge_preferences.where(category_id: entry.category_id).empty?
-    ""
+    "black"
+  end
+
+  def display_peerages
+    peerage_string = peerages.map do |peerage|
+      peerage.description[0]
+    end.join(" ")
+    peerage_string.blank? ? "" : "(#{peerage_string})"
   end
 end

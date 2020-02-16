@@ -4,8 +4,9 @@
     <thead>
     <tr>
       <th>Entry</th>
+      <th>Entrant</th>
       <% Timeslot.all.in_order.each do |timeslot| %>
-        <th><%= timeslot.description %></th>
+        <th></th>
       <% end %>
       <th>Room</th>
     </tr>
@@ -14,7 +15,12 @@
     <tbody>
     <% @entries.each do |entry| %>
       <tr>
-        <td><%= entry.pent_or_div %><%= link_to entry.entry_name, entry_path(entry), target: :_blank %></td>
+        <td>
+          <h4><%= entry.pent_or_div %><%= link_to entry.entry_name, entry_path(entry), target: :_blank %></h4>
+        </td>
+        <td>
+          <%= entry.entrant_string %>
+        </td>
         <%= fields_for "entries[]", entry do |f| %>
           <%= render partial: 'bulk_update_entry_timeslot', locals: {form: f, entry: entry} %>
           <td>
@@ -24,11 +30,12 @@
           </td>
           </tr>
           <tr>
-            <td colspan="7">
+            <td colspan="8">
               <%= f.fields_for "judge_assigns[]", entry do |ff| %>
                 <% order_by_preference(User.volunteered(entry.fair), entry).each do |user| %>
                   <%= check_box_tag 'judge_assigns[]', "#{entry.id}_#{user.id}", user.judging_entry?(entry) %>
-                  <label class=<%= user.color_class(entry) %>><%= user.email_or_name %></label>
+                  <%= link_to user.email_or_name, user_judge_preferences_path(user), target: :_blank, class: user.color_class(entry) %>
+                  <%= user.display_peerages %>
                 <% end %>
               <% end %>
             </td>

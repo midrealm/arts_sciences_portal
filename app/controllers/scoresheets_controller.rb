@@ -9,8 +9,6 @@ class ScoresheetsController < ApplicationController
   def index
     fair = next_fair
 
-
-puts fair.inspect
     if fair.mail_in_scoresheets_allowed && !fair.scoresheets_allowed
       @entries = filter_unjudged(Entry.fair_entries(fair).judge_assigned_entries(current_user).joins(:category).where('mail_in = ?', true))
     else
