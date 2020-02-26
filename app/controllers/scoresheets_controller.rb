@@ -1,3 +1,5 @@
+include FairsHelper
+
 class ScoresheetsController < ApplicationController
   before_action :set_scoresheet, only: [:show, :edit, :update, :destroy]
   before_action :set_entry, only: [:create, :new, :edit, :update, :show]
@@ -5,7 +7,14 @@ class ScoresheetsController < ApplicationController
   # GET /scoresheets
   # GET /scoresheets.json
   def index
-    @entries = filter_unjudged(Entry.all.judge_assigned_entries(current_user))
+    fair = next_fair
+
+    if fair.mail_in_scoresheets_allowed && !fair.scoresheets_allowed
+      @entries = filter_unjudged(Entry.fair_entries(fair).judge_assigned_entries(current_user).joins(:category).where('mail_in = ?', true))
+    else
+      @entries = filter_unjudged(Entry.fair_entries(fair).judge_assigned_entries(current_user))
+    end
+
     if current_user.admin?
       @scoresheets = Scoresheet.all
     else

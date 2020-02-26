@@ -42,6 +42,21 @@
   </div>
 
   <div class="field">
+    <%= form.label :scoresheets_allowed %>
+    <%= form.check_box :scoresheets_allowed %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mail_in_scoresheets_allowed %>
+    <%= form.check_box :mail_in_scoresheets_allowed %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Finalize fair?' %>
+    <%= form.check_box :finalized %>
+  </div>
+
+  <div class="field">
     <%= form.label :comment %>
     <%= form.text_field :comment %>
   </div>

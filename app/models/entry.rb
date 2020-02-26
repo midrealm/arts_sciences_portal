@@ -18,6 +18,8 @@ class Entry < ApplicationRecord
   scope :basic_entries, -> (fair) { where(pentathlon: false, division: false).where('fair_id = ?', fair.id) }
   scope :pentathlons, -> (fair) { where(pentathlon: true).where('fair_id = ?', fair.id) }
   scope :divisions, -> (fair) { where(division: true).where('fair_id = ?', fair.id) }
+  scope :qualified_pents, -> (fair, disqualified_users) { pentathlons(fair).joins(:user_entries).where.not(:user_entries => {user_id: disqualified_users}) }
+  scope :disqualified_pents, -> (fair, disqualified_users) { pentathlons(fair).joins(:user_entries).where(:user_entries => {user_id: disqualified_users}) }
 
   def timeslot_description
     self.timeslot.nil? ? "Unassigned" : self.timeslot.description
@@ -46,9 +48,15 @@ class Entry < ApplicationRecord
     end
   end
 
-  def color_class
-    return "blue" if self.division
-    return "red" if self.pentathlon
+  def entrant_string
+    users.map do |user|
+      user.email_or_name
+    end.join(" ")
+  end
+
+  def pent_or_div
+    return "Div | " if self.division
+    return "Pent | " if self.pentathlon
     ""
   end
 

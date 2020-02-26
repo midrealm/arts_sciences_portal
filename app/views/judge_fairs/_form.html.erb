@@ -24,7 +24,7 @@
 
   <div class="field">
     <%= form.label :fair_id %>
-    <%= form.select :fair_id, Fair.all.map{ |m| [m.name_with_warning, m.id] }%>
+    <%= form.select :fair_id, Fair.current.map{ |m| [m.name_with_warning, m.id] }%>
   </div>
 
   <div class="field">

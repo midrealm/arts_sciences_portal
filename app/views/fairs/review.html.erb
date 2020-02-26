@@ -47,7 +47,7 @@
   </thead>
 
   <tbody>
-  <% Entry.pentathlons(@fair).joins(:users).pluck(:'users.id').uniq.each do |user_id| %>
+  <% @pents.joins(:user_entries).pluck(:'user_entries.user_id').uniq.each do |user_id| %>
     <tr><td><h3><%= User.find(user_id).sca_name %></h3></td></tr>
     <% @pents.select {|n| n.users.pluck(:id).include?(user_id)}.each do |pent| %>
       <tr>

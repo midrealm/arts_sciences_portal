@@ -18,6 +18,10 @@
     <br>
     <%= link_to 'Review your Schedule', review_path %>
   <% end %>
+  <% if scoresheets_visible?(@next_fair, current_user)  %>
+    <br>
+    <%= link_to 'Submit a Scoresheet', scoresheets_path %>
+  <% end %>
   <h3>System Management</h3>
   <%= link_to 'Category Management', categories_path %>
   <br>
@@ -46,10 +50,16 @@
   <%= link_to 'Manage Your Entries', entries_path %>
   <br>
   <%= link_to 'Volunteer for a Fair', judge_fairs_path %>
-  <!--  <br>-->
-  <%#= link_to 'Submit a Scoresheet', scoresheets_path %>
   <br>
   <%= link_to 'User Preferences', current_user %>
   <br>
   <%= link_to 'Manage your judging preferences', user_judge_preferences_path(current_user) %>
+  <% if @next_fair.scheduling_visible %>
+    <br>
+    <%= link_to 'Review your Schedule', review_path %>
+  <% end %>
+  <% if scoresheets_visible?(@next_fair, current_user)  %>
+    <br>
+    <%= link_to 'Submit a Scoresheet', scoresheets_path %>
+  <% end %>
 <% end %>

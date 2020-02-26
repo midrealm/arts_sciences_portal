@@ -80,9 +80,16 @@ class FairsController < ApplicationController
   end
 
   def review
-    @entries = Entry.basic_entries(@fair).sort {|a,b| b.final_score <=> a.final_score}
-    @pents = Entry.pentathlons(@fair).sort {|a,b| b.final_score <=> a.final_score}
     @divs = Entry.divisions(@fair).sort {|a,b| b.final_score <=> a.final_score}
+
+    # find the ids of all users that don't qualify for pent
+    disqualified_entries = Entry.pentathlons(@fair).select { |entry| entry.final_score < 19 }.map{ |entry| entry.id }
+    disqualified_users = UserEntry.where(entry_id: disqualified_entries).pluck(:user_id).uniq
+
+    @pents = Entry.qualified_pents(@fair, disqualified_users)
+
+    @entries = (Entry.basic_entries(@fair) + Entry.disqualified_pents(@fair, disqualified_users))
+                   .sort {|a,b| b.final_score <=> a.final_score}
   end
 
   private
@@ -93,7 +100,7 @@ class FairsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fair_params
-      params.require(:fair).permit(:date, :region_id, :name, :comment, :internet_access, :entries_allowed, :scheduling_visible)
+      params.require(:fair).permit(:date, :region_id, :name, :comment, :internet_access, :entries_allowed, :scheduling_visible, :mail_in_scoresheets_allowed, :scoresheets_allowed, :finalized)
     end
 
   def update_assignments(judge_assignments)
