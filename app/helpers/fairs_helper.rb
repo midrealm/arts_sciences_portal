@@ -8,7 +8,7 @@ module FairsHelper
   def next_fair
     Fair.current.order(date: :asc).first
   end
-  
+
   def order_by_preference(collection, entry)
     collection.sort do |a, b|
       if a.judge_preferences.empty?
