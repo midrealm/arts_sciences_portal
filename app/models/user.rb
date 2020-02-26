@@ -36,11 +36,13 @@ class User < ApplicationRecord
   end
 
   def judging_entry?(entry)
-    !JudgeAssign.find_by(entry_id: entry.id, user_id: self.id).nil?
+    # !JudgeAssign.find_by(entry_id: entry.id, user_id: self.id).nil?
+
+    !judge_assigns.find_by(entry_id: entry.id,).nil?
   end
 
   def color_class(entry)
-    return "blue" unless self.judge_preferences.where(category_id: entry.category_id).empty?
+    return "blue" unless judge_preferences.find_by(category_id: entry.category_id).nil?
     "black"
   end
 
