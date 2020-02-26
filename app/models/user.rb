@@ -34,4 +34,22 @@ class User < ApplicationRecord
   def email_or_name
     self.sca_name.nil? ? self.email : self.sca_name
   end
+
+  def judging_entry?(entry)
+    # !JudgeAssign.find_by(entry_id: entry.id, user_id: self.id).nil?
+
+    !judge_assigns.find_by(entry_id: entry.id,).nil?
+  end
+
+  def color_class(entry)
+    return "blue" unless judge_preferences.find_by(category_id: entry.category_id).nil?
+    "black"
+  end
+
+  def display_peerages
+    peerage_string = peerages.map do |peerage|
+      peerage.description[0]
+    end.join(" ")
+    peerage_string.blank? ? "" : "(#{peerage_string})"
+  end
 end

@@ -69,11 +69,7 @@ class FairsController < ApplicationController
 
   def schedule
     @entries = Entry.fair_entries(@fair).order(:entry_name)
-    @judges = User.volunteered(@fair)
-    judge_ids = @judges.pluck(:id)
-    @peerages = UserPeerage.where(user_id: judge_ids)
-    @judge_preferences = JudgePreference.where(user_id: judge_ids)
-    @judge_assignments = JudgeAssign.where(user_id: judge_ids)
+    @judges = User.volunteered(@fair).includes([:judge_assigns, :judge_preferences, :user_peerages])
   end
 
   def submit_schedule
