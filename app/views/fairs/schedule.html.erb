@@ -33,8 +33,8 @@
             <td colspan="8">
               <%= f.fields_for "judge_assigns[]", entry do |ff| %>
                 <%# order_by_preference(User.volunteered(entry.fair), entry).each do |user| %>
-                <% @judges.each do |user| %>
-                  <%= check_box_tag 'judge_assigns[]', "#{entry.id}_#{user.id}", user.judging_entry?(entry) %>
+                <% order_by_preference(@judges, entry).each do |user| %>
+                  <%= check_box_tag 'judge_assigns[]', "#{entry.id}_#{user.id}", judging_entry?(entry, user, @judge_assignments) %>
                   <%= link_to user.email_or_name, user_judge_preferences_path(user), target: :_blank, class: color_class(entry, @judge_preferences, user) %>
                   <%= display_peerages(@peerages, user) %>
                 <% end %>

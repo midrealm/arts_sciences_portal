@@ -73,6 +73,7 @@ class FairsController < ApplicationController
     judge_ids = @judges.pluck(:id)
     @peerages = UserPeerage.where(user_id: judge_ids)
     @judge_preferences = JudgePreference.where(user_id: judge_ids)
+    @judge_assignments = JudgeAssign.where(user_id: judge_ids)
   end
 
   def submit_schedule

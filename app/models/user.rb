@@ -34,8 +34,4 @@ class User < ApplicationRecord
   def email_or_name
     self.sca_name.nil? ? self.email : self.sca_name
   end
-
-  def judging_entry?(entry)
-    !JudgeAssign.find_by(entry_id: entry.id, user_id: self.id).nil?
-  end
 end

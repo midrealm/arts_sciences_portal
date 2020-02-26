@@ -21,6 +21,10 @@ module FairsHelper
     peerage_string.blank? ? "" : "(#{peerage_string})"
   end
 
+  def judging_entry?(entry, judge, relevant_assignments)
+    !relevant_assignments.find_by(entry_id: entry.id, user_id: judge.id).nil?
+  end
+
   def order_by_preference(collection, entry)
     collection.sort do |a, b|
       if a.judge_preferences.empty?
