@@ -14,11 +14,11 @@
   <%= link_to 'Manage your judging preferences', user_judge_preferences_path(current_user) %>
   <br>
   <%= link_to 'Volunteer for a Fair', judge_fairs_path %>
-  <% if @next_fair.scheduling_visible %>
+  <% if !@next_fair.nil? && @next_fair.scheduling_visible %>
     <br>
     <%= link_to 'Review your Schedule', review_path %>
   <% end %>
-  <% if scoresheets_visible?(@next_fair, current_user)  %>
+  <% if !@next_fair.nil? && scoresheets_visible?(@next_fair, current_user)  %>
     <br>
     <%= link_to 'Submit a Scoresheet', scoresheets_path %>
   <% end %>
@@ -54,11 +54,11 @@
   <%= link_to 'User Preferences', current_user %>
   <br>
   <%= link_to 'Manage your judging preferences', user_judge_preferences_path(current_user) %>
-  <% if @next_fair.scheduling_visible %>
+  <% if !@next_fair.nil? && @next_fair.scheduling_visible %>
     <br>
     <%= link_to 'Review your Schedule', review_path %>
   <% end %>
-  <% if scoresheets_visible?(@next_fair, current_user)  %>
+  <% if !@next_fair.nil? && scoresheets_visible?(@next_fair, current_user)  %>
     <br>
     <%= link_to 'Submit a Scoresheet', scoresheets_path %>
   <% end %>

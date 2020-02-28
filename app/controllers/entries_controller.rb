@@ -2,9 +2,14 @@ class EntriesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
   before_action :verify_user_entry, only: [:show, :edit, :update, :destroy]
+  before_action :verify_entry_editable, only: [:edit, :update, :destroy]
 
   def verify_user_entry
     authorize @entry, :owns_entry?
+  end
+
+  def verify_entry_editable
+    authorize @entry, :entry_open?
   end
 
   # GET /entries

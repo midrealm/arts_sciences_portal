@@ -7,4 +7,8 @@ class EntryPolicy < ApplicationPolicy
   def owns_entry?
     @user.admin? || UserEntry.entrants(@entry).include?(@user)
   end
+
+  def entry_open?
+    @user.admin? || (!@entry.fair.finalized && @entry.fair.entries_allowed)
+  end
 end
