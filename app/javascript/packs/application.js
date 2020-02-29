@@ -23,6 +23,11 @@ require("channels")
 
 import $ from 'jquery';
 
+function printpage()
+{
+    window.print()
+}
+
 $(document).on("change", "#entry_category_id", function() {
     var entryCategoryDesc = $("#entry_category_desc");
 

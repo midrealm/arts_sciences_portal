@@ -15,7 +15,7 @@
   <%= @entry.category.division.name %>
 </p>
 
-<% CriteriaType.all.top_level.each do |criteria_type| %>
+<% CriteriaType.all.top_level.in_order.each do |criteria_type| %>
   <p>
     <strong><%= criteria_type.description %></strong>
   </p>
@@ -44,4 +44,16 @@
   <%= link_to 'Back', scoresheets_path %>
 <% else %>
   <%= link_to 'Back', entries_path %>
+  <%= link_to "PRINT", '#', onclick: "printpage()" %>
 <% end %>
+
+<br>
+
+<script type="text/javascript">
+    function printpage()
+    {
+        window.print()
+    }
+</script>
+
+<%= link_to "Print Page", '#', onclick: "printpage()" %>
