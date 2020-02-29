@@ -89,7 +89,7 @@ class FairsController < ApplicationController
 
     @pents = Entry.qualified_pents(@fair, disqualified_users)
 
-    @entries = (Entry.basic_entries(@fair) + Entry.disqualified_pents(@fair, disqualified_users))
+    @entries = (Entry.non_pents(@fair) + Entry.disqualified_pents(@fair, disqualified_users))
                    .sort {|a,b| b.final_score <=> a.final_score}
   end
 

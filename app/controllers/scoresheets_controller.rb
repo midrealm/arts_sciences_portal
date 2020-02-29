@@ -3,6 +3,16 @@ include FairsHelper
 class ScoresheetsController < ApplicationController
   before_action :set_scoresheet, only: [:show, :edit, :update, :destroy]
   before_action :set_entry, only: [:create, :new, :edit, :update, :show]
+  before_action :verify_owns_scoresheet, only: [:edit, :update, :destroy]
+  before_action :verify_user_owns_entry, only: [:show]
+
+  def verify_owns_scoresheet
+    authorize @scoresheet, :owns_scoresheet?
+  end
+
+  def verify_user_owns_entry
+    authorize @scoresheet, :owns_entry?
+  end
 
   # GET /scoresheets
   # GET /scoresheets.json

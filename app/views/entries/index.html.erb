@@ -4,7 +4,7 @@
 
 <h1>Your past entries</h1>
 
-<%= render partial: 'entry_index', locals: {entries: @entries.joins(:fair).where('finalized = ?', true)} %>
+<%= render partial: 'past_entry_index', locals: {entries: @entries.joins(:fair).where('finalized = ?', true)} %>
 
 <% if current_user.admin? %>
   <h1>All entries</h1>
