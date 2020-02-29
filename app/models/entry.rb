@@ -64,6 +64,8 @@ class Entry < ApplicationRecord
     return 0 if scoresheets.empty?
     entry_scoresheets = scoresheets.select{ |x| !x.shadow_scoresheet? }
 
+    return 0 if entry_scoresheets.empty?
+
     sum = 0
     entry_scoresheets.map do |scoresheet|
       sum = sum + scoresheet.total_score
