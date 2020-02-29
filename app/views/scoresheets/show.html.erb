@@ -1,5 +1,11 @@
 <h3><%= @entry.entry_name %></h3>
 
+
+<p>
+  <strong>Judge:</strong>
+  <%= @scoresheet.user.email_or_name %>
+</p>
+
 <p>
   <strong>Name:</strong>
   <%= @entry.category.name %>
