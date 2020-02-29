@@ -25,6 +25,8 @@ class ScoresheetsController < ApplicationController
       @entries = filter_unjudged(Entry.fair_entries(fair).judge_assigned_entries(current_user))
     end
 
+    @all_entries = filter_unjudged(Entry.fair_entries(fair))
+
     if current_user.admin?
       @scoresheets = Scoresheet.all
     else
@@ -57,6 +59,7 @@ class ScoresheetsController < ApplicationController
   # POST /scoresheets
   # POST /scoresheets.json
   def create
+    puts scoresheet_params.inspect
     @scoresheet = Scoresheet.new(scoresheet_params)
 
     CriteriaType.applicable(@entry.category).each do |criteria_type|
@@ -118,7 +121,11 @@ class ScoresheetsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def scoresheet_params
-    params.permit(:entry_id).merge(user_id: current_user.id)
+    if current_user.admin?
+      params.permit(:entry_id).merge(user_id: params[:scoresheet][:user_id])
+    else
+      params.permit(:entry_id).merge(user_id: current_user.id)
+    end
   end
 
   def score_params(params)

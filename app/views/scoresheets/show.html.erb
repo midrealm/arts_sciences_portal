@@ -1,5 +1,7 @@
 <h3><%= @entry.entry_name %></h3>
-
+<% if @scoresheet.shadow_scoresheet? %>
+  <h4>This is a shadow judge scoresheet.</h4>
+<% end %>
 
 <p>
   <strong>Judge:</strong>
