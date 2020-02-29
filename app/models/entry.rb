@@ -69,6 +69,6 @@ class Entry < ApplicationRecord
       sum = sum + scoresheet.total_score
     end
 
-    sum / entry_scoresheets.count
+    (sum / entry_scoresheets.count).truncate(2)
   end
 end

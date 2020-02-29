@@ -25,7 +25,7 @@ class ScoresheetsController < ApplicationController
       @entries = filter_unjudged(Entry.fair_entries(fair).judge_assigned_entries(current_user))
     end
 
-    @all_entries = filter_unjudged(Entry.fair_entries(fair))
+    @all_entries = filter_admin_unjudged(Entry.fair_entries(fair))
 
     if current_user.admin?
       @scoresheets = Scoresheet.all
@@ -59,7 +59,6 @@ class ScoresheetsController < ApplicationController
   # POST /scoresheets
   # POST /scoresheets.json
   def create
-    puts scoresheet_params.inspect
     @scoresheet = Scoresheet.new(scoresheet_params)
 
     CriteriaType.applicable(@entry.category).each do |criteria_type|
@@ -145,6 +144,12 @@ class ScoresheetsController < ApplicationController
   def filter_unjudged(entries)
     entries.reject do |entry|
       !Scoresheet.find_by(entry_id: entry.id, user_id: current_user.id).nil?
+    end
+  end
+
+  def filter_admin_unjudged(entries)
+    entries.reject do |entry|
+      JudgeAssign.where(entry_id: entry.id).count == Scoresheet.where(entry_id: entry.id).count
     end
   end
 end
