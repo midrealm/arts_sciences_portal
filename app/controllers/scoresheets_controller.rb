@@ -3,7 +3,7 @@ include FairsHelper
 class ScoresheetsController < ApplicationController
   before_action :set_scoresheet, only: [:show, :edit, :update, :destroy]
   before_action :set_entry, only: [:create, :new, :edit, :update, :show]
-  before_action :verify_owns_scoresheet, only: [:edit, :update, :destroy]
+  # before_action :verify_owns_scoresheet, only: [:edit, :update, :destroy]  TODO: re-enable this so it doesn't break things
   before_action :verify_user_owns_entry, only: [:show]
 
   def verify_owns_scoresheet
