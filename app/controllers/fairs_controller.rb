@@ -6,7 +6,7 @@ class FairsController < ApplicationController
   # GET /fairs
   # GET /fairs.json
   def index
-    @fairs = Fair.all
+    @fairs = Fair.all.in_order
   end
 
   # GET /fairs/1
