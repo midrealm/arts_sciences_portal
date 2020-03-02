@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable
 
+  validates :sca_name, presence: true
+
   belongs_to :user_role
   belongs_to :region
 
