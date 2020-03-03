@@ -5,7 +5,7 @@
 
 <p>
   <strong>Description:</strong>
-  <%= @category.description %>
+  <%= simple_format @category.description %>
 </p>
 
 <p>
@@ -33,3 +33,14 @@
 <% end %>
 
 <%= link_to 'Back', categories_path %>
+
+<br>
+
+<script type="text/javascript">
+    function printpage()
+    {
+        window.print()
+    }
+</script>
+
+<%= link_to "Print Page", '#', onclick: "printpage()" %>

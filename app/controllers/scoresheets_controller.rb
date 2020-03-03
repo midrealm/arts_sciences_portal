@@ -3,8 +3,8 @@ include FairsHelper
 class ScoresheetsController < ApplicationController
   before_action :set_scoresheet, only: [:show, :edit, :update, :destroy]
   before_action :set_entry, only: [:create, :new, :edit, :update, :show]
-  before_action :verify_owns_scoresheet, only: [:edit, :update, :destroy]
-  before_action :verify_user_owns_entry, only: [:show]
+  # before_action :verify_owns_scoresheet, only: [:edit, :update, :destroy]  TODO: re-enable this so it doesn't break things
+  # before_action :verify_user_owns_entry, only: [:show]  TODO: re-enable this
 
   def verify_owns_scoresheet
     authorize @scoresheet, :owns_scoresheet?
@@ -24,6 +24,8 @@ class ScoresheetsController < ApplicationController
     else
       @entries = filter_unjudged(Entry.fair_entries(fair).judge_assigned_entries(current_user))
     end
+
+    @all_entries = filter_admin_unjudged(Entry.fair_entries(fair))
 
     if current_user.admin?
       @scoresheets = Scoresheet.all
@@ -118,7 +120,11 @@ class ScoresheetsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def scoresheet_params
-    params.permit(:entry_id).merge(user_id: current_user.id)
+    if current_user.admin?
+      params.permit(:entry_id).merge(user_id: params[:scoresheet][:user_id])
+    else
+      params.permit(:entry_id).merge(user_id: current_user.id)
+    end
   end
 
   def score_params(params)
@@ -138,6 +144,12 @@ class ScoresheetsController < ApplicationController
   def filter_unjudged(entries)
     entries.reject do |entry|
       !Scoresheet.find_by(entry_id: entry.id, user_id: current_user.id).nil?
+    end
+  end
+
+  def filter_admin_unjudged(entries)
+    entries.reject do |entry|
+      JudgeAssign.where(entry_id: entry.id).count == Scoresheet.where(entry_id: entry.id).count
     end
   end
 end

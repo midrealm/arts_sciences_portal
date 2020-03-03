@@ -21,10 +21,34 @@
 
 <hr>
 
+<% if current_user.admin? %>
+  <table>
+    <thead>
+    <tr>
+      <th>All Unjudged Entries (for admin entry)</th>
+      <th colspan="2"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @all_entries.each do |entry| %>
+      <tr>
+        <td><%= entry.entry_name %></td>
+        <td><%= link_to 'New Scoresheet', new_entry_scoresheet_path(entry) %></td>
+        <td><%= "You are assigned as a shadow judge." if JudgeAssign.find_by(entry_id: entry.id).shadow %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+
 <table>
   <thead>
   <tr>
     <th>Submitted scoresheets</th>
+    <% if current_user.admin? %>
+      <th>Judge</th>
+    <% end %>
     <th colspan="3"></th>
   </tr>
   </thead>
@@ -33,6 +57,9 @@
   <% @scoresheets.each do |scoresheet| %>
     <tr>
       <td><%= scoresheet.entry.entry_name %></td>
+      <% if current_user.admin? %>
+        <td><%= scoresheet.user.email_or_name %></td>
+      <% end %>
       <td><%= link_to 'View Details', entry_scoresheet_path(scoresheet.entry, scoresheet) %></td>
       <td><%= link_to 'Edit', edit_entry_scoresheet_path(scoresheet.entry, scoresheet) %></td>
       <% if current_user.admin? %>

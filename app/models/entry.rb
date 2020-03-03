@@ -61,14 +61,16 @@ class Entry < ApplicationRecord
   end
 
   def final_score
-    return 0 if self.scoresheets.empty?
-    entry_scoresheets = self.scoresheets
+    return 0 if scoresheets.empty?
+    entry_scoresheets = scoresheets.select{ |x| !x.shadow_scoresheet? }
+
+    return 0 if entry_scoresheets.empty?
 
     sum = 0
     entry_scoresheets.map do |scoresheet|
       sum = sum + scoresheet.total_score
     end
 
-    sum / entry_scoresheets.count
+    (sum / entry_scoresheets.count).truncate(2)
   end
 end

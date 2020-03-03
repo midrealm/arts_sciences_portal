@@ -6,7 +6,8 @@ class Fair < ApplicationRecord
   has_many :locations
 
   scope :allowed, -> { where(entries_allowed: true) }
-  scope :current, -> {where(finalized: false)}
+  scope :current, -> { where(finalized: false) }
+  scope :in_order, -> { order(:date) }
 
   def name_with_warning
     self.internet_access ? self.name : "#{self.name} - WARNING: electronic judging not available"
