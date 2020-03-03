@@ -36,6 +36,11 @@
 
   <% CriteriaType.all.children_for(criteria_type).applicable(@entry.category).each do |child_criteria| %>
     <strong><%= child_criteria.description %></strong>
+    <ul>
+      <% Criterium.where(criteria_type_id: child_criteria.id).each do |child_criterium| %>
+        <li><%= child_criterium.description %></li>
+      <% end %>
+    </ul>
     <%= render partial: 'sub_criteria_score', locals: {score: @scoresheet.scores.find_by(criteria_type_id: child_criteria.id)} %>
     <hr>
   <% end %>
