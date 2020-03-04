@@ -11,10 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  */
-//@import "bootstrap";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "bootstrap";
 
 /*!
  * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)
