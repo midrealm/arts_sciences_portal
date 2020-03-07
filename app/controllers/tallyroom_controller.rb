@@ -3,10 +3,10 @@ include FairsHelper
 class TallyroomController < ApplicationController
   def index
     fair = next_fair
-    @unjudged_entries = filter_admin_unjudged(Entry.fair_entries(fair))
     @scoresheets = Scoresheet.for_fair(fair)
     # @remaining_judges = JudgeAssign.where.not(entry_id: @scoresheets.pluck(:entry_id), user_id: @scoresheets.pluck(:user_id))
     @remaining_judges = JudgeAssign.for_fair(fair).reject {|assign| !@scoresheets.find_by(user_id: assign.user_id, entry_id: assign.entry_id).nil? }
+    @unjudged_entries = Entry.fair_entries(fair).where(id: @remaining_judges.pluck(:entry_id))
   end
 
   # GET /scoresheets/1
@@ -119,12 +119,6 @@ class TallyroomController < ApplicationController
   def filter_unjudged(entries)
     entries.reject do |entry|
       !Scoresheet.find_by(entry_id: entry.id, user_id: current_user.id).nil?
-    end
-  end
-
-  def filter_admin_unjudged(entries)
-    entries.reject do |entry|
-      JudgeAssign.where(entry_id: entry.id).count == Scoresheet.where(entry_id: entry.id).count
     end
   end
 end
