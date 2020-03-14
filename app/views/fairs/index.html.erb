@@ -12,6 +12,7 @@
       <th>Mail-In Scoresheets Available</th>
       <th>Scoresheets Available</th>
       <th>Finalized?</th>
+      <th>Kingdom?</th>
       <th colspan="7"></th>
     </tr>
   </thead>
@@ -28,6 +29,7 @@
         <td><%= fair.mail_in_scoresheets_allowed %></td>
         <td><%= fair.scoresheets_allowed %></td>
         <td><%= fair.finalized %></td>
+        <td><%= fair.kingdom %></td>
         <td><%= link_to 'View Schedule', view_schedule_fair_path(fair) %></td>
         <td><%= link_to 'Assign Schedule', schedule_fair_path(fair) %></td>
         <td><%= link_to 'Assign Judges', fair_judge_assigns_path(fair) %></td>

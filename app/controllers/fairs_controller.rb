@@ -107,7 +107,18 @@ class FairsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fair_params
-      params.require(:fair).permit(:date, :region_id, :name, :comment, :internet_access, :entries_allowed, :scheduling_visible, :mail_in_scoresheets_allowed, :scoresheets_allowed, :finalized)
+      params.require(:fair).permit(
+          :date,
+          :region_id,
+          :name,
+          :comment,
+          :internet_access,
+          :entries_allowed,
+          :scheduling_visible,
+          :mail_in_scoresheets_allowed,
+          :scoresheets_allowed,
+          :finalized,
+          :kingdom)
     end
 
   def update_assignments(judge_assignments)
