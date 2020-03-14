@@ -10,9 +10,9 @@ Rails.application.routes.draw do
   end
 
   get 'review', to: 'dashboard#review', as: 'review'
-  get 'tallyroom', to: 'tallyroom#index'
 
   resources :entries do
+    # post 'promote', on: :member, to: 'entries#promote'
     resources :user_entries, only: [:new, :create, :index, :destroy]
     resources :scoresheets, only: [:new, :create, :show, :update, :edit, :destroy]
   end
@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       post 'schedule', on: :member, to: 'fairs#submit_schedule'
       get 'schedule', on: :member
       get 'review', on: :member
+      get 'tallyroom', on: :member, to: 'fairs#tallyroom'
       resources :judge_assigns
     end
     resources :timeslots

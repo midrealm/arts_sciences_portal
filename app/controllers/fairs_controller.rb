@@ -1,7 +1,7 @@
 class FairsController < ApplicationController
   before_action :authenticate_user!
   before_action :verify_admin
-  before_action :set_fair, only: [:show, :edit, :update, :destroy, :schedule, :view_schedule, :submit_schedule, :review]
+  before_action :set_fair, only: [:show, :edit, :update, :destroy, :schedule, :view_schedule, :submit_schedule, :review, :tallyroom]
 
   # GET /fairs
   # GET /fairs.json
@@ -91,6 +91,12 @@ class FairsController < ApplicationController
 
     @entries = (Entry.non_pents(@fair) + Entry.disqualified_pents(@fair, disqualified_users))
                    .sort {|a,b| b.final_score <=> a.final_score}
+  end
+
+  def tallyroom
+    @scoresheets = Scoresheet.for_fair(@fair)
+    @remaining_judges = JudgeAssign.for_fair(@fair).reject {|assign| !@scoresheets.find_by(user_id: assign.user_id, entry_id: assign.entry_id).nil? }
+    @unjudged_entries = Entry.fair_entries(@fair).where(id: @remaining_judges.pluck(:entry_id))
   end
 
   private
