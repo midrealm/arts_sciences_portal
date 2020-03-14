@@ -40,7 +40,7 @@
           <td><%= link_to 'Delete Entry', entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
         <td><%= link_to 'Add Group Entrants', entry_user_entries_path(entry) %></td>
-<!--        <td><%#= link_to 'Promote to Kingdom', entry(entry) %></td>-->
+        <td><%= link_to 'Promote to Kingdom', promote_entry_path(entry) %></td>
       </tr>
     <% end %>
     </tbody>

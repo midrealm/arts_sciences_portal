@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get 'review', to: 'dashboard#review', as: 'review'
 
   resources :entries do
-    # post 'promote', on: :member, to: 'entries#promote'
+    get 'promote', on: :member, to: 'entries#promote'
     resources :user_entries, only: [:new, :create, :index, :destroy]
     resources :scoresheets, only: [:new, :create, :show, :update, :edit, :destroy]
   end

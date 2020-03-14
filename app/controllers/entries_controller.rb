@@ -1,8 +1,9 @@
 class EntriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_entry, only: [:show, :edit, :update, :destroy]
-  before_action :verify_user_entry, only: [:show, :edit, :update, :destroy]
+  before_action :set_entry, only: [:show, :edit, :update, :destroy, :promote]
+  before_action :verify_user_entry, only: [:show, :edit, :update, :destroy, :promote]
   before_action :verify_entry_editable, only: [:edit, :update, :destroy]
+  before_action :verify_promotable, only: [:promote]
 
   def verify_user_entry
     authorize @entry, :owns_entry?
@@ -10,6 +11,10 @@ class EntriesController < ApplicationController
 
   def verify_entry_editable
     authorize @entry, :entry_open?
+  end
+
+  def verify_promotable
+    authorize @entry, :kingdom_open?
   end
 
   # GET /entries
@@ -69,6 +74,24 @@ class EntriesController < ApplicationController
     @entry.destroy
     respond_to do |format|
       format.html { redirect_to entries_url, notice: 'Entry was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def promote
+    entrants = @entry.users
+
+    new_entry = @entry.dup
+    new_entry.save
+
+    entrants.each do |user|
+      UserEntry.create(entry_id: new_entry.id, user_id: user.id)
+    end
+
+    @entry.prior_entry_id = Entry.find(new_entry.id)
+
+    respond_to do |format|
+      format.html { redirect_to entries_url, notice: 'Entry was successfully promoted to Kingdom.' }
       format.json { head :no_content }
     end
   end

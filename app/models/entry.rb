@@ -9,6 +9,8 @@ class Entry < ApplicationRecord
   has_many :judge_assigns, dependent: :destroy
   has_many :scoresheets, dependent: :destroy
 
+  has_one :prior_entry, class_name: "Entry"
+
   validates_presence_of :entry_name
 
   scope :user_entries, -> (user) { joins(:user_entries).where('user_entries.user_id = ?', user.id) }

@@ -11,4 +11,8 @@ class EntryPolicy < ApplicationPolicy
   def entry_open?
     @user.admin? || (!@entry.fair.finalized && @entry.fair.entries_allowed)
   end
+
+  def kingdom_open?
+    @user.admin? || (!@entry.fair.finalized && @entry.fair.entries_allowed)
+  end
 end
