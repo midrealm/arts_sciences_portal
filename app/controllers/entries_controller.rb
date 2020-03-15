@@ -1,3 +1,5 @@
+include FairsHelper
+
 class EntriesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_entry, only: [:show, :edit, :update, :destroy, :promote]
@@ -14,7 +16,7 @@ class EntriesController < ApplicationController
   end
 
   def verify_promotable
-    authorize @entry, :kingdom_open?
+    authorize @entry, :promotable?
   end
 
   # GET /entries
@@ -82,13 +84,14 @@ class EntriesController < ApplicationController
     entrants = @entry.users
 
     new_entry = @entry.dup
+    new_entry.fair_id = next_kingdom_fair.id
     new_entry.save
 
     entrants.each do |user|
       UserEntry.create(entry_id: new_entry.id, user_id: user.id)
     end
 
-    @entry.prior_entry_id = Entry.find(new_entry.id)
+    @entry.prior_entry_id = new_entry.id
 
     respond_to do |format|
       format.html { redirect_to entries_url, notice: 'Entry was successfully promoted to Kingdom.' }
