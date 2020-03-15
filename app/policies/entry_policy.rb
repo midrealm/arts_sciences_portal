@@ -18,6 +18,6 @@ class EntryPolicy < ApplicationPolicy
     kingdom_fair = next_kingdom_fair
     # check that it hasn't already been promoted
     promoted_already = (@entry.fair_id == next_kingdom_fair.id || !Entry.find_by(prior_entry_id: @entry.id).nil?)
-    @user.admin? || (!promoted_already && kingdom_fair.entries_allowed) && @entry.final_score > 0)
+    @user.admin? || (!promoted_already && kingdom_fair.entries_allowed && @entry.final_score > 0)
   end
 end
