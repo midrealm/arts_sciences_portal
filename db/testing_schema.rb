@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_13_005124) do
+ActiveRecord::Schema.define(version: 2020_03_14_233550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,9 +91,11 @@ ActiveRecord::Schema.define(version: 2020_02_13_005124) do
     t.boolean "youth", default: false
     t.bigint "fair_id", null: false
     t.bigint "location_id"
+    t.bigint "prior_entry_id"
     t.index ["category_id"], name: "index_entries_on_category_id"
     t.index ["fair_id"], name: "index_entries_on_fair_id"
     t.index ["location_id"], name: "index_entries_on_location_id"
+    t.index ["prior_entry_id"], name: "index_entries_on_prior_entry_id"
     t.index ["timeslot_id"], name: "index_entries_on_timeslot_id"
   end
 
@@ -110,6 +112,7 @@ ActiveRecord::Schema.define(version: 2020_02_13_005124) do
     t.boolean "scoresheets_allowed", default: false
     t.boolean "mail_in_scoresheets_allowed", default: false
     t.boolean "finalized", default: false
+    t.boolean "kingdom", default: false
     t.index ["region_id"], name: "index_fairs_on_region_id"
   end
 

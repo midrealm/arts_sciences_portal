@@ -7,6 +7,7 @@ class Fair < ApplicationRecord
 
   scope :allowed, -> { where(entries_allowed: true) }
   scope :current, -> { where(finalized: false) }
+  scope :kingdom, -> { where(kingdom: true) }
   scope :in_order, -> { order(:date) }
 
   def name_with_warning

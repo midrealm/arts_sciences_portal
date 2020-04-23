@@ -1,7 +1,7 @@
 class FairsController < ApplicationController
   before_action :authenticate_user!
   before_action :verify_admin
-  before_action :set_fair, only: [:show, :edit, :update, :destroy, :schedule, :view_schedule, :submit_schedule, :review]
+  before_action :set_fair, only: [:show, :edit, :update, :destroy, :schedule, :view_schedule, :submit_schedule, :review, :tallyroom]
 
   # GET /fairs
   # GET /fairs.json
@@ -93,6 +93,12 @@ class FairsController < ApplicationController
                    .sort {|a,b| b.final_score <=> a.final_score}
   end
 
+  def tallyroom
+    @scoresheets = Scoresheet.for_fair(@fair)
+    @remaining_judges = JudgeAssign.for_fair(@fair).reject {|assign| !@scoresheets.find_by(user_id: assign.user_id, entry_id: assign.entry_id).nil? }
+    @unjudged_entries = Entry.fair_entries(@fair).where(id: @remaining_judges.pluck(:entry_id))
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fair
@@ -101,7 +107,18 @@ class FairsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fair_params
-      params.require(:fair).permit(:date, :region_id, :name, :comment, :internet_access, :entries_allowed, :scheduling_visible, :mail_in_scoresheets_allowed, :scoresheets_allowed, :finalized)
+      params.require(:fair).permit(
+          :date,
+          :region_id,
+          :name,
+          :comment,
+          :internet_access,
+          :entries_allowed,
+          :scheduling_visible,
+          :mail_in_scoresheets_allowed,
+          :scoresheets_allowed,
+          :finalized,
+          :kingdom)
     end
 
   def update_assignments(judge_assignments)
