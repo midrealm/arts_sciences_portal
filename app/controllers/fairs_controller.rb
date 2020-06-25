@@ -68,6 +68,10 @@ class FairsController < ApplicationController
   end
 
   def schedule
+    Rails.cache.write("selected", {}) if Rails.cache.fetch("selected").nil?
+    Rails.cache.write("judges", {}) if Rails.cache.fetch("judges").nil?
+    Rails.cache.write("assignments", {}) if Rails.cache.fetch("assignments").nil?
+
     @entries = Entry.fair_entries(@fair).order(:entry_name)
     @judges = User.volunteered(@fair).includes([:judge_assigns, :judge_preferences, :user_peerages])
   end

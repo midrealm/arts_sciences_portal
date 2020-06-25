@@ -1,4 +1,10 @@
 <h1>Schedule</h1>
+
+<a href="#"
+   data-reflex="click->ExampleReflex#reset"
+>Reset</a>
+
+
 <%= form_for :entries, :url => schedule_fair_path do |form| %>
   <table>
     <thead>
@@ -33,9 +39,16 @@
             <td colspan="8">
               <%= f.fields_for "judge_assigns[]", entry do |ff| %>
                 <% order_by_preference(@judges, entry).each do |user| %>
-                  <%= check_box_tag 'judge_assigns[]', "#{entry.id}_#{user.id}", user.judging_entry?(entry) %>
+                  <label class="<%= warn_of_dupes_for_judges(entry, user) %>">
+                  <%= check_box_tag 'judge_assigns[]', "#{entry.id}_#{user.id}",
+                                    # user.judging_entry?(entry),
+                                    is_judge_selected?(entry, user),
+                                    "data-entry" => entry.id,
+                                    "data-entrant" => user.id,
+                                    "data-reflex" => "change->ExampleReflex#judges" %>
                   <%= link_to user.email_or_name, user_judge_preferences_path(user), target: :_blank, class: user.color_class(entry) %>
                   <%= user.display_peerages %>
+                  </label>
                 <% end %>
               <% end %>
             </td>
