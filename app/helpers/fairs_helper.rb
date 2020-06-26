@@ -43,13 +43,14 @@ module FairsHelper
     entrants = UserEntry.where(entry_id: entry.id).pluck(:user_id)
     results = []
 
+    # you didn't check the timeslot matches dumbass
     entrants.each do |entrant|
       if assignments.has_key?(entrant.to_s)
         person_assignment = assignments[entrant.to_s].reject{ |x| x[:timeslot].nil? }
 
-        if person_assignment.collect { |x| x[:timeslot] }.uniq.length == person_assignment.length
+        if person_assignment.reject { |x| x[:timeslot] != timeslot.id.to_s }.length == 1
           results.push("yellow-background")
-        else
+        elsif person_assignment.reject { |x| x[:timeslot] != timeslot.id.to_s }.length > 1
           results.push("red-background")
         end
       end
