@@ -46,8 +46,8 @@ class ExampleReflex < ApplicationReflex
 
     judge_entry = {entry: entry, timeslot: timeslot, as: 'judge'}
 
-    assignments.each do |person|
-      if person.include?(judge_entry)
+    assignments.each do |key, person|
+      if person.any? { |x| x[:entry] == entry && x[:as] == 'judge' }
         person.delete_if { |x| x[:entry] == entry && x[:as] == 'judge' }
         person.push(judge_entry)
       end
@@ -99,9 +99,50 @@ class ExampleReflex < ApplicationReflex
   end
 
   def reset
-    Rails.cache.write("selected", {})
-    Rails.cache.write("judges", {})
-    Rails.cache.write("assignments", {})
+    fair = element.dataset[:fair]
+
+    selected = {}
+    Entry.fair_entries(fair).each { |x| selected[x.id.to_s] = x.timeslot_id.to_s unless x.timeslot_id.nil? }
+
+    judges = {}
+    JudgeAssign.for_fair(fair).each do |x|
+      if judges.has_key?(x.entry_id.to_s)
+        judges[x.entry_id.to_s].push(x.user_id.to_s)
+      else
+        judges[x.entry_id.to_s] = [x.user_id.to_s]
+      end
+    end
+
+    assignments = {}
+
+    selected.each do |entry, timeslot|
+      people = UserEntry.where(entry_id: entry).pluck(:user_id)
+      people.each do |person|
+        timeslot_entry = {entry: entry, timeslot: timeslot, as: 'entrant'}
+
+        if assignments.has_key?(person.to_s)
+          assignments[person.to_s].push(timeslot_entry)
+        else
+          assignments[person.to_s] = [timeslot_entry]
+        end
+      end
+
+      unless judges[entry].nil?
+        judge_entry = {entry: entry, timeslot: timeslot, as: 'judge'}
+
+        judges[entry].each do |judge|
+          if assignments.has_key?(judge)
+            assignments[judge].push(judge_entry)
+          else
+            assignments[judge] = [judge_entry]
+          end
+        end
+      end
+    end
+
+    Rails.cache.write("selected", selected)
+    Rails.cache.write("judges", judges)
+    Rails.cache.write("assignments", assignments)
   end
 
 end

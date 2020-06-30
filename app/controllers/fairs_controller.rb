@@ -64,15 +64,18 @@ class FairsController < ApplicationController
   end
 
   def view_schedule
-    @entries = Entry.fair_entries(@fair).in_schedule_order
+    @entries = Entry.fair_entries(@fair.id).in_schedule_order
   end
 
   def schedule
-    Rails.cache.write("selected", {}) if Rails.cache.fetch("selected").nil?
+    selected = {}
+    Entry.fair_entries(@fair.id).each { |x| selected[x.id.to_s] = x.timeslot_id.to_s unless x.timeslot_id.nil? }
+
+    Rails.cache.write("selected", selected) if Rails.cache.fetch("selected").nil?
     Rails.cache.write("judges", {}) if Rails.cache.fetch("judges").nil?
     Rails.cache.write("assignments", {}) if Rails.cache.fetch("assignments").nil?
 
-    @entries = Entry.fair_entries(@fair).order(:entry_name)
+    @entries = Entry.fair_entries(@fair.id).order(:entry_name)
     @judges = User.volunteered(@fair).includes([:judge_assigns, :judge_preferences, :user_peerages])
   end
 
@@ -99,8 +102,8 @@ class FairsController < ApplicationController
 
   def tallyroom
     @scoresheets = Scoresheet.for_fair(@fair)
-    @remaining_judges = JudgeAssign.for_fair(@fair).reject {|assign| !@scoresheets.find_by(user_id: assign.user_id, entry_id: assign.entry_id).nil? }
-    @unjudged_entries = Entry.fair_entries(@fair).where(id: @remaining_judges.pluck(:entry_id))
+    @remaining_judges = JudgeAssign.for_fair(@fair.id).reject {|assign| !@scoresheets.find_by(user_id: assign.user_id, entry_id: assign.entry_id).nil? }
+    @unjudged_entries = Entry.fair_entries(@fair.id).where(id: @remaining_judges.pluck(:entry_id))
   end
 
   private

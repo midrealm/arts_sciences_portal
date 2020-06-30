@@ -1,9 +1,9 @@
 <h1>Schedule</h1>
 
-<a href="#"
-   data-reflex="click->ExampleReflex#reset"
->Reset</a>
-
+<div>
+  <p>Scheduling changes will be stored but NOT saved until submitted.  The reset button will clear pending changes.</p>
+  <p><a href="#" data-fair="<%= @fair.id %>" data-reflex="click->ExampleReflex#reset">Reset</a></p>
+</div>
 
 <%= form_for :entries, :url => schedule_fair_path do |form| %>
   <table>
