@@ -71,6 +71,7 @@ GEM
     cable_ready (4.1.2)
       rails (>= 5.2)
     concurrent-ruby (1.1.6)
+    connection_pool (2.2.3)
     crass (1.0.6)
     dalli (2.7.10)
     devise (4.7.1)
@@ -272,6 +273,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   bootstrap (~> 4.3.1)
   byebug
+  connection_pool
   dalli
   devise
   factory_bot_rails

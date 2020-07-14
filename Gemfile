@@ -28,6 +28,7 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'sendgrid-ruby'
 gem 'dalli'
+gem 'connection_pool'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
