@@ -68,12 +68,15 @@ class FairsController < ApplicationController
   end
 
   def schedule
-    selected = {}
-    Entry.fair_entries(@fair.id).each { |x| selected[x.id.to_s] = x.timeslot_id.to_s unless x.timeslot_id.nil? }
+    @selected = Rails.cache.fetch("selected")
+    @judges = Rails.cache.fetch("judges")
+    @assignments = Rails.cache.fetch("assignments")
 
-    Rails.cache.write("selected", selected) if Rails.cache.fetch("selected").nil?
-    Rails.cache.write("judges", {}) if Rails.cache.fetch("judges").nil?
-    Rails.cache.write("assignments", {}) if Rails.cache.fetch("assignments").nil?
+    reset if @selected.nil? && @judges.nil? && @assignments.nil?
+
+    @selected = Rails.cache.fetch("selected")
+    @judges_selected = Rails.cache.fetch("judges")
+    @assignments = Rails.cache.fetch("assignments")
 
     @entries = Entry.fair_entries(@fair.id).order(:entry_name)
     @judges = User.volunteered(@fair).includes([:judge_assigns, :judge_preferences, :user_peerages])
@@ -152,5 +155,53 @@ class FairsController < ApplicationController
         JudgeAssign.create(user_id: new_judge, entry_id: entry) if JudgeAssign.find_by(user_id: new_judge, entry_id: entry).nil?
       end
     end
+  end
+
+  # this is duplicated code
+  def reset
+    fair = @fair
+
+    selected = {}
+    Entry.fair_entries(fair).each { |x| selected[x.id.to_s] = x.timeslot_id.to_s unless x.timeslot_id.nil? }
+
+    judges = {}
+    JudgeAssign.for_fair(fair).each do |x|
+      if judges.has_key?(x.entry_id.to_s)
+        judges[x.entry_id.to_s].push(x.user_id.to_s)
+      else
+        judges[x.entry_id.to_s] = [x.user_id.to_s]
+      end
+    end
+
+    assignments = {}
+
+    selected.each do |entry, timeslot|
+      people = UserEntry.where(entry_id: entry).pluck(:user_id)
+      people.each do |person|
+        timeslot_entry = {entry: entry, timeslot: timeslot, as: 'entrant'}
+
+        if assignments.has_key?(person.to_s)
+          assignments[person.to_s].push(timeslot_entry)
+        else
+          assignments[person.to_s] = [timeslot_entry]
+        end
+      end
+
+      unless judges[entry].nil?
+        judge_entry = {entry: entry, timeslot: timeslot, as: 'judge'}
+
+        judges[entry].each do |judge|
+          if assignments.has_key?(judge)
+            assignments[judge].push(judge_entry)
+          else
+            assignments[judge] = [judge_entry]
+          end
+        end
+      end
+    end
+
+    Rails.cache.write("selected", selected)
+    Rails.cache.write("judges", judges)
+    Rails.cache.write("assignments", assignments)
   end
 end

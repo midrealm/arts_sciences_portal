@@ -27,19 +27,16 @@ module FairsHelper
     end
   end
 
-  def is_selected?(entry, timeslot)
-    Rails.cache.fetch("selected")[entry.id.to_s] == timeslot.id.to_s
+  def is_selected?(selected, entry, timeslot)
+    selected[entry.id.to_s] == timeslot.id.to_s
   end
 
-  def is_judge_selected?(entry, entrant)
-    judges = Rails.cache.fetch("judges")
+  def is_judge_selected?(judges, entry, entrant)
     return false unless judges.has_key?(entry.id.to_s)
     judges[entry.id.to_s].include?(entrant.id.to_s)
   end
 
-  def warn_of_dupes(entry, timeslot)
-    assignments = Rails.cache.fetch("assignments")
-
+  def warn_of_dupes(assignments, entry, timeslot)
     entrants = UserEntry.where(entry_id: entry.id).pluck(:user_id)
     results = []
 
@@ -62,14 +59,12 @@ module FairsHelper
     ""
   end
 
-  def warn_of_dupes_for_judges(entry, user)
-    assignments = Rails.cache.fetch("assignments")
-
+  def warn_of_dupes_for_judges(assignments, selected, entry, user)
     return "" unless assignments.has_key?(user.id.to_s)
 
     person_assignment = assignments[user.id.to_s].reject{ |x| x[:timeslot].nil? }
 
-    timeslot = Rails.cache.fetch("selected")[entry.id.to_s]
+    timeslot = selected[entry.id.to_s]
     return "" if timeslot.nil?
 
     return "" unless person_assignment.collect{ |x| x[:timeslot] }.include?(timeslot)

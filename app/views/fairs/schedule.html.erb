@@ -28,7 +28,7 @@
           <%= entry.entrant_string %>
         </td>
         <%= fields_for "entries[]", entry do |f| %>
-          <%= render partial: 'bulk_update_entry_timeslot', locals: {form: f, entry: entry} %>
+          <%= render partial: 'bulk_update_entry_timeslot', locals: {form: f, assignments: @assignments, selected: @selected, entry: entry} %>
           <td>
             <div class="field">
               <%= f.select :location_id, Location.for_fair(entry.fair).map { |m| [m.description, m.id] } %>
@@ -39,10 +39,10 @@
             <td colspan="8">
               <%= f.fields_for "judge_assigns[]", entry do |ff| %>
                 <% order_by_preference(@judges, entry).each do |user| %>
-                  <label class="<%= warn_of_dupes_for_judges(entry, user) %>">
+                  <label class="<%= warn_of_dupes_for_judges(@assignments, @selected, entry, user) %>">
                   <%= check_box_tag 'judge_assigns[]', "#{entry.id}_#{user.id}",
                                     # user.judging_entry?(entry),
-                                    is_judge_selected?(entry, user),
+                                    is_judge_selected?(@judges_selected, entry, user),
                                     "data-entry" => entry.id,
                                     "data-entrant" => user.id,
                                     "data-reflex" => "change->ExampleReflex#judges" %>
