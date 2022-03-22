@@ -11,7 +11,7 @@ module EntriesHelper
   end
 
   def div_score_for(user, fair)
-    divs = Entry.divisions(fair).user_entries(user).sort {|a,b| b.final_score <=> a.final_score}
+    divs = Entry.division_types(fair).user_entries(user).sort {|a,b| b.final_score <=> a.final_score}
     top_three = divs.slice(0, 3)
     sum = 0
 

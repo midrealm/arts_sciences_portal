@@ -71,6 +71,6 @@ class CriteriaController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def criterium_params
-      params.require(:criterium).permit(:description, :criteria_type_id, :category_id, :suggested_score, :optional)
+      params.require(:criterium).permit(:description, :criteria_type_id, :division_id, :suggested_score, :optional)
     end
 end

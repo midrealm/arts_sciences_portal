@@ -20,17 +20,12 @@
 
   <p>
     <strong>Name:</strong>
-    <%= @entry.category.name %>
+    <%= @entry.division.name %>
   </p>
 
   <p>
     <strong>Description:</strong>
-    <%= simple_format @entry.category.description %>
-  </p>
-
-  <p>
-    <strong>Division:</strong>
-    <%= @entry.category.division.name %>
+    <%= simple_format @entry.division.description %>
   </p>
 
   <% CriteriaType.all.top_level.in_order.each do |criteria_type| %>
@@ -38,16 +33,16 @@
       <strong><%= criteria_type.description %></strong>
     </p>
 
-    <p><%= CriteriaDescription.description_for_category(criteria_type.id, @entry.category.id) %></p>
+    <p><%= CriteriaDescription.description_for_division(criteria_type.id, @entry.division.id) %></p>
 
-    <% Criterium.all.by_type(criteria_type.id).by_category(@entry.category.id).order(:suggested_score).each do |criteria| %>
+    <% Criterium.all.by_type(criteria_type.id).by_division(@entry.division.id).order(:suggested_score).each do |criteria| %>
       <p><%= "#{criteria.suggested_score} - #{criteria.description}" %></p>
     <% end %>
 
 
 <!-- children start here -->
 
-    <% CriteriaType.all.children_for(criteria_type).applicable(@entry.category).each do |child_criteria| %>
+    <% CriteriaType.all.children_for(criteria_type).applicable(@entry.division).each do |child_criteria| %>
       <strong><%= child_criteria.description %></strong>
       <ul>
         <% Criterium.where(criteria_type_id: child_criteria.id).each do |child_criterium| %>

@@ -28,13 +28,13 @@ function printpage()
     window.print()
 }
 
-$(document).on("change", "#entry_category_id", function() {
-    var entryCategoryDesc = $("#entry_category_desc");
+$(document).on("change", "#entry_division_id", function() {
+    var entryDivisionDesc = $("#entry_division_desc");
 
-    $.get("/admin/categories/" + $('#entry_category_id').val() + ".json", function(data) {
-        entryCategoryDesc.html("<p>" + data.description.replace(/\n\r/g, "</p><p>") + "</p>");
+    $.get("/admin/divisions/" + $('#entry_division_id').val() + ".json", function(data) {
+        entryDivisionDesc.html("<p>" + data.description.replace(/\n\r/g, "</p><p>") + "</p>");
 
-        if(data.mail_in) {
+        if(data.name == "Research") {
             $('#mail_in_warning').text("This is a mail-in category.");
         } else {
             $('#mail_in_warning').text("")

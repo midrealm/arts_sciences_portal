@@ -22,10 +22,9 @@ Rails.application.routes.draw do
       resources :judge_preferences, only: [:new, :create, :index]
     end
     resources :user_roles
-    resources :categories do
+    resources :divisions do
       get 'scoresheet', on: :member
     end
-    resources :divisions
     resources :regions
     resources :fairs do
       get 'view_schedule', on: :member, to: 'fairs#view_schedule'

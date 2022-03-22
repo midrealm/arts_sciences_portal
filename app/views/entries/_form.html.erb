@@ -45,12 +45,12 @@
   <br>
 
   <div class="field">
-    <%= form.label :category %>
-    <%= form.select :category_id, Category.all.default_order.map{ |m| ["#{m.division.name} - #{m.name}", m.id] }%>
+    <%= form.label :division %>
+    <%= form.select :division_id, Division.all.default_order.map{ |m| [m.name, m.id] }%>
   </div>
 
-  <div id="entry_category_desc">
-    <p><%= simple_format Category.default_order.first.description %></p>
+  <div id="entry_division_desc">
+    <p><%= simple_format Division.default_order.first.description %></p>
     <p id="mail_in_warning"></p>
   </div>
 
@@ -77,8 +77,8 @@
   </div>
 
   <div class="field">
-    <%= form.check_box :division %>
-    <%= form.label :division %>
+    <%= form.check_box :division_type %>
+    <%= form.label :division_type %>
   </div>
 
   <div class="field">

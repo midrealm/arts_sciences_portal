@@ -9,6 +9,6 @@ class CriteriaType < ApplicationRecord
   scope :top_level, -> { where('parent_id is null') }
   scope :children, -> { where.not('parent_id is null') }
   scope :children_for, -> (parent) { where('parent_id = ?', parent.id) }
-  scope :applicable, -> (category) { joins(:applicable_criteriums).where('applicable_criteria.category_id = ?', category.id) }
+  scope :applicable, -> (division) { joins(:applicable_criteriums).where('applicable_criteria.division_id = ?',division.id) }
   scope :in_order, -> { sort_by{|thing| ORDER_ARRAY.index thing.description} }
 end

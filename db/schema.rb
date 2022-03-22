@@ -10,50 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_14_233550) do
+ActiveRecord::Schema.define(version: 2022_03_19_164717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "applicable_criteria", force: :cascade do |t|
     t.bigint "criteria_type_id", null: false
-    t.bigint "category_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["category_id"], name: "index_applicable_criteria_on_category_id"
-    t.index ["criteria_type_id"], name: "index_applicable_criteria_on_criteria_type_id"
-  end
-
-  create_table "categories", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "division_id", null: false
-    t.boolean "mail_in", default: false
-    t.index ["division_id"], name: "index_categories_on_division_id"
+    t.index ["criteria_type_id"], name: "index_applicable_criteria_on_criteria_type_id"
+    t.index ["division_id"], name: "index_applicable_criteria_on_division_id"
   end
 
   create_table "criteria", force: :cascade do |t|
     t.text "description"
     t.bigint "criteria_type_id", null: false
-    t.bigint "category_id", null: false
     t.integer "suggested_score"
     t.boolean "optional"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["category_id"], name: "index_criteria_on_category_id"
+    t.bigint "division_id", null: false
     t.index ["criteria_type_id"], name: "index_criteria_on_criteria_type_id"
+    t.index ["division_id"], name: "index_criteria_on_division_id"
   end
 
   create_table "criteria_descriptions", force: :cascade do |t|
     t.text "description"
-    t.bigint "category_id", null: false
     t.bigint "criteria_type_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["category_id"], name: "index_criteria_descriptions_on_category_id"
+    t.bigint "division_id", null: false
     t.index ["criteria_type_id"], name: "index_criteria_descriptions_on_criteria_type_id"
+    t.index ["division_id"], name: "index_criteria_descriptions_on_division_id"
   end
 
   create_table "criteria_types", force: :cascade do |t|
@@ -71,6 +61,7 @@ ActiveRecord::Schema.define(version: 2020_03_14_233550) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "description"
   end
 
   create_table "entries", force: :cascade do |t|
@@ -78,7 +69,6 @@ ActiveRecord::Schema.define(version: 2020_03_14_233550) do
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "category_id", null: false
     t.bigint "timeslot_id"
     t.boolean "in_person", default: true
     t.boolean "scored", default: true
@@ -86,13 +76,14 @@ ActiveRecord::Schema.define(version: 2020_03_14_233550) do
     t.string "culture"
     t.string "time_period"
     t.boolean "pentathlon", default: false
-    t.boolean "division", default: false
+    t.boolean "division_type", default: false
     t.boolean "first_time", default: false
     t.boolean "youth", default: false
     t.bigint "fair_id", null: false
     t.bigint "location_id"
     t.bigint "prior_entry_id"
-    t.index ["category_id"], name: "index_entries_on_category_id"
+    t.bigint "division_id", null: false
+    t.index ["division_id"], name: "index_entries_on_division_id"
     t.index ["fair_id"], name: "index_entries_on_fair_id"
     t.index ["location_id"], name: "index_entries_on_location_id"
     t.index ["prior_entry_id"], name: "index_entries_on_prior_entry_id"
@@ -142,8 +133,8 @@ ActiveRecord::Schema.define(version: 2020_03_14_233550) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
-    t.bigint "category_id", null: false
-    t.index ["category_id"], name: "index_judge_preferences_on_category_id"
+    t.bigint "division_id", null: false
+    t.index ["division_id"], name: "index_judge_preferences_on_division_id"
     t.index ["user_id"], name: "index_judge_preferences_on_user_id"
   end
 
@@ -240,14 +231,13 @@ ActiveRecord::Schema.define(version: 2020_03_14_233550) do
     t.index ["user_role_id"], name: "index_users_on_user_role_id"
   end
 
-  add_foreign_key "applicable_criteria", "categories"
   add_foreign_key "applicable_criteria", "criteria_types"
-  add_foreign_key "categories", "divisions"
-  add_foreign_key "criteria", "categories"
+  add_foreign_key "applicable_criteria", "divisions"
   add_foreign_key "criteria", "criteria_types"
-  add_foreign_key "criteria_descriptions", "categories"
+  add_foreign_key "criteria", "divisions"
   add_foreign_key "criteria_descriptions", "criteria_types"
-  add_foreign_key "entries", "categories"
+  add_foreign_key "criteria_descriptions", "divisions"
+  add_foreign_key "entries", "divisions"
   add_foreign_key "entries", "fairs"
   add_foreign_key "entries", "locations"
   add_foreign_key "entries", "timeslots"
@@ -256,7 +246,7 @@ ActiveRecord::Schema.define(version: 2020_03_14_233550) do
   add_foreign_key "judge_assigns", "users"
   add_foreign_key "judge_fairs", "fairs"
   add_foreign_key "judge_fairs", "users"
-  add_foreign_key "judge_preferences", "categories"
+  add_foreign_key "judge_preferences", "divisions"
   add_foreign_key "judge_preferences", "users"
   add_foreign_key "locations", "fairs"
   add_foreign_key "scores", "criteria_types"

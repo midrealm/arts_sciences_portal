@@ -5,7 +5,6 @@
   <tr>
     <th>Entry</th>
     <th>Entrants</th>
-    <th>Category</th>
     <th>Division</th>
     <th>Score</th>
     <!--    <th colspan="6"></th>-->
@@ -14,7 +13,7 @@
 
   <tbody>
   <% Division.all.each do |division| %>
-    <% @entries.select{ |x| x.category.division_id == division.id }.each do |entry| %>
+    <% @entries.select{ |x| x.division_id == division.id }.each do |entry| %>
       <tr>
         <td><%= "#{entry.pent_or_div}#{entry.entry_name}" %></td>
         <td>
@@ -22,7 +21,6 @@
             <%= user.sca_name %><br>
           <% end %>
         </td>
-        <td><%= entry.category.name %></td>
         <td>
           <%= division.name %>
         </td>
@@ -47,7 +45,7 @@
   <tr>
     <th>Entry</th>
     <th>Entrants</th>
-    <th>Category</th>
+    <th>Division</th>
     <th>Score</th>
     <!--    <th colspan="6"></th>-->
   </tr>
@@ -62,7 +60,7 @@
       <tr>
         <td><%= pent.entry_name %></td>
         <td><%= pent.users.first.sca_name %></td>
-        <td><%= pent.category.name %></td>
+        <td><%= pent.division.name %></td>
         <td><%= pent.final_score %></td>
       </tr>
     <% end %>

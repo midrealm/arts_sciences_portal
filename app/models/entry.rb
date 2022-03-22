@@ -1,5 +1,5 @@
 class Entry < ApplicationRecord
-  belongs_to :category
+  belongs_to :division
   belongs_to :timeslot, optional: true
   belongs_to :fair
   belongs_to :location, optional: true
@@ -19,7 +19,7 @@ class Entry < ApplicationRecord
   scope :in_schedule_order, -> { joins(:timeslot).order(order: :asc) }
   scope :non_pents, -> (fair) { where(pentathlon: false).where('fair_id = ?', fair.id) }
   scope :pentathlons, -> (fair) { where(pentathlon: true).where('fair_id = ?', fair.id) }
-  scope :divisions, -> (fair) { where(division: true).where('fair_id = ?', fair.id) }
+  scope :division_types, -> (fair) { where(division_type: true).where('fair_id = ?', fair.id) }
   scope :qualified_pents, -> (fair, disqualified_users) { pentathlons(fair).joins(:user_entries).where.not(:user_entries => {user_id: disqualified_users}) }
   scope :disqualified_pents, -> (fair, disqualified_users) { pentathlons(fair).joins(:user_entries).where(:user_entries => {user_id: disqualified_users}) }
 
