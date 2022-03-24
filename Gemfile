@@ -20,6 +20,9 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# check if this can be removed next time ruby is upgraded
+gem 'psych', '< 4'
+
 gem 'pg'
 gem 'devise'
 gem 'pundit'
