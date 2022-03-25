@@ -121,7 +121,7 @@ Rails.application.configure do
   # config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"
-  config.action_mailer.default_url_options = { :host => 'https://a-and-s-portal.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'a-and-s-portal.herokuapp.com' }
   #
   # config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = {
@@ -139,7 +139,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     :user_name => ENV['MAILGUN_SMTP_LOGIN'],
     :password => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain => 'herokuapp.com',
+    :domain => 'a-and-s-portal.herokuapp.com',
     :address => ENV['MAILGUN_SMTP_SERVER'],
     :port => ENV['MAILGUN_SMTP_PORT'],
     :authentication => :plain,
