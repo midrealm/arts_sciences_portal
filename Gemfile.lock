@@ -198,7 +198,6 @@ GEM
       rspec-support (~> 3.10)
     rspec-support (3.11.0)
     ruby_dep (1.5.0)
-    ruby_http_client (3.5.5)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -218,8 +217,6 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    sendgrid-ruby (6.6.2)
-      ruby_http_client (~> 3.4)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -278,7 +275,6 @@ DEPENDENCIES
   rspec-junklet
   rspec-rails (~> 4.0.0.beta2)
   sass-rails (~> 5)
-  sendgrid-ruby
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)

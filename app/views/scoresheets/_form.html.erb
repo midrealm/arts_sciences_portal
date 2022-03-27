@@ -28,14 +28,14 @@
     <%= simple_format @entry.division.description %>
   </p>
 
-  <% CriteriaType.all.top_level.in_order.each do |criteria_type| %>
+  <% CriteriaType.all.by_division(@entry.division).in_order.each do |criteria_type| %>
     <p>
-      <strong><%= criteria_type.description %></strong>
+      <strong><%= criteria_type.name %></strong>
     </p>
 
-    <p><%= CriteriaDescription.description_for_division(criteria_type.id, @entry.division.id) %></p>
+    <p><%= criteria_type.description %></p>
 
-    <% Criterium.all.by_type(criteria_type.id).by_division(@entry.division.id).order(:suggested_score).each do |criteria| %>
+    <% criteria_type.criteriums.order(:suggested_score).each do |criteria| %>
       <p><%= "#{criteria.suggested_score} - #{criteria.description}" %></p>
     <% end %>
 
@@ -57,13 +57,13 @@
 
 <!-- children end here -->
 
-    <b><%= "Total Score for #{criteria_type.description}" %></b>
+    <b><%= "Score for #{criteria_type.description}" %></b>
     <%= form.fields_for 'scores[]', @scoresheet.scores.select {|n| n.criteria_type_id == criteria_type.id}.first do |score_fields| %>
-      <% if ["Scope", "Skill"].include?(criteria_type.description) %>
-        <%= render partial: 'scoresheet_sub_criteria_total', locals: {form: score_fields, criteria: criteria_type} %>
-      <% else %>
+      <%# if ["Scope", "Skill"].include?(criteria_type.description) %>
+        <%#= render partial: 'scoresheet_sub_criteria_total', locals: {form: score_fields, criteria: criteria_type} %>
+      <%# else %>
         <%= render partial: 'scoresheet', locals: {form: score_fields, criteria: criteria_type} %>
-      <% end %>
+      <%# end %>
     <% end %>
     <hr>
   <% end %>

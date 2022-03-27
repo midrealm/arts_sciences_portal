@@ -12,13 +12,23 @@
   <% end %>
 
   <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
     <%= form.label :description %>
-    <%= form.text_field :description %>
+    <%= form.text_area :description %>
   </div>
 
   <div class="field">
     <%= form.label :max_score %>
     <%= form.number_field :max_score %>
+  </div>
+
+  <div class="field">
+    <%= form.label :division %>
+    <%= form.select :division_id, Division.all.map{ |m| [m.name, m.id] } %>
   </div>
 
   <div class="field">

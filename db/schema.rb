@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_19_164717) do
+ActiveRecord::Schema.define(version: 2022_03_27_014101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,9 +31,7 @@ ActiveRecord::Schema.define(version: 2022_03_19_164717) do
     t.boolean "optional"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "division_id", null: false
     t.index ["criteria_type_id"], name: "index_criteria_on_criteria_type_id"
-    t.index ["division_id"], name: "index_criteria_on_division_id"
   end
 
   create_table "criteria_descriptions", force: :cascade do |t|
@@ -47,13 +45,16 @@ ActiveRecord::Schema.define(version: 2022_03_19_164717) do
   end
 
   create_table "criteria_types", force: :cascade do |t|
-    t.string "description"
+    t.string "name"
     t.integer "max_score"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "criteria_type_id"
     t.bigint "parent_id"
+    t.text "description"
+    t.bigint "division_id", null: false
     t.index ["criteria_type_id"], name: "index_criteria_types_on_criteria_type_id"
+    t.index ["division_id"], name: "index_criteria_types_on_division_id"
     t.index ["parent_id"], name: "index_criteria_types_on_parent_id"
   end
 
@@ -234,9 +235,9 @@ ActiveRecord::Schema.define(version: 2022_03_19_164717) do
   add_foreign_key "applicable_criteria", "criteria_types"
   add_foreign_key "applicable_criteria", "divisions"
   add_foreign_key "criteria", "criteria_types"
-  add_foreign_key "criteria", "divisions"
   add_foreign_key "criteria_descriptions", "criteria_types"
   add_foreign_key "criteria_descriptions", "divisions"
+  add_foreign_key "criteria_types", "divisions"
   add_foreign_key "entries", "divisions"
   add_foreign_key "entries", "fairs"
   add_foreign_key "entries", "locations"

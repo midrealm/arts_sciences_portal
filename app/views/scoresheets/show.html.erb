@@ -18,27 +18,27 @@
   <%= simple_format @entry.division.description %>
 </p>
 
-<% CriteriaType.all.top_level.in_order.each do |criteria_type| %>
+<% CriteriaType.by_division(@entry.division).in_order.each do |criteria_type| %>
   <p>
-    <strong><%= criteria_type.description %></strong>
+    <strong><%= criteria_type.name %></strong>
   </p>
 
-  <p><%= CriteriaDescription.description_for_division(criteria_type.id, @entry.division.id) %></p>
+  <p><%= criteria_type.description %></p>
 
-  <% Criterium.all.by_type(criteria_type.id).by_division(@entry.division.id).order(:suggested_score).each do |criteria| %>
+  <% criteria_type.criteriums.order(:suggested_score).each do |criteria| %>
     <p><%= "#{criteria.suggested_score} - #{criteria.description}" %></p>
   <% end %>
 
-  <% CriteriaType.all.children_for(criteria_type).applicable(@entry.division).each do |child_criteria| %>
-    <strong><%= child_criteria.description %></strong>
-    <ul>
-      <% Criterium.where(criteria_type_id: child_criteria.id).each do |child_criterium| %>
-        <li><%= child_criterium.description %></li>
-      <% end %>
-    </ul>
-    <%= render partial: 'sub_criteria_score', locals: {score: @scoresheet.scores.find_by(criteria_type_id: child_criteria.id)} %>
-    <hr>
-  <% end %>
+  <%# CriteriaType.all.children_for(criteria_type).applicable(@entry.division).each do |child_criteria| %>
+<!--    <strong><%#= child_criteria.description %></strong>-->
+<!--    <ul>-->
+      <%# Criterium.where(criteria_type_id: child_criteria.id).each do |child_criterium| %>
+<!--        <li><%#= child_criterium.description %></li>-->
+      <%# end %>
+<!--    </ul>-->
+    <%#= render partial: 'sub_criteria_score', locals: {score: @scoresheet.scores.find_by(criteria_type_id: child_criteria.id)} %>
+<!--    <hr>-->
+  <%# end %>
 
   <%= render partial: 'score', locals: {score: @scoresheet.scores.find_by(criteria_type_id: criteria_type.id)} %>
   <hr>

@@ -22,11 +22,6 @@
   </div>
 
   <div class="field">
-    <%= form.label :division %>
-    <%= form.select :division_id, Division.all.map{ |m| [m.name, m.id] }%>
-  </div>
-
-  <div class="field">
     <%= form.label :suggested_score %>
     <%= form.number_field :suggested_score %>
   </div>
