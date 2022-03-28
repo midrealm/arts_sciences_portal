@@ -16,7 +16,7 @@
     <% @criteria.each do |criterium| %>
       <tr>
         <td><%= criterium.description %></td>
-        <td><%= criterium.criteria_type.description %></td>
+        <td><%= criterium.criteria_type.name %></td>
         <td><%= criterium.criteria_type.division.name %></td>
         <td><%= criterium.suggested_score %></td>
         <td><%= criterium.optional %></td>
