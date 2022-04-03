@@ -22,8 +22,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :category %>
-    <%= form.select :category_id, Category.all.map{ |m| [m.name, m.id] }%>
+    <%= form.label :division %>
+    <%= form.select :division_id, Division.all.map{ |m| [m.name, m.id] }%>
   </div>
 
   <div class="actions">

@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th>Description</th>
-      <th>Category</th>
+      <th>Division</th>
       <th>Criteria type</th>
       <th colspan="3"></th>
     </tr>
@@ -14,7 +14,7 @@
     <% @criteria_descriptions.each do |criteria_description| %>
       <tr>
         <td><%= criteria_description.description %></td>
-        <td><%= criteria_description.category.name %></td>
+        <td><%= criteria_description.division.name %></td>
         <td><%= criteria_description.criteria_type.description %></td>
         <td><%= link_to 'Show', criteria_description %></td>
         <td><%= link_to 'Edit', edit_criteria_description_path(criteria_description) %></td>

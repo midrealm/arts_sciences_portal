@@ -109,14 +109,14 @@ class EntriesController < ApplicationController
       params.require(:entry).permit(
         :entry_name,
         :description,
-        :category_id,
+        :division_id,
         :in_person,
         :scored,
         :materials,
         :culture,
         :time_period,
         :pentathlon,
-        :division,
+        :division_type,
         :first_time,
         :youth,
         :fair_id

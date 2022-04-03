@@ -1,8 +1,8 @@
 module FairsHelper
-  def scoresheets_visible?(fair, user)
+  def scoresheets_visible?(fair, current_user)
     return true if fair.scoresheets_allowed
-    entries = fair.entries.judge_assigned_entries(current_user).joins(:category).pluck(:'categories.mail_in')
-    entries.include?(true) && fair.mail_in_scoresheets_allowed
+    entries = fair.entries.judge_assigned_entries(current_user).joins(:division).where('divisions.name = ?', 'Research')
+    !entries.empty? && fair.mail_in_scoresheets_allowed
   end
 
   def next_fair
@@ -19,7 +19,7 @@ module FairsHelper
         1
       elsif b.judge_preferences.empty?
         0
-      elsif a.judge_preferences.where(category_id: entry.category_id).empty?
+      elsif a.judge_preferences.where(division_id: entry.division_id).empty?
         1
       else
         0

@@ -13,8 +13,7 @@ class Scoresheet < ApplicationRecord
   end
 
   def total_score
-    top_level_criteria = CriteriaType.top_level.pluck(:id)
-    all_relevant_scores = self.scores.where(criteria_type_id: top_level_criteria).pluck(:score)
+    all_relevant_scores = self.scores.pluck(:score)
     all_relevant_scores.reduce(:+)
   end
 end

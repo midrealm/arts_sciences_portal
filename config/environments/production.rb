@@ -121,7 +121,7 @@ Rails.application.configure do
   # config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"
-  config.action_mailer.default_url_options = { :host => 'https://a-and-s-portal.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'a-and-s-portal.herokuapp.com' }
   #
   # config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = {
@@ -133,14 +133,17 @@ Rails.application.configure do
   #   :authentication => :plain
   # }
 
-  # MAILGUN
-  ActionMailer::Base.smtp_settings = {
-    :port           => ENV['MAILGUN_SMTP_PORT'],
-    :address        => ENV['MAILGUN_SMTP_SERVER'],
-    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
-    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => 'a-and-s-portal.herokuapp.com',
-    :authentication => :plain,
+  # Mailgun
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+
+  # SMTP settings for gmail
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :user_name            => ENV["GMAIL_USERNAME"],
+    :password             => ENV["GMAIL_PASSWORD"],
+    :authentication       => "plain",
+    :enable_starttls_auto => true
   }
-  ActionMailer::Base.delivery_method = :smtp
 end

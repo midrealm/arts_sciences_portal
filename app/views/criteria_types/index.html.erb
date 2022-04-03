@@ -3,9 +3,10 @@
 <table>
   <thead>
     <tr>
+      <th>Name</th>
       <th>Description</th>
+      <th>Division</th>
       <th>Max Score</th>
-      <th>Parent</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -13,9 +14,10 @@
   <tbody>
     <% @criteria_types.each do |criteria_type| %>
       <tr>
+        <td><%= criteria_type.name %></td>
         <td><%= criteria_type.description %></td>
+        <td><%= criteria_type.division.name %></td>
         <td><%= criteria_type.max_score %></td>
-        <td><%= criteria_type.parent.description unless criteria_type.parent.nil? %></td>
         <td><%= link_to 'Show', criteria_type %></td>
         <td><%= link_to 'Edit', edit_criteria_type_path(criteria_type) %></td>
         <td><%= link_to 'Destroy', criteria_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -1,4 +1,4 @@
 class ApplicableCriterium < ApplicationRecord
   belongs_to :criteria_type
-  belongs_to :category
+  belongs_to :division
 end

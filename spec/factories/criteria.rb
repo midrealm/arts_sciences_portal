@@ -4,7 +4,7 @@ FactoryBot.define do
     suggested_score { 1 }
     optional { false }
 
-    association :category, factory: :category
+    association :division, factory: :division
     association :criteria_type, factory: :criteria_type
   end
 end

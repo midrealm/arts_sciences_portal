@@ -15,7 +15,7 @@ class ScoresheetsController < ApplicationController
     fair = next_fair
 
     if fair.mail_in_scoresheets_allowed && !fair.scoresheets_allowed
-      @entries = filter_unjudged(Entry.fair_entries(fair).judge_assigned_entries(current_user).joins(:category).where('mail_in = ?', true))
+      @entries = filter_unjudged(Entry.fair_entries(fair).judge_assigned_entries(current_user).joins(:division).where('divisions.name = ?', 'Research'))
     else
       @entries = filter_unjudged(Entry.fair_entries(fair).judge_assigned_entries(current_user))
     end
@@ -36,13 +36,11 @@ class ScoresheetsController < ApplicationController
   def new
     @scoresheet = Scoresheet.new
 
-    CriteriaType.applicable(@entry.category).each do |criteria_type|
+    CriteriaType.where(division_id: @entry.division.id).each do |criteria_type|
       @scoresheet.scores.build({criteria_type_id: criteria_type.id})
     end
 
-    CriteriaType.all.top_level.each do |criteria_type|
-      @scoresheet.scores.build({criteria_type_id: criteria_type.id})
-    end
+    puts @scoresheet.scores.inspect
   end
 
   # GET /scoresheets/1/edit
@@ -54,11 +52,7 @@ class ScoresheetsController < ApplicationController
   def create
     @scoresheet = Scoresheet.new(scoresheet_params)
 
-    CriteriaType.applicable(@entry.category).each do |criteria_type|
-      @scoresheet.scores.build({criteria_type_id: criteria_type.id})
-    end
-
-    CriteriaType.all.top_level.each do |criteria_type|
+    CriteriaType.where(division_id: @entry.division.id).each do |criteria_type|
       @scoresheet.scores.build({criteria_type_id: criteria_type.id})
     end
 
@@ -126,7 +120,6 @@ class ScoresheetsController < ApplicationController
 
   def update_scores
     scores = params[:scoresheet][:scores]
-
     scores.each do |score|
       score_record = @scoresheet.scores.select{|n| n.criteria_type_id == score[:criteria_type_id].to_i}.first
       score_record.update(score_params(score))
