@@ -19,8 +19,8 @@ module FairsHelper
         1
       elsif b.judge_preferences.empty?
         0
-      elsif a.judge_preferences.where(division_id: entry.division_id).empty?
-        1
+      # elsif a.judge_preferences.where(division_id: entry.division_id).empty?
+      #   1
       else
         0
       end
