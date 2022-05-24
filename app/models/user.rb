@@ -29,8 +29,8 @@ class User < ApplicationRecord
     self.user_role.role_name == "admin"
   end
 
-  def selected_divisions
-    JudgePreference.where(user_id: self.id).pluck(:division_id)
+  def selected_categories
+    JudgePreference.where(user_id: self.id).pluck(:category_id)
   end
 
   def email_or_name
@@ -44,7 +44,7 @@ class User < ApplicationRecord
   end
 
   def color_class(entry)
-    return "blue" unless judge_preferences.find_by(division_id: entry.division_id).nil?
+    # return "blue" unless judge_preferences.find_by(category_id: entry.division_id).nil?
     "black"
   end
 

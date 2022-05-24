@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_27_014101) do
+ActiveRecord::Schema.define(version: 2022_04_03_151649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,12 @@ ActiveRecord::Schema.define(version: 2022_03_27_014101) do
     t.bigint "division_id", null: false
     t.index ["criteria_type_id"], name: "index_applicable_criteria_on_criteria_type_id"
     t.index ["division_id"], name: "index_applicable_criteria_on_division_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "criteria", force: :cascade do |t|
@@ -52,7 +58,7 @@ ActiveRecord::Schema.define(version: 2022_03_27_014101) do
     t.bigint "criteria_type_id"
     t.bigint "parent_id"
     t.text "description"
-    t.bigint "division_id", null: false
+    t.bigint "division_id", default: 6, null: false
     t.index ["criteria_type_id"], name: "index_criteria_types_on_criteria_type_id"
     t.index ["division_id"], name: "index_criteria_types_on_division_id"
     t.index ["parent_id"], name: "index_criteria_types_on_parent_id"
@@ -134,8 +140,8 @@ ActiveRecord::Schema.define(version: 2022_03_27_014101) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
-    t.bigint "division_id", null: false
-    t.index ["division_id"], name: "index_judge_preferences_on_division_id"
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_judge_preferences_on_category_id"
     t.index ["user_id"], name: "index_judge_preferences_on_user_id"
   end
 
@@ -247,7 +253,7 @@ ActiveRecord::Schema.define(version: 2022_03_27_014101) do
   add_foreign_key "judge_assigns", "users"
   add_foreign_key "judge_fairs", "fairs"
   add_foreign_key "judge_fairs", "users"
-  add_foreign_key "judge_preferences", "divisions"
+  add_foreign_key "judge_preferences", "categories"
   add_foreign_key "judge_preferences", "users"
   add_foreign_key "locations", "fairs"
   add_foreign_key "scores", "criteria_types"

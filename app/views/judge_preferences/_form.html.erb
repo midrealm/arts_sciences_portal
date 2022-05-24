@@ -18,12 +18,8 @@
   <% end %>
 
   <div class="field">
-    <%= collection_check_boxes(:user, :selected_divisions, Division.all.default_order, :id, :name) do |b| %>
+    <%= collection_check_boxes(:user, :selected_categories, Category.all.default_order, :id, :name) do |b| %>
       <br>
-      <% if @prior_division_name != b.object.name %>
-        <h3><%= b.object.name %></h3>
-        <% @prior_division_name = b.object.name %>
-      <% end %>
       <%= b.label(class: "checkbox-inline", :"data-value" => b.value) { b.check_box + b.text } %>
     <% end %>
   </div>
