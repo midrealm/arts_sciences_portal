@@ -1,0 +1,17 @@
+<% @entrants.each do |entrant| %>
+  <h3><%= entrant %></h3>
+<% end %>
+
+<h3><%= @entry.entry_name %></h3>
+<h3><% @entry.final_score %></h3>
+
+<hr>
+
+<script type="text/javascript">
+    function printpage()
+    {
+        window.print()
+    }
+</script>
+
+<%= link_to "Print Page", '#', onclick: "printpage()" %>

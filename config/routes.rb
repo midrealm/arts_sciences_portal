@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :entries do
     get 'promote', on: :member, to: 'entries#promote'
+    get 'cover_sheet', on: :member, to: 'entries#cover_sheet'
     resources :user_entries, only: [:new, :create, :index, :destroy]
     resources :scoresheets, only: [:new, :create, :show, :update, :edit, :destroy]
   end
