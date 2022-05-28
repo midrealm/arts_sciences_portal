@@ -2,7 +2,7 @@ include FairsHelper
 
 class EntriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_entry, only: [:show, :edit, :update, :destroy, :promote]
+  before_action :set_entry, only: [:show, :edit, :update, :destroy, :promote, :cover_sheet]
   before_action :verify_user_entry, only: [:show, :edit, :update, :destroy, :promote]
   before_action :verify_entry_editable, only: [:edit, :update, :destroy]
   before_action :verify_promotable, only: [:promote]
@@ -94,6 +94,15 @@ class EntriesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to entries_url, notice: 'Entry was successfully promoted to Kingdom.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def cover_sheet
+    @entrants = @entry.users.pluck(:sca_name)
+
+    respond_to do |format|
+      format.html { render :cover_sheet }
       format.json { head :no_content }
     end
   end
