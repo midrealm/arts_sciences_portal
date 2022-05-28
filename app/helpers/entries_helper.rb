@@ -1,4 +1,6 @@
 module EntriesHelper
+  SCORE_DIVERGENCE = 10
+
   def pent_score_for(user, fair)
     pents = Entry.pentathlons(fair).user_entries(user)
     sum = 0
@@ -20,5 +22,14 @@ module EntriesHelper
     end
 
     (sum / 3).round(2)
+  end
+
+  def needs_review?(entry)
+    return false if entry.scoresheets.empty?
+
+    scores = entry.scoresheets.sort {|a,b| b.total_score <=> a.total_score}
+    top_score = scores.first.total_score
+    bottom_score = scores.last.total_score
+    top_score - bottom_score > SCORE_DIVERGENCE
   end
 end

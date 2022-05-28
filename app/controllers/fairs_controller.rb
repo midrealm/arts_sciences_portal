@@ -1,4 +1,6 @@
 class FairsController < ApplicationController
+  include EntriesHelper
+
   before_action :authenticate_user!
   before_action :verify_admin
   before_action :set_fair, only: [:show, :edit, :update, :destroy, :schedule, :view_schedule, :submit_schedule, :review, :tallyroom]
@@ -97,6 +99,8 @@ class FairsController < ApplicationController
     @scoresheets = Scoresheet.for_fair(@fair)
     @remaining_judges = JudgeAssign.for_fair(@fair).reject {|assign| !@scoresheets.find_by(user_id: assign.user_id, entry_id: assign.entry_id).nil? }
     @unjudged_entries = Entry.fair_entries(@fair).where(id: @remaining_judges.pluck(:entry_id))
+    judged_entries = Entry.fair_entries(@fair) - @unjudged_entries
+    @divergent_entries = judged_entries.select { |x| needs_review?(x) }
   end
 
   private

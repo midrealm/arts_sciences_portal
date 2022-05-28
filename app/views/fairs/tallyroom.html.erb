@@ -4,6 +4,13 @@
   <p>There are <strong><%= @scoresheets.count %></strong> scoresheets submitted.</p>
   <p>There are <strong><%= @remaining_judges.count %></strong> scoresheets remaining.</p>
   <p>There are <strong><%= @unjudged_entries.count %></strong> entries left to be fully judged.</p>
+  <p>
+    These entries have divergent scores and need review:
+    <% @divergent_entries.each do |entry|  %>
+      <%= entry.entry_name %>
+      <br>
+    <% end %>
+  </p>
 </div>
 
 <% if current_user.admin? %>
