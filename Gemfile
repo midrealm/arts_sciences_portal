@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.1'
 
-gem 'rails', '~> 7.0.1'
+gem 'rails', '~> 7.1.1'
 gem 'puma', '~> 3.12'
 gem 'webpacker', '~> 4.0'
 gem 'psych', '< 4' #update this at some point
@@ -29,7 +29,7 @@ end
 
 group :development do
   gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'listen'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
