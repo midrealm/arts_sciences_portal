@@ -23,7 +23,7 @@ services:
     command: ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
 
   postgres:
-    image: postgres:9.6
+    image: postgres:16.0
     container_name: arts_sciences_portal-psql
     environment:
       POSTGRES_USER: username
