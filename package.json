@@ -7,6 +7,7 @@
     "@rails/ujs": "^7.1.1",
     "@rails/webpacker": "^5.4.4",
     "jquery": "^3.7.1",
+    "postcss": "^8.4.31",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
