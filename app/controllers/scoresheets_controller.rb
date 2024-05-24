@@ -72,7 +72,8 @@ class ScoresheetsController < ApplicationController
   # PATCH/PUT /scoresheets/1
   # PATCH/PUT /scoresheets/1.json
   def update
-    Score.update(params[:scoresheet][:scores].keys, params[:scoresheet][:scores].values)
+    cheater_params = params.permit!
+    Score.update(cheater_params[:scoresheet][:scores].keys, cheater_params[:scoresheet][:scores].values)
 
     respond_to do |format|
       if @scoresheet.update(scoresheet_params)
