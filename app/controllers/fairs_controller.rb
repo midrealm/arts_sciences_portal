@@ -76,8 +76,9 @@ class FairsController < ApplicationController
 
   def submit_schedule
     update_assignments(params[:judge_assigns])
-
-    Entry.update(params[:entries].keys, params[:entries].values)
+    
+    entry_params = params.require(:entries).permit!
+    Entry.update(entry_params.keys, entry_params.values)
 
     redirect_to schedule_fair_url, notice: 'Schedule was successfully updated.'
   end
