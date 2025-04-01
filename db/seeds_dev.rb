@@ -73,19 +73,19 @@ pent5 = Entry.create(entry_name: 'pent5', description: 'description', division_i
 JudgeAssign.create(user_id: admin.id, entry_id: pent5.id)
 UserEntry.create(entry_id: pent5.id, user_id: admin.id)
 
-div1 = Entry.create(entry_name: 'div1', description: 'description', division_id: div1.id, fair_id: fair.id, division: true)
+div1 = Entry.create(entry_name: 'div1', description: 'description', division_id: div1.id, fair_id: fair.id, division_type: true)
 JudgeAssign.create(user_id: admin.id, entry_id: div1.id)
 UserEntry.create(entry_id: div1.id, user_id: admin.id)
 
-div2 = Entry.create(entry_name: 'div2', description: 'description', division_id: div2.id, fair_id: fair.id, division: true)
+div2 = Entry.create(entry_name: 'div2', description: 'description', division_id: div2.id, fair_id: fair.id, division_type: true)
 JudgeAssign.create(user_id: admin.id, entry_id: div2.id)
 UserEntry.create(entry_id: div2.id, user_id: admin.id)
 
-div3 = Entry.create(entry_name: 'div3', description: 'description', division_id: div3.id, fair_id: fair.id, division: true)
+div3 = Entry.create(entry_name: 'div3', description: 'description', division_id: div3.id, fair_id: fair.id, division_type: true)
 JudgeAssign.create(user_id: admin.id, entry_id: div3.id)
 UserEntry.create(entry_id: div3.id, user_id: admin.id)
 
-div4 = Entry.create(entry_name: 'div4', description: 'description', division_id: div4.id, fair_id: fair.id, division: true)
+div4 = Entry.create(entry_name: 'div4', description: 'description', division_id: div4.id, fair_id: fair.id, division_type: true)
 JudgeAssign.create(user_id: admin.id, entry_id: div4.id)
 UserEntry.create(entry_id: div4.id, user_id: admin.id)
 
