@@ -5,11 +5,11 @@ ruby '3.2.8'
 
 gem 'rails', '~> 8.0.2'
 gem 'puma'
-gem 'webpacker'
 gem 'psych'
 gem 'turbolinks'
 gem 'jbuilder'
-gem "sassc-rails"
+gem 'sassc-rails'
+gem 'jsbundling-rails'
 
 gem 'pg'
 gem 'devise'
