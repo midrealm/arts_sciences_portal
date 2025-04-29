@@ -2,22 +2,26 @@
   "name": "arts_sciences_portal",
   "private": true,
   "dependencies": {
-    "@rails/actioncable": "^7.1.1",
-    "@rails/activestorage": "^7.1.1",
-    "@rails/ujs": "^7.1.1",
-    "@rails/webpacker": "^5.4.4",
-    "jquery": "^3.7.1",
-    "postcss": "^8.4.31",
-    "turbolinks": "^5.2.0"
+    "@rails/actioncable": ">=7.1.1",
+    "@rails/activestorage": ">=7.1.1",
+    "@rails/ujs": ">=7.1.1",
+    "@rails/webpacker": ">=5.4.4",
+    "jquery": ">=3.7.1",
+    "postcss": ">=8.4.31",
+    "turbolinks": ">=5.2.0"
   },
   "version": "0.1.0",
   "devDependencies": {
-    "webpack-dev-server": "^4.15.1"
+    "webpack": "^5.99.6",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": ">=4.15.1"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "webpack --config webpack.config.js"
   },
   "engines": {
-    "node": "14.x"
-  }
+    "node": "22.x"
+  },
+  "packageManager": "yarn@1.22.22"
 }
