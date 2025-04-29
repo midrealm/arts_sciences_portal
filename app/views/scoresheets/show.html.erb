@@ -18,7 +18,7 @@
   <%= simple_format @entry.division.description %>
 </p>
 
-<% CriteriaType.by_division(@entry.division).in_order.each do |criteria_type| %>
+<% CriteriaTypeRepository.by_scoresheet(@scoresheet.id).in_order.each do |criteria_type| %>
   <p>
     <strong><%= criteria_type.name %></strong>
   </p>

@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2022_04_03_151649) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_02_012300) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
 
   create_table "applicable_criteria", force: :cascade do |t|
     t.bigint "criteria_type_id", null: false
@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.1].define(version: 2022_04_03_151649) do
     t.bigint "parent_id"
     t.text "description"
     t.bigint "division_id", default: 6, null: false
+    t.boolean "deprecated", default: false, null: false
     t.index ["criteria_type_id"], name: "index_criteria_types_on_criteria_type_id"
     t.index ["division_id"], name: "index_criteria_types_on_division_id"
     t.index ["parent_id"], name: "index_criteria_types_on_parent_id"

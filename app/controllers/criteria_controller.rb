@@ -6,7 +6,8 @@ class CriteriaController < ApplicationController
   # GET /criteria
   # GET /criteria.json
   def index
-    @criteria = Criterium.all.joins(criteria_type: :division).order('criteria_types.division_id', :criteria_type_id)
+    @criteria = CriteriaRepository.active_criteria
+                                  .joins(criteria_type: :division).order('criteria_types.division_id', :criteria_type_id)
   end
 
   # GET /criteria/1
