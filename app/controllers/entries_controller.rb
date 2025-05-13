@@ -29,7 +29,6 @@ class EntriesController < ApplicationController
     else
       @entries = Entry.user_entries(current_user).where(fair_id: search_param).order(:fair_id, :entry_name)
       @all_entries = Entry.where(fair_id: search_param).order(:fair_id, :entry_name)
-
     end
   end
 

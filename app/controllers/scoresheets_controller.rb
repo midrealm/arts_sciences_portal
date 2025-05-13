@@ -25,7 +25,13 @@ class ScoresheetsController < ApplicationController
     else
       @scoresheets = Scoresheet.for_user(current_user)
     end
+
+    search_param = params[:fair]
+    unless search_param.nil?
+      @scoresheets = @scoresheets.joins(:entry).where(entry: {fair_id: search_param})
+    end
   end
+
 
   # GET /scoresheets/1
   # GET /scoresheets/1.json
