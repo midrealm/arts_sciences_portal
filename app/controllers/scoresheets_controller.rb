@@ -25,22 +25,28 @@ class ScoresheetsController < ApplicationController
     else
       @scoresheets = Scoresheet.for_user(current_user)
     end
+
+    search_param = params[:fair]
+    unless search_param.nil?
+      @scoresheets = @scoresheets.joins(:entry).where(entry: {fair_id: search_param})
+    end
   end
+
 
   # GET /scoresheets/1
   # GET /scoresheets/1.json
   def show
+    @criteria_types = CriteriaTypeRepository.active_criteria
   end
 
   # GET /scoresheets/new
   def new
     @scoresheet = Scoresheet.new
+    @criteria_types = CriteriaTypeRepository.active_criteria
 
-    CriteriaType.where(division_id: @entry.division.id).each do |criteria_type|
+    CriteriaTypeRepository.active_criteria.where(division_id: @entry.division.id).each do |criteria_type|
       @scoresheet.scores.build({criteria_type_id: criteria_type.id})
     end
-
-    puts @scoresheet.scores.inspect
   end
 
   # GET /scoresheets/1/edit
@@ -51,8 +57,9 @@ class ScoresheetsController < ApplicationController
   # POST /scoresheets.json
   def create
     @scoresheet = Scoresheet.new(scoresheet_params)
+    @criteria_types = CriteriaTypeRepository.active_criteria
 
-    CriteriaType.where(division_id: @entry.division.id).each do |criteria_type|
+    CriteriaTypeRepository.active_criteria.where(division_id: @entry.division.id).each do |criteria_type|
       @scoresheet.scores.build({criteria_type_id: criteria_type.id})
     end
 
@@ -74,6 +81,8 @@ class ScoresheetsController < ApplicationController
   def update
     cheater_params = params.permit!
     Score.update(cheater_params[:scoresheet][:scores].keys, cheater_params[:scoresheet][:scores].values)
+
+    @criteria_types = CriteriaTypeRepository.active_criteria
 
     respond_to do |format|
       if @scoresheet.update(scoresheet_params)

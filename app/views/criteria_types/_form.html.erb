@@ -36,6 +36,11 @@
     <%= form.select :parent_id, CriteriaType.all.top_level.map{ |m| [m.description, m.id] }.push(["No Parent", nil]) %>
   </div>
 
+  <div class="field">
+    <%= form.label :deprecated %>
+    <%= form.check_box :deprecated %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

@@ -1,0 +1,10 @@
+<div class="dropdown-container">
+  <%= form_tag @path, method: :get do %>
+    <select name="fair" , class="form-control">
+      <% Fair.all.each do |fair| %>
+        <option value="<%= fair.id %>"><%= fair.name %></option>
+      <% end %>
+    </select>
+    <%= submit_tag("Filter") %>
+  <% end %>
+</div>

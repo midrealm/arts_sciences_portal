@@ -1,8 +1,9 @@
 <h3><%= @entry.entry_name %></h3>
+<h5><%= @entry.fair.name %></h5>
 <% if @scoresheet.shadow_scoresheet? %>
   <h4>This is a shadow judge scoresheet.</h4>
 <% end %>
-
+<hr>
 <p>
   <strong>Judge:</strong>
   <%= @scoresheet.user.email_or_name %>
@@ -18,7 +19,7 @@
   <%= simple_format @entry.division.description %>
 </p>
 
-<% CriteriaType.by_division(@entry.division).in_order.each do |criteria_type| %>
+<% CriteriaTypeRepository.by_scoresheet(@scoresheet.id).in_order.each do |criteria_type| %>
   <p>
     <strong><%= criteria_type.name %></strong>
   </p>
