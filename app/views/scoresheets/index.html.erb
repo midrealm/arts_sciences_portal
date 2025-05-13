@@ -28,6 +28,7 @@
     <% if current_user.admin? %>
       <th>Judge</th>
     <% end %>
+    <th>Faire</th>
     <th colspan="3"></th>
   </tr>
   </thead>
@@ -39,6 +40,7 @@
       <% if current_user.admin? %>
         <td><%= scoresheet.user.email_or_name %></td>
       <% end %>
+      <td><%= scoresheet.entry.fair.name %></td>
       <td><%= link_to 'View Details', entry_scoresheet_path(scoresheet.entry, scoresheet) %></td>
       <td><%= link_to 'Edit', edit_entry_scoresheet_path(scoresheet.entry, scoresheet) %></td>
       <% if current_user.admin? %>

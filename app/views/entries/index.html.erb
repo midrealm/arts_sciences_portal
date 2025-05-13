@@ -1,3 +1,5 @@
+<%= render partial: "layouts/filter", path: entries_path%>
+
 <h1>Your entries</h1>
 
 <%= render partial: 'entry_index', locals: {entries: @entries.joins(:fair).where('finalized = ?', false)} %>
@@ -22,7 +24,7 @@
     </thead>
 
     <tbody>
-    <% Entry.all.order(:fair_id, :entry_name).each do |entry| %>
+    <% @all_entries.each do |entry| %>
       <tr>
         <td><%= entry.entry_name %></td>
         <td><%= entry.timeslot_description %></td>
