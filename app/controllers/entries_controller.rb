@@ -22,7 +22,14 @@ class EntriesController < ApplicationController
   # GET /entries
   # GET /entries.json
   def index
-    @entries = Entry.user_entries(current_user).order(:fair_id, :entry_name)
+    search_param = params[:fair]
+    if search_param.nil?
+      @entries = Entry.user_entries(current_user).order(:fair_id, :entry_name)
+      @all_entries = Entry.all.order(:fair_id, :entry_name)
+    else
+      @entries = Entry.user_entries(current_user).where(fair_id: search_param).order(:fair_id, :entry_name)
+      @all_entries = Entry.where(fair_id: search_param).order(:fair_id, :entry_name)
+    end
   end
 
   # GET /entries/1

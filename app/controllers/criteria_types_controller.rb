@@ -6,7 +6,7 @@ class CriteriaTypesController < ApplicationController
   # GET /criteria_types
   # GET /criteria_types.json
   def index
-    @criteria_types = CriteriaType.all
+    @criteria_types = CriteriaTypeRepository.active_criteria
   end
 
   # GET /criteria_types/1
@@ -71,6 +71,6 @@ class CriteriaTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def criteria_type_params
-      params.require(:criteria_type).permit(:description, :max_score, :parent_id, :name, :division_id)
+      params.require(:criteria_type).permit(:description, :max_score, :parent_id, :name, :division_id, :deprecated)
     end
 end

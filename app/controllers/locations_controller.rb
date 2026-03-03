@@ -6,7 +6,12 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def index
-    @locations = Location.all
+    search_param = params[:fair]
+    if search_param.nil?
+      @locations = Location.all
+    else
+      @locations = Location.where(fair_id: search_param)
+    end
   end
 
   # GET /locations/1

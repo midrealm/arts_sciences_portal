@@ -28,7 +28,7 @@
     <%= simple_format @entry.division.description %>
   </p>
 
-  <% CriteriaType.all.by_division(@entry.division).in_order.each do |criteria_type| %>
+  <% @criteria_types.by_division(@entry.division).in_order.each do |criteria_type| %>
     <p>
       <strong><%= criteria_type.name %></strong>
     </p>
@@ -42,7 +42,7 @@
 
 <!-- children start here -->
 
-    <% CriteriaType.all.children_for(criteria_type).applicable(@entry.division).each do |child_criteria| %>
+    <% @criteria_types.children_for(criteria_type).applicable(@entry.division).each do |child_criteria| %>
       <strong><%= child_criteria.description %></strong>
       <ul>
         <% Criterium.where(criteria_type_id: child_criteria.id).each do |child_criterium| %>
