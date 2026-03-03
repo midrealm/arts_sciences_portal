@@ -9,21 +9,21 @@ Region.create(name: 'Pentamere')
 Region.create(name: 'Out of Kingdom')
 
 admin = User.create(
-    :email => 'admin@test.com',
-    :password => 'adminadmin',
-    :password_confirmation => 'adminadmin',
-    user_role: admin_role,
-    sca_name: 'Admin',
-    region: region,
-    confirmed_at: DateTime.now)
+  :email => 'admin@test.com',
+  :password => 'adminadmin',
+  :password_confirmation => 'adminadmin',
+  user_role: admin_role,
+  sca_name: 'Admin',
+  region: region,
+  confirmed_at: DateTime.now)
 user = User.create(
-    :email => 'user@test.com',
-    :password => 'useruser',
-    :password_confirmation => 'useruser',
-    user_role: user_role,
-    sca_name: 'User',
-    region: region,
-    confirmed_at: DateTime.now)
+  :email => 'user@test.com',
+  :password => 'useruser',
+  :password_confirmation => 'useruser',
+  user_role: user_role,
+  sca_name: 'User',
+  region: region,
+  confirmed_at: DateTime.now)
 
 fair = Fair.create(date: Date.today, region: region, name: 'Generic Fair', internet_access: true)
 
