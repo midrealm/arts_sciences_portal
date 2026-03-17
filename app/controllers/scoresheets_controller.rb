@@ -51,6 +51,7 @@ class ScoresheetsController < ApplicationController
 
   # GET /scoresheets/1/edit
   def edit
+    @criteria_types = CriteriaTypeRepository.active_criteria
   end
 
   # POST /scoresheets

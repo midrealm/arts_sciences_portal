@@ -10,86 +10,86 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_02_012300) do
+ActiveRecord::Schema[8.1].define(version: 2025_04_02_012300) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "applicable_criteria", force: :cascade do |t|
-    t.bigint "criteria_type_id", null: false
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.bigint "criteria_type_id", null: false
     t.bigint "division_id", null: false
+    t.datetime "updated_at", null: false
     t.index ["criteria_type_id"], name: "index_applicable_criteria_on_criteria_type_id"
     t.index ["division_id"], name: "index_applicable_criteria_on_division_id"
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", null: false
+    t.string "name"
     t.datetime "updated_at", null: false
   end
 
   create_table "criteria", force: :cascade do |t|
-    t.text "description"
-    t.bigint "criteria_type_id", null: false
-    t.integer "suggested_score"
-    t.boolean "optional"
     t.datetime "created_at", null: false
+    t.bigint "criteria_type_id", null: false
+    t.text "description"
+    t.boolean "optional"
+    t.integer "suggested_score"
     t.datetime "updated_at", null: false
     t.index ["criteria_type_id"], name: "index_criteria_on_criteria_type_id"
   end
 
   create_table "criteria_descriptions", force: :cascade do |t|
-    t.text "description"
-    t.bigint "criteria_type_id", null: false
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.bigint "criteria_type_id", null: false
+    t.text "description"
     t.bigint "division_id", null: false
+    t.datetime "updated_at", null: false
     t.index ["criteria_type_id"], name: "index_criteria_descriptions_on_criteria_type_id"
     t.index ["division_id"], name: "index_criteria_descriptions_on_division_id"
   end
 
   create_table "criteria_types", force: :cascade do |t|
-    t.string "name"
-    t.integer "max_score"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.bigint "criteria_type_id"
-    t.bigint "parent_id"
+    t.boolean "deprecated", default: false, null: false
     t.text "description"
     t.bigint "division_id", default: 6, null: false
-    t.boolean "deprecated", default: false, null: false
+    t.integer "max_score"
+    t.string "name"
+    t.bigint "parent_id"
+    t.datetime "updated_at", null: false
     t.index ["criteria_type_id"], name: "index_criteria_types_on_criteria_type_id"
     t.index ["division_id"], name: "index_criteria_types_on_division_id"
     t.index ["parent_id"], name: "index_criteria_types_on_parent_id"
   end
 
   create_table "divisions", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.text "description"
+    t.string "name"
+    t.datetime "updated_at", null: false
   end
 
   create_table "entries", force: :cascade do |t|
-    t.string "entry_name"
-    t.string "description"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "timeslot_id"
-    t.boolean "in_person", default: true
-    t.boolean "scored", default: true
-    t.text "materials"
     t.string "culture"
-    t.string "time_period"
-    t.boolean "pentathlon", default: false
-    t.boolean "division_type", default: false
-    t.boolean "first_time", default: false
-    t.boolean "youth", default: false
-    t.bigint "fair_id", null: false
-    t.bigint "location_id"
-    t.bigint "prior_entry_id"
+    t.string "description"
     t.bigint "division_id", null: false
+    t.boolean "division_type", default: false
+    t.string "entry_name"
+    t.bigint "fair_id", null: false
+    t.boolean "first_time", default: false
+    t.boolean "in_person", default: true
+    t.bigint "location_id"
+    t.text "materials"
+    t.boolean "pentathlon", default: false
+    t.bigint "prior_entry_id"
+    t.boolean "scored", default: true
+    t.string "time_period"
+    t.bigint "timeslot_id"
+    t.datetime "updated_at", null: false
+    t.boolean "youth", default: false
     t.index ["division_id"], name: "index_entries_on_division_id"
     t.index ["fair_id"], name: "index_entries_on_fair_id"
     t.index ["location_id"], name: "index_entries_on_location_id"
@@ -98,141 +98,141 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_02_012300) do
   end
 
   create_table "fairs", force: :cascade do |t|
-    t.date "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "region_id", null: false
-    t.string "name"
-    t.boolean "internet_access", default: true
     t.text "comment"
+    t.datetime "created_at", null: false
+    t.date "date"
     t.boolean "entries_allowed", default: false
+    t.boolean "finalized", default: false
+    t.boolean "internet_access", default: true
+    t.boolean "kingdom", default: false
+    t.boolean "mail_in_scoresheets_allowed", default: false
+    t.string "name"
+    t.bigint "region_id", null: false
     t.boolean "scheduling_visible", default: false
     t.boolean "scoresheets_allowed", default: false
-    t.boolean "mail_in_scoresheets_allowed", default: false
-    t.boolean "finalized", default: false
-    t.boolean "kingdom", default: false
+    t.datetime "updated_at", null: false
     t.index ["region_id"], name: "index_fairs_on_region_id"
   end
 
   create_table "judge_assigns", force: :cascade do |t|
     t.boolean "assigned"
-    t.boolean "shadow"
     t.datetime "created_at", null: false
+    t.bigint "entry_id", null: false
+    t.boolean "shadow"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.bigint "entry_id", null: false
     t.index ["entry_id"], name: "index_judge_assigns_on_entry_id"
     t.index ["user_id"], name: "index_judge_assigns_on_user_id"
   end
 
   create_table "judge_fairs", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "fair_id", null: false
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "shadow_judge", default: false
+    t.bigint "fair_id", null: false
     t.boolean "first_time", default: false
+    t.boolean "shadow_judge", default: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["fair_id"], name: "index_judge_fairs_on_fair_id"
     t.index ["user_id"], name: "index_judge_fairs_on_user_id"
   end
 
   create_table "judge_preferences", force: :cascade do |t|
+    t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.bigint "category_id", null: false
     t.index ["category_id"], name: "index_judge_preferences_on_category_id"
     t.index ["user_id"], name: "index_judge_preferences_on_user_id"
   end
 
   create_table "locations", force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.string "description"
     t.bigint "fair_id", null: false
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["fair_id"], name: "index_locations_on_fair_id"
   end
 
   create_table "peerages", force: :cascade do |t|
-    t.string "description"
     t.datetime "created_at", null: false
+    t.string "description"
     t.datetime "updated_at", null: false
   end
 
   create_table "regions", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", null: false
+    t.string "name"
     t.datetime "updated_at", null: false
   end
 
   create_table "scores", force: :cascade do |t|
-    t.bigint "criteria_type_id", null: false
     t.text "comment"
-    t.decimal "score"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.bigint "criteria_type_id", null: false
+    t.decimal "score"
     t.bigint "scoresheet_id", null: false
+    t.datetime "updated_at", null: false
     t.index ["criteria_type_id"], name: "index_scores_on_criteria_type_id"
     t.index ["scoresheet_id"], name: "index_scores_on_scoresheet_id"
   end
 
   create_table "scoresheets", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "entry_id", null: false
     t.datetime "created_at", null: false
+    t.bigint "entry_id", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["entry_id"], name: "index_scoresheets_on_entry_id"
     t.index ["user_id"], name: "index_scoresheets_on_user_id"
   end
 
   create_table "timeslots", force: :cascade do |t|
-    t.integer "order"
-    t.string "description"
     t.datetime "created_at", null: false
+    t.string "description"
+    t.integer "order"
     t.datetime "updated_at", null: false
   end
 
   create_table "user_entries", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.bigint "entry_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.bigint "entry_id", null: false
     t.index ["entry_id"], name: "index_user_entries_on_entry_id"
     t.index ["user_id"], name: "index_user_entries_on_user_id"
   end
 
   create_table "user_peerages", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "peerage_id", null: false
     t.datetime "created_at", null: false
+    t.bigint "peerage_id", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["peerage_id"], name: "index_user_peerages_on_peerage_id"
     t.index ["user_id"], name: "index_user_peerages_on_user_id"
   end
 
   create_table "user_roles", force: :cascade do |t|
-    t.string "role_name"
     t.datetime "created_at", null: false
+    t.string "role_name"
     t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_role_id", null: false
-    t.bigint "region_id", null: false
-    t.boolean "written", default: false
+    t.datetime "confirmation_sent_at"
     t.string "confirmation_token"
     t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string "unconfirmed_email"
-    t.string "sca_name"
+    t.datetime "created_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
     t.string "name"
+    t.bigint "region_id", null: false
+    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at"
+    t.string "reset_password_token"
+    t.string "sca_name"
+    t.string "unconfirmed_email"
+    t.datetime "updated_at", null: false
+    t.bigint "user_role_id", null: false
+    t.boolean "written", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["region_id"], name: "index_users_on_region_id"
     t.index ["user_role_id"], name: "index_users_on_user_role_id"

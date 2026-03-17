@@ -9,21 +9,21 @@ Region.create(name: 'Pentamere')
 Region.create(name: 'Out of Kingdom')
 
 admin = User.create(
-    :email => 'admin@test.com',
-    :password => 'adminadmin',
-    :password_confirmation => 'adminadmin',
-    user_role: admin_role,
-    sca_name: 'Admin',
-    region: region,
-    confirmed_at: DateTime.now)
+  :email => 'admin@test.com',
+  :password => 'adminadmin',
+  :password_confirmation => 'adminadmin',
+  user_role: admin_role,
+  sca_name: 'Admin',
+  region: region,
+  confirmed_at: DateTime.now)
 user = User.create(
-    :email => 'user@test.com',
-    :password => 'useruser',
-    :password_confirmation => 'useruser',
-    user_role: user_role,
-    sca_name: 'User',
-    region: region,
-    confirmed_at: DateTime.now)
+  :email => 'user@test.com',
+  :password => 'useruser',
+  :password_confirmation => 'useruser',
+  user_role: user_role,
+  sca_name: 'User',
+  region: region,
+  confirmed_at: DateTime.now)
 
 fair = Fair.create(date: Date.today, region: region, name: 'Generic Fair', internet_access: true)
 
@@ -39,12 +39,12 @@ div3 = Division.create(name: "Div 3")
 div4 = Division.create(name: "Div 4")
 div5 = Division.create(name: "Div 5")
 
-CriteriaType.create(description: 'Research and Supporting Evidence', max_score: 4)
-CriteriaType.create(description: 'Materials and Methods', max_score: 4)
-CriteriaType.create(description: 'Scope', max_score: 6)
-CriteriaType.create(description: 'Skill', max_score: 6)
-CriteriaType.create(description: 'Ingenuity', max_score: 4)
-CriteriaType.create(description: "Judge's Observation", max_score: 4)
+CriteriaType.create(description: 'Research and Supporting Evidence', max_score: 4, division: div1)
+CriteriaType.create(description: 'Materials and Methods', max_score: 4, division: div2)
+CriteriaType.create(description: 'Scope', max_score: 6, division: div3)
+CriteriaType.create(description: 'Skill', max_score: 6, division: div4)
+CriteriaType.create(description: 'Ingenuity', max_score: 4, division: div5)
+CriteriaType.create(description: "Judge's Observation", max_score: 4, division: div1)
 
 entry = Entry.create(entry_name: 'test entry 1', description: 'test entry 1 description', division_id: div1.id, fair_id: fair.id)
 JudgeAssign.create(user_id: admin.id, entry_id: entry.id)

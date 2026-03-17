@@ -86,14 +86,17 @@ class FairsController < ApplicationController
   def review
     @divs = Entry.division_types(@fair).sort {|a,b| b.final_score <=> a.final_score}
 
+    # pents can no longer be disqualified as of March 2026
     # find the ids of all users that don't qualify for pent
-    disqualified_entries = Entry.pentathlons(@fair).select { |entry| entry.final_score < 19 }.map{ |entry| entry.id }
-    disqualified_users = UserEntry.where(entry_id: disqualified_entries).pluck(:user_id).uniq
+    # disqualified_entries = Entry.pentathlons(@fair).select { |entry| entry.final_score < 19 }.map{ |entry| entry.id }
+    # disqualified_users = UserEntry.where(entry_id: disqualified_entries).pluck(:user_id).uniq
 
-    @pents = Entry.qualified_pents(@fair, disqualified_users)
+    @pents = Entry.qualified_pents(@fair, [])
 
-    @entries = (Entry.non_pents(@fair) + Entry.disqualified_pents(@fair, disqualified_users))
-                   .sort {|a,b| b.final_score <=> a.final_score}
+    # @entries = (Entry.non_pents(@fair) + Entry.disqualified_pents(@fair, disqualified_users))
+    #                .sort {|a,b| b.final_score <=> a.final_score}
+
+    @entries = (Entry.non_pents(@fair)).sort {|a,b| b.final_score <=> a.final_score}
   end
 
   def tallyroom
