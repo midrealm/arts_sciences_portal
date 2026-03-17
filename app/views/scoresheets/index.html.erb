@@ -47,7 +47,7 @@
       <td><%= link_to 'View Details', entry_scoresheet_path(scoresheet.entry, scoresheet) %></td>
       <td><%= link_to 'Edit', edit_entry_scoresheet_path(scoresheet.entry, scoresheet) %></td>
       <% if current_user.admin? %>
-        <td><%= link_to 'Delete', [scoresheet.entry, scoresheet], method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <td><%= button_to 'Delete', [scoresheet.entry, scoresheet], method: :delete, data: {confirm: 'Are you sure?'} %></td>
       <% end %>
     </tr>
   <% end %>
