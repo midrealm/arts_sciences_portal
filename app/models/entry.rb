@@ -57,7 +57,7 @@ class Entry < ApplicationRecord
   end
 
   def pent_or_div
-    return "Div | " if self.division
+    return "#{division.name} | " if self.division_type
     return "Pent | " if self.pentathlon
     ""
   end

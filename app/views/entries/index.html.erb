@@ -1,3 +1,5 @@
+<%= link_to 'Back', root_path %>
+<br>
 <%= render partial: "layouts/filter", path: entries_path%>
 
 <h1>Your entries</h1>
@@ -42,7 +44,6 @@
           <td><%= button_to 'Delete Entry', entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
         <td><%= link_to 'Add Group Entrants', entry_user_entries_path(entry) %></td>
-        <td><%= link_to 'Promote to Kingdom', promote_entry_path(entry) %></td>
         <td><%= link_to "Print Cover Sheet", cover_sheet_entry_path(entry) %></td>
       </tr>
     <% end %>

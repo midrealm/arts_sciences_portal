@@ -1,3 +1,10 @@
+<% if @current_user == @scoresheet.user %>
+  <%= link_to 'Back', scoresheets_path %>
+<% else %>
+  <%= link_to 'Back', entries_path %>
+<% end %>
+<br>
+
 <h3><%= @entry.entry_name %></h3>
 <h5><%= @entry.fair.name %></h5>
 <% if @scoresheet.shadow_scoresheet? %>

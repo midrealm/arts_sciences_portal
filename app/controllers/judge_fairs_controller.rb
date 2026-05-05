@@ -9,6 +9,12 @@ class JudgeFairsController < ApplicationController
     else
       @judge_fairs = JudgeFair.for_user(current_user)
     end
+
+
+    search_param = params[:fair]
+    unless search_param.nil?
+      @judge_fairs = @judge_fairs.where(fair_id: search_param)
+    end
   end
 
   # GET /judge_fairs/new
