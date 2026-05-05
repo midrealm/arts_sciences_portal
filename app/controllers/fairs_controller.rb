@@ -66,12 +66,15 @@ class FairsController < ApplicationController
   end
 
   def view_schedule
-    @entries = Entry.fair_entries(@fair).in_schedule_order
+    @entries = Entry.fair_entries(@fair).in_schedule_order.includes(:judge_assigns)
+    @timeslots = Timeslot.all.in_order
+    @entries_by_timeslot = @timeslots.index_with { |ts| @entries.select { |e| e.timeslot_id == ts.id } }
   end
 
   def schedule
     @entries = Entry.fair_entries(@fair).order(:entry_name)
     @judges = User.volunteered(@fair).includes([:judge_assigns, :judge_preferences, :user_peerages])
+    @timeslots = Timeslot.all.in_order
   end
 
   def submit_schedule
@@ -142,15 +145,16 @@ class FairsController < ApplicationController
     end
 
     Entry.where(fair_id: @fair.id).each do |entry|
-      selections = assignments.has_key?(entry.id) ? assigments[entry.id] : []
+      selections = assignments.has_key?(entry.id.to_s) ? assignments[entry.id.to_s] : []
       JudgeAssign.where(entry_id: entry.id).each do |judge|
         judge.destroy unless selections.include?(judge.user_id)
       end
     end
 
-    assignments.each do |entry, selections|
+    assignments.each do |entry_id, selections|
+      eid = entry_id.to_i
       selections.each do |new_judge|
-        JudgeAssign.create(user_id: new_judge, entry_id: entry) if JudgeAssign.find_by(user_id: new_judge, entry_id: entry).nil?
+        JudgeAssign.create(user_id: new_judge, entry_id: eid) if JudgeAssign.find_by(user_id: new_judge, entry_id: eid).nil?
       end
     end
   end
