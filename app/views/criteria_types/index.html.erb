@@ -20,7 +20,7 @@
         <td><%= criteria_type.max_score %></td>
         <td><%= link_to 'Show', criteria_type %></td>
         <td><%= link_to 'Edit', edit_criteria_type_path(criteria_type) %></td>
-        <td><%= link_to 'Destroy', criteria_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Destroy', criteria_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

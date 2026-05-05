@@ -20,7 +20,7 @@
         <td><%= judge_assign.shadow %></td>
         <td><%= link_to 'Show', fair_judge_assign_path(@fair, judge_assign) %></td>
         <td><%= link_to 'Edit', edit_fair_judge_assign_path(@fair, judge_assign) %></td>
-        <td><%= link_to 'Destroy', [@fair, judge_assign], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Destroy', [@fair, judge_assign], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

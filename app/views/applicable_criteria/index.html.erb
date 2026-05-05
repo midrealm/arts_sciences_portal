@@ -16,7 +16,7 @@
         <td><%= applicable_criterium.division.name %></td>
         <td><%= link_to 'Show', applicable_criterium %></td>
         <td><%= link_to 'Edit', edit_applicable_criterium_path(applicable_criterium) %></td>
-        <td><%= link_to 'Destroy', applicable_criterium, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Destroy', applicable_criterium, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

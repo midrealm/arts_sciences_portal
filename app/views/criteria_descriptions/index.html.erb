@@ -18,7 +18,7 @@
         <td><%= criteria_description.criteria_type.description %></td>
         <td><%= link_to 'Show', criteria_description %></td>
         <td><%= link_to 'Edit', edit_criteria_description_path(criteria_description) %></td>
-        <td><%= link_to 'Destroy', criteria_description, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Destroy', criteria_description, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

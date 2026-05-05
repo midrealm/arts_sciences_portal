@@ -16,7 +16,7 @@
         <td><%= peerage.description %></td>
         <td><%= link_to 'Show', peerage %></td>
         <td><%= link_to 'Edit', edit_peerage_path(peerage) %></td>
-        <td><%= link_to 'Destroy', peerage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Destroy', peerage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
