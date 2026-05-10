@@ -1,6 +1,9 @@
+<br><%= link_to 'Back', root_path %>
+<br>
 <% if current_user.admin? && @user.id != current_user.id %>
   <div class="alert alert-danger">
     <h4>You are currently in admin mode and are viewing a user other than yourself.</h4>
+    <p>You are viewing user <%= @user.sca_name%></p>
   </div>
 <% end %>
 

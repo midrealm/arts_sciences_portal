@@ -87,6 +87,8 @@ class EntriesController < ApplicationController
     end
   end
 
+  # promoting entries to Kingdom has been deprecated, but the code has been left here just in case
+  # all usage of the route has been removed from the erb files
   def promote
     entrants = @entry.users
 
