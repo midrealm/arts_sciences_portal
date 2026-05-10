@@ -27,7 +27,7 @@
       <td><%= judge_fair.fair.name_with_warning %></td>
       <td><%= judge_fair.shadow_judge %></td>
       <td><%= judge_fair.first_time %></td>
-      <td><%= link_to 'Un-volunteer', judge_fair, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      <td><%= button_to 'Un-volunteer', judge_fair, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <td><%= link_to 'Edit Volunteer Details', edit_judge_fair_path(judge_fair) %></td>
     </tr>
   <% end %>
