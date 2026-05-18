@@ -50,6 +50,14 @@
     <% end %>
   </div>
 
+  <% if current_user.admin? && @user.id != current_user.id %>
+  <hr>
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.text_field :password %>
+  </div>
+  <% end %>
+
   <hr>
 
   <p>If you will not be judging entries, you may ignore these questions.</p>
