@@ -23,8 +23,24 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /user/1
   def update
+    attributes = user_params
+    password = attributes.delete(:password)
+    password_confirmation = attributes.delete(:password_confirmation)
+
+    updated =
+      if password.present?
+        @user.update(
+          attributes.merge(
+            password: password,
+            password_confirmation: password_confirmation.presence || password
+          )
+        )
+      else
+        @user.update_without_password(attributes)
+      end
+
     respond_to do |format|
-      if @user.update(user_params)
+      if updated
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -51,6 +67,26 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:region_id, :written, :user_role_id, :name, :sca_name, :password, {:peerage_ids => []})
+      permitted = params.require(:user).permit(
+        :region_id,
+        :written,
+        :user_role_id,
+        :name,
+        :sca_name,
+        :password,
+        :password_confirmation,
+        peerage_ids: []
+      )
+
+      unless admin_resetting_password?
+        permitted.delete(:password)
+        permitted.delete(:password_confirmation)
+      end
+
+      permitted
+    end
+
+    def admin_resetting_password?
+      current_user.admin? && @user.id != current_user.id
     end
 end

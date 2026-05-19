@@ -118,19 +118,35 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe 'POST update' do
-    subject(:update) {post :update, params: {id: user.id, user: {written: true}}}
+  describe 'PATCH update' do
+    let!(:user) { FactoryBot.create(:user, written: false) }
 
-    let!(:user) {FactoryBot.create(:user)}
+    before(:each) { stub_login }
 
-    before(:each) do
-      stub_login
-      update
+    it 'updates profile fields without a password' do
+      patch :update, params: {
+        id: user.id,
+        user: { written: true, password: "", password_confirmation: "" }
+      }
+
+      user.reload
+      expect(user.written).to eq true
+      expect(response).to redirect_to(user_path(user))
     end
 
-    it 'updated the existing role name' do
-      user.reload
-      expect(user.first_time).to eq true
+    it 'allows admin to set a new password for another user' do
+      other = FactoryBot.create(:user)
+      patch :update, params: {
+        id: other.id,
+        user: {
+          name: other.name,
+          password: "newpassword123",
+          password_confirmation: "newpassword123"
+        }
+      }
+
+      expect(response).to redirect_to(user_path(other))
+      expect(other.reload.valid_password?("newpassword123")).to eq true
     end
   end
 

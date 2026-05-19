@@ -7,7 +7,7 @@
 <%= form_with(model: user, local: true) do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation" class="alert alert-danger">
-      <h2><%= pluralize(user_role.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
       <ul>
         <% user.errors.full_messages.each do |message| %>
@@ -51,11 +51,18 @@
   </div>
 
   <% if current_user.admin? && @user.id != current_user.id %>
-  <hr>
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.text_field :password %>
-  </div>
+    <hr>
+    <p class="text-secondary small">
+      Set a new password for user. Leave both fields blank to keep their current password.
+    </p>
+    <div class="field">
+      <%= form.label :password, "New password" %>
+      <%= form.password_field :password, autocomplete: "new-password" %>
+    </div>
+    <div class="field">
+      <%= form.label :password_confirmation, "Confirm new password" %>
+      <%= form.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
   <% end %>
 
   <hr>
@@ -71,5 +78,7 @@
     <%= form.submit %>
   </div>
 
-  <%= link_to "Change your password", edit_user_registration_path %>
+  <% unless current_user.admin? && @user.id != current_user.id %>
+    <%= link_to "Change your password", edit_user_registration_path %>
+  <% end %>
 <% end %>
