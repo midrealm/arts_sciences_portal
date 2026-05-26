@@ -1,5 +1,67 @@
 /* Fairs & scheduling UI */
 
+.fairs-index-scroll {
+  border: 1px solid var(--site-border, rgba(0, 0, 0, 0.08));
+  background-color: #fff;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fairs-index-table {
+  width: 100%;
+  margin-bottom: 0;
+
+  thead th {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: normal;
+    line-height: 1.25;
+    vertical-align: bottom;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  thead th.text-center {
+    max-width: 5.25rem;
+    min-width: 3.25rem;
+  }
+
+  .fair-name-col {
+    min-width: 8rem;
+    max-width: 14rem;
+    white-space: normal;
+  }
+
+  thead th.fair-name-col {
+    max-width: 14rem;
+  }
+
+  .fairs-index-data-row > * {
+    border-bottom: none;
+  }
+
+  .fairs-index-actions-row > * {
+    padding-top: 0;
+    padding-bottom: 0.85rem;
+    border-top: none;
+    background-color: rgba(21, 42, 69, 0.04);
+  }
+
+  .fairs-index-data-row:hover + .fairs-index-actions-row > *,
+  .fairs-index-actions-row:hover > * {
+    background-color: rgba(21, 42, 69, 0.07);
+  }
+
+  .fairs-index-actions {
+    padding: 0.35rem 0 0.15rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .fairs-index-scroll-hint {
+    display: none;
+  }
+}
+
 .schedule-page {
   margin-bottom: 2rem;
 }
@@ -42,6 +104,7 @@
 }
 
 .schedule-judge-check {
+  cursor: help;
   transition:
     border-color 0.15s ease,
     background-color 0.15s ease;
@@ -58,7 +121,21 @@
   .form-check-label {
     padding-left: 0.25rem;
     line-height: 1.35;
+    cursor: help;
   }
+
+  .form-check-label a {
+    cursor: pointer;
+  }
+
+  .form-check-input {
+    cursor: pointer;
+  }
+}
+
+.popover.schedule-judge-prefs-popover,
+.popover .popover-body ul {
+  max-width: 16rem;
 }
 
 .schedule-save-card {

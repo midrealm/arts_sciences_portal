@@ -180,6 +180,32 @@ main {
   opacity: 0.85;
 }
 
+.dashboard-section-label {
+  letter-spacing: 0.06em;
+}
+
+.dashboard-section-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dashboard-section-divider-line {
+  flex: 1;
+  margin: 0;
+  border: 0;
+  border-top: 2px solid rgba(21, 42, 69, 0.12);
+  opacity: 1;
+}
+
+.dashboard-section-divider-label {
+  flex-shrink: 0;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 /* Utility colors used in views */
 .red {
   color: #b42318 !important;

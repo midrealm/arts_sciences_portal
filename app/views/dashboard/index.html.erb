@@ -1,7 +1,7 @@
 <h1 class="h2 dashboard-page-title mb-2">Dashboard</h1>
 <p class="text-secondary dashboard-lead mb-4">
   <% if current_user.admin? %>
-    Quick access to fair operations, admin tools, and reference data.
+    Access to fair operations, admin tools, and scoresheet rubric management.
   <% else %>
     Manage your entries, judging preferences, and fair-related tasks.
   <% end %>
@@ -12,6 +12,11 @@
 <% scores_ok = fair_opts && scoresheets_visible?(@next_fair, current_user) %>
 
 <% if current_user.admin? %>
+<div class="dashboard-section-divider my-4" role="separator" aria-label="Global settings">
+    <hr class="dashboard-section-divider-line">
+    <span class="dashboard-section-divider-label small text-secondary">Fair Settings</span>
+    <hr class="dashboard-section-divider-line">
+  </div>
   <div class="row g-4">
     <% if fair_opts %>
       <div class="col-12 col-md-6 col-xl-4">
@@ -21,63 +26,19 @@
             <p class="small text-secondary mb-0 mt-1">Live scoring during the fair.</p>
           </div>
           <div class="list-group list-group-flush rounded-0 border-top mt-2">
-            <%= dashboard_link_to "Open tallyroom", tallyroom_fair_path(@next_fair) %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-
-    <div class="col-12 col-md-6 col-xl-4">
-      <div class="card border-0 shadow-sm h-100 dashboard-card">
-        <div class="card-header bg-transparent border-0 pt-3 pb-0">
-          <h2 class="h5 mb-0">Scoresheets</h2>
-          <p class="small text-secondary mb-0 mt-1">Review and manage competition scoresheets.</p>
-        </div>
-        <div class="list-group list-group-flush rounded-0 border-top mt-2">
-          <%= dashboard_link_to "Scoresheet management", scoresheets_path %>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-12 col-xl-4">
-      <div class="card border-0 shadow-sm h-100 dashboard-card">
-        <div class="card-header bg-transparent border-0 pt-3 pb-0">
-          <h2 class="h5 mb-0">People &amp; judging</h2>
-          <p class="small text-secondary mb-0 mt-1">Users, roles, and volunteer judging.</p>
-        </div>
-        <div class="list-group list-group-flush rounded-0 border-top mt-2">
-          <%= dashboard_link_to "User management", users_path %>
-          <%= dashboard_link_to "User role management", user_roles_path %>
-          <%= dashboard_link_to "User profile and preferences", current_user %>
-          <%= dashboard_link_to "Manage judging preferences", user_judge_preferences_path(current_user) %>
-          <%= dashboard_link_to "Volunteer for a fair", judge_fairs_path %>
-          <% if schedule_ok %>
+            <%= dashboard_link_to "Tallyroom", tallyroom_fair_path(@next_fair) %>
+            <%= dashboard_link_to "Scoresheet management", scoresheets_path %>
+            <%= dashboard_link_to "Volunteer management", judge_fairs_path %>
+            <% if schedule_ok %>
             <%= dashboard_link_to "Review your schedule", review_path %>
           <% end %>
           <% if scores_ok %>
             <%= dashboard_link_to "Submit a scoresheet", scoresheets_path %>
           <% end %>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="col-12 col-lg-6">
-      <div class="card border-0 shadow-sm h-100 dashboard-card">
-        <div class="card-header bg-transparent border-0 pt-3 pb-0">
-          <h2 class="h5 mb-0">Reference data</h2>
-          <p class="small text-secondary mb-0 mt-1">Structure used across fairs and entries.</p>
-        </div>
-        <div class="list-group list-group-flush rounded-0 border-top mt-2">
-          <%= dashboard_link_to "Divisions", divisions_path %>
-          <%= dashboard_link_to "Regions", regions_path %>
-          <%= dashboard_link_to "Timeslots", timeslots_path %>
-          <%= dashboard_link_to "Peerage titles", peerages_path %>
-          <%= dashboard_link_to "Criteria types", criteria_types_path %>
-          <%= dashboard_link_to "Criteria", criteria_path %>
-          <%= dashboard_link_to "Categories", categories_path %>
-        </div>
-      </div>
-    </div>
+    <% end %>
 
     <div class="col-12 col-lg-6">
       <div class="card border-0 shadow-sm h-100 dashboard-card">
@@ -88,10 +49,52 @@
         <div class="list-group list-group-flush rounded-0 border-top mt-2">
           <%= dashboard_link_to "Fair management", fairs_path %>
           <%= dashboard_link_to "Room and location management", locations_url %>
-          <%= dashboard_link_to "Entry management", entries_path %>
+          <%= dashboard_link_to "Manage and Submit Entries", entries_path %>
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="dashboard-section-divider my-4" role="separator" aria-label="Global settings">
+    <hr class="dashboard-section-divider-line">
+    <span class="dashboard-section-divider-label small text-secondary">Global settings</span>
+    <hr class="dashboard-section-divider-line">
+  </div>
+
+  <div class="row g-4">
+    <div class="col-12 col-xl-4">
+      <div class="card border-0 shadow-sm h-100 dashboard-card">
+        <div class="card-header bg-transparent border-0 pt-3 pb-0">
+          <h2 class="h5 mb-0">People Management</h2>
+          <p class="small text-secondary mb-0 mt-1">Users, roles, and volunteer judging.</p>
+        </div>
+        <div class="list-group list-group-flush rounded-0 border-top mt-2">
+          <%= dashboard_link_to "User Management", users_path %>
+          <%= dashboard_link_to "Assign User Roles", user_roles_path %>
+          <%= dashboard_link_to "User Profile and Preferences", current_user %>
+          <%= dashboard_link_to "Manage Judging Preferences", user_judge_preferences_path(current_user) %>
+          <%= dashboard_link_to "Manage Peerage Titles", peerages_path %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <div class="card border-0 shadow-sm h-100 dashboard-card">
+        <div class="card-header bg-transparent border-0 pt-3 pb-0">
+          <h2 class="h5 mb-0">Rubrics and Misc Management</h2>
+          <p class="small text-secondary mb-0 mt-1">Structure used across fairs and entries.</p>
+        </div>
+        <div class="list-group list-group-flush rounded-0 border-top mt-2">
+          <%= dashboard_link_to "Divisions", divisions_path %>
+          <%= dashboard_link_to "Regions", regions_path %>
+          <%= dashboard_link_to "Timeslots", timeslots_path %>
+          <%= dashboard_link_to "Criteria types", criteria_types_path %>
+          <%= dashboard_link_to "Criteria", criteria_path %>
+          <%= dashboard_link_to "Categories", categories_path %>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 <% else %>

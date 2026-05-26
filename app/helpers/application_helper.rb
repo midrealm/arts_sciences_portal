@@ -1,4 +1,10 @@
 module ApplicationHelper
+  def yes_no_badge(value)
+    label = value ? "Yes" : "No"
+    css = value ? "text-bg-success" : "text-bg-secondary"
+    content_tag(:span, label, class: ["badge", css].join(" "))
+  end
+
   # Full-width list row for dashboard cards (arrow is decorative only).
   def dashboard_link_to(label, url, **html_options)
     extra = html_options.delete(:class)

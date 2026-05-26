@@ -51,6 +51,18 @@ module FairsHelper
     (room_dup || judge_dup) ? "table-danger" : ""
   end
 
+  def judge_preferences_popover_body(user)
+    prefs = user.judge_preferences.sort_by { |jp| jp.category.name }
+
+    if prefs.empty?
+      return content_tag(:p, "No category preferences set.", class: "small mb-0")
+    end
+
+    content_tag(:ul, class: "small mb-0 ps-3") do
+      safe_join(prefs.map { |jp| content_tag(:li, jp.category.name) })
+    end
+  end
+
   def order_by_preference(collection, entry)
     collection.sort do |a, b|
       if a.judge_preferences.empty?
