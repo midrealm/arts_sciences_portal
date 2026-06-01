@@ -52,28 +52,57 @@ module FairsHelper
   end
 
   def judge_preferences_popover_body(user)
-    prefs = user.judge_preferences.sort_by { |jp| jp.category.name }
+    prefs = user.judge_preferences.sort_by { |jp| jp.preference.name }
 
     if prefs.empty?
-      return content_tag(:p, "No category preferences set.", class: "small mb-0")
+      return content_tag(:p, "No judging preferences set.", class: "small mb-0")
     end
 
     content_tag(:ul, class: "small mb-0 ps-3") do
-      safe_join(prefs.map { |jp| content_tag(:li, jp.category.name) })
+      safe_join(prefs.map { |jp| content_tag(:li, jp.preference.name) })
     end
   end
 
+  def schedule_timeslot_id(entry, proposed_schedule, preview)
+    if preview && proposed_schedule[entry.id]
+      proposed_schedule[entry.id][:timeslot_id]
+    else
+      entry.timeslot_id
+    end
+  end
+
+  def schedule_location_id(entry, proposed_schedule, preview)
+    if preview && proposed_schedule[entry.id]
+      proposed_schedule[entry.id][:location_id]
+    else
+      entry.location_id
+    end
+  end
+
+  def schedule_judge_assigned?(entry, user, proposed_schedule, preview)
+    if preview && proposed_schedule[entry.id]
+      proposed_schedule[entry.id][:judge_ids].include?(user.id)
+    else
+      user.judging_entry?(entry)
+    end
+  end
+
+  def schedule_unassigned_entries(entries, proposed_schedule, preview)
+    return [] unless preview
+
+    entries.reject { |entry| proposed_schedule.key?(entry.id) }
+  end
+
+  def schedule_needs_manual_assignment?(entry, proposed_schedule, preview)
+    preview && !proposed_schedule.key?(entry.id)
+  end
+
   def order_by_preference(collection, entry)
-    collection.sort do |a, b|
-      if a.judge_preferences.empty?
-        1
-      elsif b.judge_preferences.empty?
-        0
-      # elsif a.judge_preferences.where(division_id: entry.division_id).empty?
-      #   1
-      else
-        0
-      end
+    entry_preference_ids = entry.preferences.map(&:id).to_set
+
+    collection.sort_by do |user|
+      overlap = user.judge_preferences.count { |jp| entry_preference_ids.include?(jp.preference_id) }
+      [-overlap, user.email_or_name]
     end
   end
 end

@@ -8,6 +8,8 @@ class Entry < ApplicationRecord
   has_many :users, through: :user_entries
   has_many :judge_assigns, dependent: :destroy
   has_many :scoresheets, dependent: :destroy
+  has_many :entry_preferences, dependent: :destroy
+  has_many :preferences, through: :entry_preferences
 
   has_one :prior_entry, class_name: "Entry"
 

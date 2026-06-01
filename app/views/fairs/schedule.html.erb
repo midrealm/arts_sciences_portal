@@ -7,26 +7,59 @@
       </p>
     </div>
     <div class="d-flex flex-wrap gap-2 schedule-toolbar">
+      <%= button_to "Auto-schedule (preview)", auto_schedule_fair_path(@fair), method: :post, class: "btn btn-outline-success" %>
       <%= link_to "Review schedule", view_schedule_fair_path(@fair), class: "btn btn-outline-primary" %>
       <%= link_to "Back to fairs", fairs_path, class: "btn btn-outline-secondary" %>
     </div>
   </div>
+
+  <% if @auto_schedule_preview %>
+    <div class="alert alert-warning">
+      Showing an auto-generated schedule preview. Nothing has been saved yet — review the suggestions and click <strong>Save schedule</strong> to persist.
+    </div>
+
+    <% unassigned_entries = schedule_unassigned_entries(@entries, @proposed_schedule, @auto_schedule_preview) %>
+    <% if unassigned_entries.any? %>
+      <div class="alert alert-danger schedule-manual-banner">
+        <strong><%= pluralize(unassigned_entries.size, "entry") %> could not be auto-scheduled</strong>
+        and will need manual assignment:
+        <%= unassigned_entries.map(&:entry_name).join(", ") %>.
+      </div>
+    <% end %>
+  <% end %>
 
   <% if @entries.empty? %>
     <div class="alert alert-info mb-0">There are no entries for this fair yet.</div>
   <% else %>
     <%= form_for :entries, url: schedule_fair_path(@fair), html: { class: "schedule-form" } do %>
       <% @entries.each do |entry| %>
-        <div class="card border-0 shadow-sm mb-4 schedule-entry-card">
+        <% needs_manual = schedule_needs_manual_assignment?(entry, @proposed_schedule, @auto_schedule_preview) %>
+        <div class="card border-0 shadow-sm mb-4 schedule-entry-card<%= " schedule-entry-card--manual" if needs_manual %>">
           <div class="card-header schedule-entry-header d-flex flex-wrap justify-content-between align-items-start gap-2">
             <div class="d-flex flex-wrap align-items-center gap-2">
+              <% if needs_manual %>
+                <span class="badge text-bg-danger">Needs manual assignment</span>
+              <% end %>
               <span class="badge text-bg-secondary schedule-pent-badge"><%= entry.pent_or_div %></span>
               <%= link_to entry.entry_name, entry_path(entry), target: "_blank", rel: "noopener", class: "fw-semibold schedule-entry-title" %>
             </div>
-            <div class="small text-secondary schedule-entrant"><%= entry.entrant_string %></div>
+            <div class="small text-secondary schedule-entrant">
+              <div><%= entry.entrant_string %></div>
+              <% if entry.preferences.any? %>
+                <div>
+                  <span class="fw-semibold">Entry preferences:</span>
+                  <%= entry.preferences.map(&:name).join(", ") %>
+                </div>
+              <% end %>
+            </div>
           </div>
 
           <div class="card-body">
+            <% if needs_manual %>
+              <div class="alert alert-danger py-2 mb-3 schedule-entry-manual-alert">
+                Auto-schedule could not place this entry. Choose a timeslot, room, and judges manually.
+              </div>
+            <% end %>
             <%= fields_for "entries[]", entry do |f| %>
               <div class="row g-4">
                 <div class="col-12">
@@ -38,7 +71,10 @@
                         <div class="col-6 col-md-4 col-xl-3">
                           <div class="schedule-slot-option border rounded p-2 h-100">
                             <div class="form-check mb-0">
-                              <%= f.radio_button :timeslot_id, timeslot.id, class: "form-check-input", id: input_id %>
+                              <%= f.radio_button :timeslot_id, timeslot.id,
+                                checked: schedule_timeslot_id(entry, @proposed_schedule, @auto_schedule_preview) == timeslot.id,
+                                class: "form-check-input",
+                                id: input_id %>
                               <%= label_tag input_id, timeslot.description, class: "form-check-label small" %>
                             </div>
                           </div>
@@ -52,7 +88,7 @@
                   <%= f.label :location_id, "Room", class: "form-label fw-semibold" %>
                   <%= f.select :location_id,
                     Location.for_fair(entry.fair).map { |m| [m.description, m.id] },
-                    {},
+                    { selected: schedule_location_id(entry, @proposed_schedule, @auto_schedule_preview) },
                     class: "form-select" %>
                 </div>
               </div>
@@ -74,9 +110,11 @@
                         data-judge-prefs="<%= prefs_id %>"
                         data-bs-title="<%= user.email_or_name %>"
                         tabindex="0"
-                        aria-label="<%= "Judge #{user.email_or_name}. Hover for category preferences." %>">
+                        aria-label="<%= "Judge #{user.email_or_name}. Hover for judging preferences." %>">
                         <div class="form-check mb-0">
-                          <%= check_box_tag "judge_assigns[]", "#{entry.id}_#{user.id}", user.judging_entry?(entry), id: cid, class: "form-check-input" %>
+                          <%= check_box_tag "judge_assigns[]", "#{entry.id}_#{user.id}",
+                            schedule_judge_assigned?(entry, user, @proposed_schedule, @auto_schedule_preview),
+                            id: cid, class: "form-check-input" %>
                           <label class="form-check-label small w-100 mb-0" for="<%= cid %>">
                             <%= user.email_or_name %>
                             <span class="text-muted"><%= user.display_peerages %></span>

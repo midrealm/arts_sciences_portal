@@ -3,8 +3,7 @@ FactoryBot.define do
     entry_name { "name" }
     description { "description" }
 
-    association :user, factory: :user
-    association :category, factory: :category
+    association :division, factory: :division
     association :timeslot, factory: :timeslot
     association :fair, factory: :fair
 

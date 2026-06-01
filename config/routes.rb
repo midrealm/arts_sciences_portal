@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :categories
+  resources :preferences
   devise_for :users, :controllers => { :registrations => "registrations" }
 
   unauthenticated :user do
@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     resources :fairs do
       get 'view_schedule', on: :member, to: 'fairs#view_schedule'
       post 'schedule', on: :member, to: 'fairs#submit_schedule'
+      post 'auto_schedule', on: :member, to: 'fairs#auto_schedule'
       get 'schedule', on: :member
       get 'review', on: :member
       get 'tallyroom', on: :member, to: 'fairs#tallyroom'

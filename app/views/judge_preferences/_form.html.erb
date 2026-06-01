@@ -18,7 +18,7 @@
   <% end %>
 
   <div class="field">
-    <%= collection_check_boxes(:user, :selected_categories, Category.all.default_order, :id, :name) do |b| %>
+    <%= collection_check_boxes(:user, :selected_preferences, Preference.all.default_order, :id, :name) do |b| %>
       <br>
       <%= b.label(class: "checkbox-inline", :"data-value" => b.value) { b.check_box + b.text } %>
     <% end %>

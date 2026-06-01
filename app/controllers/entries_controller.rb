@@ -137,7 +137,8 @@ class EntriesController < ApplicationController
         :division_type,
         :first_time,
         :youth,
-        :fair_id
+        :fair_id,
+        preference_ids: []
       )
     end
 end

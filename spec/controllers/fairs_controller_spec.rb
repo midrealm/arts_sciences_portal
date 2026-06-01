@@ -159,4 +159,28 @@ RSpec.describe FairsController, type: :controller do
       expect(names).to_not include 'delete me'
     end
   end
+
+  describe "POST #auto_schedule" do
+    let!(:fair) { FactoryBot.create(:fair) }
+    let!(:entry) { FactoryBot.create(:entry, fair: fair, timeslot: nil, location: nil) }
+    let!(:judge) { FactoryBot.create(:user) }
+    let!(:timeslot) { FactoryBot.create(:timeslot) }
+    let!(:location) { FactoryBot.create(:location, fair: fair) }
+
+    before do
+      login_admin
+      FactoryBot.create(:judge_fair, user: judge, fair: fair)
+    end
+
+    it "renders the schedule preview without persisting assignments" do
+      expect {
+        post :auto_schedule, params: { id: fair.id }
+      }.not_to change { JudgeAssign.count }
+
+      expect(response).to render_template(:schedule)
+      expect(assigns(:auto_schedule_preview)).to eq(true)
+      expect(assigns(:proposed_schedule)[entry.id]).to be_present
+      expect(entry.reload.timeslot_id).to be_nil
+    end
+  end
 end

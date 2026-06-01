@@ -3,7 +3,7 @@ class FairsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :verify_admin
-  before_action :set_fair, only: [:show, :edit, :update, :destroy, :schedule, :view_schedule, :submit_schedule, :review, :tallyroom]
+  before_action :set_fair, only: [:show, :edit, :update, :destroy, :schedule, :auto_schedule, :view_schedule, :submit_schedule, :review, :tallyroom]
 
   # GET /fairs
   # GET /fairs.json
@@ -72,9 +72,23 @@ class FairsController < ApplicationController
   end
 
   def schedule
-    @entries = Entry.fair_entries(@fair).order(:entry_name)
-    @judges = User.volunteered(@fair).includes(:judge_assigns, :peerages, judge_preferences: :category)
-    @timeslots = Timeslot.all.in_order
+    load_schedule_data
+    @auto_schedule_preview = false
+    @proposed_schedule = {}
+  end
+
+  def auto_schedule
+    load_schedule_data
+    @locations = Location.for_fair(@fair)
+    @proposed_schedule = AutoScheduleService.new(
+      entries: @entries,
+      judges: @judges,
+      timeslots: @timeslots,
+      locations: @locations
+    ).call
+    @auto_schedule_preview = true
+    flash.now[:notice] = "Auto-schedule preview generated. Review the suggestions below and click Save schedule to persist."
+    render :schedule
   end
 
   def submit_schedule
@@ -111,6 +125,14 @@ class FairsController < ApplicationController
   end
 
   private
+    def load_schedule_data
+      @entries = Entry.fair_entries(@fair)
+        .includes(:preferences, :judge_assigns)
+        .order(:entry_name)
+      @judges = User.volunteered(@fair).includes(:judge_assigns, :peerages, judge_preferences: :preference)
+      @timeslots = Timeslot.all.in_order
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_fair
       @fair = Fair.find(params[:id])

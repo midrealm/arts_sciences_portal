@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_04_02_012300) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_26_164500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -21,12 +21,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_04_02_012300) do
     t.datetime "updated_at", null: false
     t.index ["criteria_type_id"], name: "index_applicable_criteria_on_criteria_type_id"
     t.index ["division_id"], name: "index_applicable_criteria_on_division_id"
-  end
-
-  create_table "categories", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "name"
-    t.datetime "updated_at", null: false
   end
 
   create_table "criteria", force: :cascade do |t|
@@ -97,6 +91,16 @@ ActiveRecord::Schema[8.1].define(version: 2025_04_02_012300) do
     t.index ["timeslot_id"], name: "index_entries_on_timeslot_id"
   end
 
+  create_table "entry_preferences", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "entry_id", null: false
+    t.bigint "preference_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entry_id", "preference_id"], name: "index_entry_preferences_on_entry_id_and_preference_id", unique: true
+    t.index ["entry_id"], name: "index_entry_preferences_on_entry_id"
+    t.index ["preference_id"], name: "index_entry_preferences_on_preference_id"
+  end
+
   create_table "fairs", force: :cascade do |t|
     t.text "comment"
     t.datetime "created_at", null: false
@@ -137,11 +141,11 @@ ActiveRecord::Schema[8.1].define(version: 2025_04_02_012300) do
   end
 
   create_table "judge_preferences", force: :cascade do |t|
-    t.bigint "category_id", null: false
     t.datetime "created_at", null: false
+    t.bigint "preference_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["category_id"], name: "index_judge_preferences_on_category_id"
+    t.index ["preference_id"], name: "index_judge_preferences_on_preference_id"
     t.index ["user_id"], name: "index_judge_preferences_on_user_id"
   end
 
@@ -156,6 +160,12 @@ ActiveRecord::Schema[8.1].define(version: 2025_04_02_012300) do
   create_table "peerages", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "description"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "preferences", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
     t.datetime "updated_at", null: false
   end
 
@@ -248,12 +258,14 @@ ActiveRecord::Schema[8.1].define(version: 2025_04_02_012300) do
   add_foreign_key "entries", "fairs"
   add_foreign_key "entries", "locations"
   add_foreign_key "entries", "timeslots"
+  add_foreign_key "entry_preferences", "entries"
+  add_foreign_key "entry_preferences", "preferences"
   add_foreign_key "fairs", "regions"
   add_foreign_key "judge_assigns", "entries"
   add_foreign_key "judge_assigns", "users"
   add_foreign_key "judge_fairs", "fairs"
   add_foreign_key "judge_fairs", "users"
-  add_foreign_key "judge_preferences", "categories"
+  add_foreign_key "judge_preferences", "preferences"
   add_foreign_key "judge_preferences", "users"
   add_foreign_key "locations", "fairs"
   add_foreign_key "scores", "criteria_types"
