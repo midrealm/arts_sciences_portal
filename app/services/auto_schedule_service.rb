@@ -16,7 +16,7 @@ class AutoScheduleService
 
     sorted_entries(judge_preference_ids).each do |entry|
       entry_preference_ids = entry.preferences.map(&:id).to_set
-      placement = find_best_placement(entry_preference_ids, judge_preference_ids, judge_busy, room_busy)
+      placement = find_best_placement(entry, entry_preference_ids, judge_preference_ids, judge_busy, room_busy)
 
       next unless placement
 
@@ -39,7 +39,10 @@ class AutoScheduleService
   def sorted_entries(judge_preference_ids)
     @entries.sort_by do |entry|
       entry_preference_ids = entry.preferences.map(&:id).to_set
+      entrant_ids = entry_entrant_ids(entry)
       compatible_judges = @judges.count do |judge|
+        next false if entrant_ids.include?(judge.id)
+
         (judge_preference_ids[judge.id] & entry_preference_ids).any?
       end
 
@@ -47,7 +50,8 @@ class AutoScheduleService
     end
   end
 
-  def find_best_placement(entry_preference_ids, judge_preference_ids, judge_busy, room_busy)
+  def find_best_placement(entry, entry_preference_ids, judge_preference_ids, judge_busy, room_busy)
+    entrant_ids = entry_entrant_ids(entry)
     best = nil
     best_score = -1
 
@@ -55,7 +59,9 @@ class AutoScheduleService
       @locations.each do |location|
         next if room_busy[location.id].include?(timeslot.id)
 
-        available_judges = @judges.reject { |judge| judge_busy[judge.id].include?(timeslot.id) }
+        available_judges = @judges.reject do |judge|
+          judge_busy[judge.id].include?(timeslot.id) || entrant_ids.include?(judge.id)
+        end
         ranked_judges = available_judges.sort_by do |judge|
           overlap = (judge_preference_ids[judge.id] & entry_preference_ids).size
           [-overlap, judge.email_or_name]
@@ -79,5 +85,9 @@ class AutoScheduleService
     end
 
     best
+  end
+
+  def entry_entrant_ids(entry)
+    entry.user_ids.to_set
   end
 end

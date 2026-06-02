@@ -32,7 +32,7 @@ RSpec.describe AutoScheduleService do
 
     subject(:proposal) do
       described_class.new(
-        entries: Entry.where(id: [entry1.id, entry2.id]).includes(:preferences),
+        entries: Entry.where(id: [entry1.id, entry2.id]).includes(:preferences, :users),
         judges: User.where(id: [judge1.id, judge2.id, judge3.id]).includes(judge_preferences: :preference),
         timeslots: Timeslot.all.in_order,
         locations: Location.for_fair(fair)
@@ -79,8 +79,22 @@ RSpec.describe AutoScheduleService do
     end
 
     it "prefers judges whose preferences match the entry" do
-      expect(proposal[entry1.id][:judge_ids]).to include(judge1.id, judge2.id)
+      expect([judge1.id, judge2.id]).to include(proposal[entry1.id][:judge_ids].first)
       expect(proposal[entry2.id][:judge_ids]).to include(judge3.id)
+    end
+
+    it "does not assign entrants as judges for their own entry" do
+      UserEntry.create!(user: judge1, entry: entry1)
+
+      proposal = described_class.new(
+        entries: Entry.where(id: entry1.id).includes(:preferences, :users),
+        judges: User.where(id: [judge1.id, judge2.id]).includes(judge_preferences: :preference),
+        timeslots: Timeslot.all.in_order,
+        locations: Location.for_fair(fair)
+      ).call
+
+      expect(proposal[entry1.id][:judge_ids]).not_to include(judge1.id)
+      expect(proposal[entry1.id][:judge_ids]).to include(judge2.id)
     end
   end
 end

@@ -127,7 +127,7 @@ class FairsController < ApplicationController
   private
     def load_schedule_data
       @entries = Entry.fair_entries(@fair)
-        .includes(:preferences, :judge_assigns)
+        .includes(:preferences, :judge_assigns, :users)
         .order(:entry_name)
       @judges = User.volunteered(@fair).includes(:judge_assigns, :peerages, judge_preferences: :preference)
       @timeslots = Timeslot.all.in_order
