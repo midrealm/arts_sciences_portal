@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :divisions do
       get 'scoresheet', on: :member
     end
+    resources :division_rubrics, only: [:index, :show]
     resources :regions
     resources :fairs do
       get 'view_schedule', on: :member, to: 'fairs#view_schedule'

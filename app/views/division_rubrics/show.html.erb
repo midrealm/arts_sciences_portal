@@ -1,0 +1,117 @@
+<%= link_to "Back to divisions", division_rubrics_path(show_deprecated: @show_deprecated), class: "btn btn-outline-secondary btn-sm mb-3" %>
+
+<div class="division-rubrics-page">
+  <div class="d-flex flex-column flex-lg-row justify-content-between align-items-start gap-3 mb-4">
+    <div>
+      <nav aria-label="breadcrumb" class="mb-2">
+        <ol class="breadcrumb small mb-0">
+          <li class="breadcrumb-item"><%= link_to "Division rubrics", division_rubrics_path(show_deprecated: @show_deprecated) %></li>
+          <li class="breadcrumb-item active" aria-current="page"><%= @division.name %></li>
+        </ol>
+      </nav>
+      <h1 class="h2 mb-2">
+        <%= @division.name %>
+        <%= rubric_deprecated_badge(@division) %>
+      </h1>
+      <% if @division.description.present? %>
+        <p class="text-secondary mb-0"><%= simple_format @division.description %></p>
+      <% end %>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      <%= link_to "Edit division", edit_division_path(@division), class: "btn btn-outline-secondary btn-sm" %>
+      <%= link_to "All criteria types", criteria_types_path, class: "btn btn-outline-secondary btn-sm" %>
+      <%= link_to "All criteria", criteria_path, class: "btn btn-outline-secondary btn-sm" %>
+    </div>
+  </div>
+
+  <%= render partial: "layouts/deprecated_toggle",
+             locals: {
+               active_url: division_rubric_path(@division),
+               deprecated_url: division_rubric_path(@division, show_deprecated: true),
+               show_deprecated: @show_deprecated
+             } %>
+
+  <% if @criteria_types.empty? %>
+    <div class="alert alert-info mb-0">
+      No <%= @show_deprecated ? "deprecated" : "active" %> criteria types are linked to this division yet.
+    </div>
+  <% else %>
+    <p class="text-secondary small mb-3">
+      Expand a criteria type to see its potential score criteria.
+    </p>
+
+    <div class="accordion division-rubrics-accordion" id="division-rubric-accordion">
+      <% @criteria_types.each_with_index do |criteria_type, index| %>
+        <% accordion_id = "criteria-type-#{criteria_type.id}" %>
+        <% child_types = rubric_child_types(criteria_type, @division, show_deprecated: @show_deprecated) %>
+        <% direct_criteriums = rubric_criteriums(criteria_type, show_deprecated: @show_deprecated) %>
+        <% child_criterium_count = child_types.sum { |child| rubric_criteriums(child, show_deprecated: @show_deprecated).size } %>
+        <% total_criteriums = direct_criteriums.size + child_criterium_count %>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="<%= accordion_id %>-heading">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#<%= accordion_id %>-panel" aria-expanded="false" aria-controls="<%= accordion_id %>-panel">
+              <span class="me-2"><%= criteria_type_heading(criteria_type) %></span>
+              <%= rubric_deprecated_badge(criteria_type) %>
+              <span class="badge text-bg-secondary ms-auto me-2">
+                <%= total_criteriums %> <%= "line".pluralize(total_criteriums) %>
+              </span>
+              <% if criteria_type.max_score.present? %>
+                <span class="badge text-bg-light text-dark border">Max <%= criteria_type.max_score %></span>
+              <% end %>
+            </button>
+          </h2>
+          <div id="<%= accordion_id %>-panel" class="accordion-collapse collapse" aria-labelledby="<%= accordion_id %>-heading" data-bs-parent="#division-rubric-accordion">
+            <div class="accordion-body">
+              <% if criteria_type.description.present? %>
+                <div class="text-secondary mb-3"><%= simple_format criteria_type.description %></div>
+              <% end %>
+
+              <div class="d-flex flex-wrap gap-2 mb-3">
+                <%= link_to "Edit criteria type", edit_criteria_type_path(criteria_type), class: "btn btn-outline-primary btn-sm" %>
+                <%= link_to "New criterion", new_criterium_path, class: "btn btn-outline-secondary btn-sm" %>
+              </div>
+
+              <% if direct_criteriums.any? %>
+                <h3 class="h6 mb-2">Criteria on this type</h3>
+                <%= render "criterium_list", criteriums: direct_criteriums %>
+              <% end %>
+
+              <% if child_types.any? %>
+                <h3 class="h6 mb-3<%= ' mt-4' if direct_criteriums.any? %>">Child criteria types</h3>
+                <div class="vstack gap-3">
+                  <% child_types.each do |child_type| %>
+                    <% child_criteriums = rubric_criteriums(child_type, show_deprecated: @show_deprecated) %>
+                    <div class="card border shadow-sm">
+                      <div class="card-header bg-transparent d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div>
+                          <span class="fw-semibold"><%= criteria_type_heading(child_type) %></span>
+                          <%= rubric_deprecated_badge(child_type) %>
+                          <% if child_type.max_score.present? %>
+                            <span class="badge text-bg-light text-dark border ms-1">Max <%= child_type.max_score %></span>
+                          <% end %>
+                        </div>
+                        <%= link_to "Edit", edit_criteria_type_path(child_type), class: "small" %>
+                      </div>
+                      <div class="card-body py-3">
+                        <% if child_type.description.present? %>
+                          <p class="small text-secondary"><%= child_type.description %></p>
+                        <% end %>
+                        <%= render "criterium_list", criteriums: child_criteriums %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              <% elsif direct_criteriums.empty? %>
+                <p class="small text-secondary mb-0">This type has no child types or criteria lines for this division.</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<br>
+<%= link_to "Back to divisions", division_rubrics_path(show_deprecated: @show_deprecated), class: "btn btn-outline-secondary btn-sm" %>

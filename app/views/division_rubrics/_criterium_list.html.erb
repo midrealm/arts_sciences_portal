@@ -1,0 +1,31 @@
+<% if criteriums.any? %>
+  <div class="table-responsive">
+    <table class="table table-sm table-striped align-middle mb-0">
+      <thead>
+        <tr>
+          <th scope="col">Score</th>
+          <th scope="col">Description</th>
+          <th scope="col">Optional</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% criteriums.each do |criterium| %>
+          <tr>
+            <td class="text-nowrap"><%= criterium.suggested_score %></td>
+            <td>
+              <%= criterium.description %>
+              <%= rubric_deprecated_badge(criterium) %>
+            </td>
+            <td><%= yes_no_badge(criterium.optional) %></td>
+            <td class="text-end text-nowrap">
+              <%= link_to "Edit", edit_criterium_path(criterium), class: "small" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <p class="small text-secondary mb-0">No criteria lines for this type.</p>
+<% end %>

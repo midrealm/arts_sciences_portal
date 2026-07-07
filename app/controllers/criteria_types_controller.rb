@@ -6,7 +6,8 @@ class CriteriaTypesController < ApplicationController
   # GET /criteria_types
   # GET /criteria_types.json
   def index
-    @criteria_types = CriteriaTypeRepository.active_criteria
+    @show_deprecated = ActiveModel::Type::Boolean.new.cast(params[:show_deprecated])
+    @criteria_types = CriteriaTypeRepository.for_index(show_deprecated: @show_deprecated)
   end
 
   # GET /criteria_types/1

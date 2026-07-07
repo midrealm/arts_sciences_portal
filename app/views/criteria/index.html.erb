@@ -2,6 +2,13 @@
 <br>
 <h1>Criteria</h1>
 
+<%= render partial: "layouts/deprecated_toggle",
+           locals: {
+             active_url: criteria_path,
+             deprecated_url: criteria_path(show_deprecated: true),
+             show_deprecated: @show_deprecated
+           } %>
+
 <table>
   <thead>
     <tr>

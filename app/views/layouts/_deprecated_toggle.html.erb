@@ -1,0 +1,4 @@
+<div class="btn-group mb-3" role="group" aria-label="Active or deprecated records">
+  <%= link_to "Active", active_url, class: "btn btn-sm #{show_deprecated ? 'btn-outline-secondary' : 'btn-secondary'}" %>
+  <%= link_to "Deprecated", deprecated_url, class: "btn btn-sm #{show_deprecated ? 'btn-secondary' : 'btn-outline-secondary'}" %>
+</div>

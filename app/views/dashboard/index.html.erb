@@ -3,7 +3,7 @@
   <% if current_user.admin? %>
     Access to fair operations, admin tools, and scoresheet rubric management.
   <% else %>
-    Manage your entries, judging preferences, and fair-related tasks.
+    Manage your entries, scoring preferences, and fair-related tasks.
   <% end %>
 </p>
 
@@ -66,13 +66,13 @@
       <div class="card border-0 shadow-sm h-100 dashboard-card">
         <div class="card-header bg-transparent border-0 pt-3 pb-0">
           <h2 class="h5 mb-0">People Management</h2>
-          <p class="small text-secondary mb-0 mt-1">Users, roles, and volunteer judging.</p>
+          <p class="small text-secondary mb-0 mt-1">Users, roles, and volunteer scoring.</p>
         </div>
         <div class="list-group list-group-flush rounded-0 border-top mt-2">
           <%= dashboard_link_to "User Management", users_path %>
           <%= dashboard_link_to "Assign User Roles", user_roles_path %>
           <%= dashboard_link_to "User Profile and Preferences", current_user %>
-          <%= dashboard_link_to "Manage Judging Preferences", user_judge_preferences_path(current_user) %>
+          <%= dashboard_link_to "Manage Scoring Preferences", user_judge_preferences_path(current_user) %>
           <%= dashboard_link_to "Manage Peerage Titles", peerages_path %>
         </div>
       </div>
@@ -85,11 +85,12 @@
           <p class="small text-secondary mb-0 mt-1">Structure used across fairs and entries.</p>
         </div>
         <div class="list-group list-group-flush rounded-0 border-top mt-2">
+          <%= dashboard_link_to "Rubrics", division_rubrics_path %>
           <%= dashboard_link_to "Divisions", divisions_path %>
-          <%= dashboard_link_to "Regions", regions_path %>
-          <%= dashboard_link_to "Timeslots", timeslots_path %>
           <%= dashboard_link_to "Criteria types", criteria_types_path %>
           <%= dashboard_link_to "Criteria", criteria_path %>
+          <%= dashboard_link_to "Regions", regions_path %>
+          <%= dashboard_link_to "Timeslots", timeslots_path %>
           <%= dashboard_link_to "Preferences", preferences_path %>
         </div>
       </div>
@@ -115,12 +116,12 @@
     <div class="col-12 col-md-6">
       <div class="card border-0 shadow-sm h-100 dashboard-card">
         <div class="card-header bg-transparent border-0 pt-3 pb-0">
-          <h2 class="h5 mb-0">Judging</h2>
+          <h2 class="h5 mb-0">Scoring</h2>
           <p class="small text-secondary mb-0 mt-1">Volunteer roles and category preferences.</p>
         </div>
         <div class="list-group list-group-flush rounded-0 border-top mt-2">
           <%= dashboard_link_to "Volunteer for a fair", judge_fairs_path %>
-          <%= dashboard_link_to "Manage your judging preferences", user_judge_preferences_path(current_user) %>
+          <%= dashboard_link_to "Manage your scoring preferences", user_judge_preferences_path(current_user) %>
           <% if schedule_ok %>
             <%= dashboard_link_to "Review your schedule", review_path %>
           <% end %>

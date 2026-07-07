@@ -6,7 +6,8 @@ class DivisionsController < ApplicationController
   # GET /divisions
   # GET /divisions.json
   def index
-    @divisions = Division.all
+    @show_deprecated = ActiveModel::Type::Boolean.new.cast(params[:show_deprecated])
+    @divisions = DivisionRepository.for_index(show_deprecated: @show_deprecated).default_order
   end
 
   # GET /divisions/1
@@ -71,6 +72,6 @@ class DivisionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def division_params
-      params.require(:division).permit(:name, :description)
+      params.require(:division).permit(:name, :description, :deprecated)
     end
 end

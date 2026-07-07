@@ -6,8 +6,8 @@ class CriteriaController < ApplicationController
   # GET /criteria
   # GET /criteria.json
   def index
-    @criteria = CriteriaRepository.active_criteria
-                                  .joins(criteria_type: :division).order('criteria_types.division_id', :criteria_type_id)
+    @show_deprecated = ActiveModel::Type::Boolean.new.cast(params[:show_deprecated])
+    @criteria = CriteriaRepository.for_index(show_deprecated: @show_deprecated)
   end
 
   # GET /criteria/1
@@ -72,6 +72,6 @@ class CriteriaController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def criterium_params
-      params.require(:criterium).permit(:description, :criteria_type_id, :suggested_score, :optional)
+      params.require(:criterium).permit(:description, :criteria_type_id, :suggested_score, :optional, :deprecated)
     end
 end

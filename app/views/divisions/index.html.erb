@@ -2,6 +2,13 @@
 <br>
 <h1>Divisions</h1>
 
+<%= render partial: "layouts/deprecated_toggle",
+           locals: {
+             active_url: divisions_path,
+             deprecated_url: divisions_path(show_deprecated: true),
+             show_deprecated: @show_deprecated
+           } %>
+
 <table>
   <thead>
     <tr>

@@ -1,0 +1,48 @@
+<%= link_to "Back", root_path, class: "btn btn-outline-secondary btn-sm mb-3" %>
+
+<div class="division-rubrics-page">
+  <div class="d-flex flex-column flex-lg-row justify-content-between align-items-start gap-3 mb-4">
+    <div>
+      <h1 class="h2 mb-2">Rubrics</h1>
+      <p class="text-secondary mb-0">
+        Each <strong>division</strong> has scoring <strong>criteria types</strong> (for example Scope or Skill).
+        Each <strong>criteria type</strong> has <strong>criteria</strong> that describe the entrant's score.
+        Choose a division to browse its full rubric hierarchy.
+      </p>
+    </div>
+  </div>
+
+  <%= render partial: "layouts/deprecated_toggle",
+             locals: {
+               active_url: division_rubrics_path,
+               deprecated_url: division_rubrics_path(show_deprecated: true),
+               show_deprecated: @show_deprecated
+             } %>
+
+  <% if @divisions.empty? %>
+    <div class="alert alert-info mb-0">
+      No <%= @show_deprecated ? "deprecated" : "active" %> divisions found.
+    </div>
+  <% else %>
+    <div class="list-group shadow-sm">
+      <% @divisions.each do |division| %>
+        <%= link_to division_rubric_path(division, show_deprecated: @show_deprecated),
+                    class: "list-group-item list-group-item-action d-flex justify-content-between align-items-center gap-3 py-3" do %>
+          <div>
+            <div class="fw-semibold">
+              <%= division.name %>
+              <%= rubric_deprecated_badge(division) %>
+            </div>
+            <% if division.description.present? %>
+              <div class="small text-secondary mt-1"><%= truncate(division.description, length: 160) %></div>
+            <% end %>
+          </div>
+          <span class="text-muted small flex-shrink-0" aria-hidden="true">View rubric →</span>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<br>
+<%= link_to "Back", root_path, class: "btn btn-outline-secondary btn-sm" %>
