@@ -14,7 +14,7 @@
   <h3><%= @entry.entry_name %></h3>
 
   <% if current_user.admin? %>
-    <strong>Person Judging this Entry</strong>
+    <strong>Person Scoring this Entry</strong>
     <%= form.select :user_id, JudgeAssign.joins(:user).where(entry_id: @entry.id).map{ |m| ["#{m.user.email} - #{m.user.sca_name}", m.user_id] }%>
   <% end %>
 

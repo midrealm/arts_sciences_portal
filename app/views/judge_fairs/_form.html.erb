@@ -1,7 +1,7 @@
 <%= form_with(model: judge_fair, local: true) do |form| %>
   <% if judge_fair.errors.any? %>
     <div id="error_explanation" class="alert alert-danger">
-      <h2><%= pluralize(judge_fair.errors.count, "error") %> prohibited this judge_fair from being saved:</h2>
+      <h2><%= pluralize(judge_fair.errors.count, "error") %> prohibited this scorer assignment from being saved:</h2>
 
       <ul>
         <% judge_fair.errors.full_messages.each do |message| %>
@@ -17,7 +17,7 @@
     </div>
   <% end %>
 
-  <p>Here you can volunteer to judge at an upcoming Fair.  If you wish to shadow judge or this is your first time judging,
+  <p>Here you can volunteer to judge at an upcoming Fair.  If you wish to shadow score or this is your first time scoring,
   please check the applicable boxes.  Otherwise, just select your fair and hit "Volunteer"!</p>
 
   <hr>
@@ -28,12 +28,12 @@
   </div>
 
   <div class="field">
-    <%= form.label "Volunteer as a shadow judge?" %>
+    <%= form.label "Volunteer as a shadow scorer?" %>
     <%= form.check_box :shadow_judge %>
   </div>
 
   <div class="field">
-    <%= form.label "This will be my first time as a judge." %>
+    <%= form.label "This will be my first time as a scorer." %>
     <%= form.check_box :first_time %>
   </div>
 

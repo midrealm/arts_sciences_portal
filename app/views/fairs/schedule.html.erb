@@ -3,7 +3,7 @@
     <div>
       <h1 class="h2 mb-2">Schedule: <%= @fair.name %></h1>
       <p class="text-secondary schedule-lead mb-0">
-        Choose a timeslot and room for each entry, then assign volunteer judges. Save when you are done editing.
+        Choose a timeslot and room for each entry, then assign volunteer scorers. Save when you are done editing.
       </p>
     </div>
     <div class="d-flex flex-wrap gap-2 schedule-toolbar">
@@ -57,7 +57,7 @@
           <div class="card-body">
             <% if needs_manual %>
               <div class="alert alert-danger py-2 mb-3 schedule-entry-manual-alert">
-                Auto-schedule could not place this entry. Choose a timeslot, room, and judges manually.
+                Auto-schedule could not place this entry. Choose a timeslot, room, and scorers manually.
               </div>
             <% end %>
             <%= fields_for "entries[]", entry do |f| %>
@@ -95,9 +95,9 @@
             <% end %>
 
             <div class="mt-4 pt-3 border-top">
-              <h2 class="h6 fw-semibold mb-2">Judges</h2>
+              <h2 class="h6 fw-semibold mb-2">Scorers</h2>
               <p class="small text-secondary mb-3">
-                Checked judges are assigned to this entry. Hover a judge cell to see judging preferences.
+                Checked scorers are assigned to this entry. Hover a scorer cell to see scoring preferences.
               </p>
               <% if @judges.any? %>
                 <div class="row g-2">
@@ -110,7 +110,7 @@
                         data-judge-prefs="<%= prefs_id %>"
                         data-bs-title="<%= user.email_or_name %>"
                         tabindex="0"
-                        aria-label="<%= "Judge #{user.email_or_name}. Hover for judging preferences." %>">
+                        aria-label="<%= "Scorer #{user.email_or_name}. Hover for scoring preferences." %>">
                         <div class="form-check mb-0">
                           <%= check_box_tag "judge_assigns[]", "#{entry.id}_#{user.id}",
                             schedule_judge_assigned?(entry, user, @proposed_schedule, @auto_schedule_preview),
@@ -128,7 +128,7 @@
                   <% end %>
                 </div>
               <% else %>
-                <p class="text-secondary small mb-0">No volunteers have signed up to judge this fair yet.</p>
+                <p class="text-secondary small mb-0">No volunteers have signed up to score this fair yet.</p>
               <% end %>
             </div>
           </div>
@@ -138,7 +138,7 @@
       <div class="card border-primary schedule-save-card shadow-sm">
         <div class="card-body d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between gap-3">
           <p class="small text-secondary mb-0">
-            <strong>Save schedule</strong> stores timeslots, rooms, and judge assignments for every entry above.
+            <strong>Save schedule</strong> stores timeslots, rooms, and scorer assignments for every entry above.
           </p>
           <%= submit_tag "Save schedule", class: "btn btn-primary btn-lg px-4 flex-shrink-0" %>
         </div>

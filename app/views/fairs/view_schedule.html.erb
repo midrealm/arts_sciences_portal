@@ -3,7 +3,7 @@
     <div>
       <h1 class="h2 mb-2">Schedule overview</h1>
       <p class="text-secondary view-schedule-lead mb-0">
-        <%= @fair.name %> — entries grouped by timeslot. Rows in <span class="text-danger fw-semibold">red</span> mean either the same <strong>room</strong> is assigned more than once in that timeslot, or the same <strong>judge</strong> is assigned to more than one entry in that timeslot.
+        <%= @fair.name %> — entries grouped by timeslot. Rows in <span class="text-danger fw-semibold">red</span> mean either the same <strong>room</strong> is assigned more than once in that timeslot, or the same <strong>scorer</strong> is assigned to more than one entry in that timeslot.
       </p>
     </div>
     <div class="d-flex flex-wrap gap-2">
@@ -37,7 +37,7 @@
                 <span class="d-block">Same room assigned more than once in this timeslot.</span>
               <% end %>
               <% if judge_conflict_entry_ids.any? %>
-                <span class="d-block<%= ' mt-1' if duplicate_room_ids.any? %>">At least one judge is assigned to more than one entry in this timeslot.</span>
+                <span class="d-block<%= ' mt-1' if duplicate_room_ids.any? %>">At least one scorer is assigned to more than one entry in this timeslot.</span>
               <% end %>
             </div>
           <% end %>
@@ -47,7 +47,7 @@
                 <tr>
                   <th scope="col">Entry</th>
                   <th scope="col">Entrants</th>
-                  <th scope="col">Judges</th>
+                  <th scope="col">Scorers</th>
                   <th scope="col">Room</th>
                 </tr>
               </thead>
