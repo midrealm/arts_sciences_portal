@@ -1,45 +1,74 @@
-<br>  <%= link_to 'Back', fairs_path %>
-<br>
-<h1>Schedule</h1>
+<div class="view-schedule-page">
+  <div class="d-flex flex-column flex-lg-row justify-content-between align-items-start gap-3 mb-4 view-schedule-no-print">
+    <div>
+      <h1 class="h2 mb-2">Schedule overview</h1>
+      <p class="text-secondary view-schedule-lead mb-0">
+        <%= @fair.name %> — entries grouped by timeslot. Rows in <span class="text-danger fw-semibold">red</span> mean either the same <strong>room</strong> is assigned more than once in that timeslot, or the same <strong>judge</strong> is assigned to more than one entry in that timeslot.
+      </p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      <%= link_to "Edit schedule", schedule_fair_path(@fair), class: "btn btn-primary" %>
+      <%= button_tag type: "button", class: "btn btn-outline-secondary", onclick: "window.print(); return false;" do %>
+        Print
+      <% end %>
+      <%= link_to "Back to fairs", fairs_path, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
 
-<% Timeslot.all.in_order.each do |timeslot| %>
-  <h3><%= timeslot.description %></h3>
+  <% if @entries.empty? %>
+    <div class="alert alert-info mb-0">
+      No scheduled entries for this fair yet, or no timeslots have been assigned. Try <%= link_to "editing the schedule", schedule_fair_path(@fair) %>.
+    </div>
+  <% else %>
+    <% @timeslots.each do |timeslot| %>
+      <% slot_entries = @entries_by_timeslot[timeslot] %>
+      <section class="card border-0 shadow-sm mb-4 view-schedule-timeslot-card" aria-labelledby="timeslot-heading-<%= timeslot.id %>">
+        <div class="card-header view-schedule-slot-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+          <h2 class="h5 mb-0" id="timeslot-heading-<%= timeslot.id %>"><%= timeslot.description %></h2>
+          <span class="badge text-bg-secondary"><%= pluralize(slot_entries.size, "entry") %></span>
+        </div>
 
-  <table>
-    <thead>
-    <tr>
-      <th>Entry</th>
-      <th>Entrants</th>
-      <th>Judges</th>
-      <th>Room</th>
-      <th colspan="3"></th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <% @entries.select { |x| x.timeslot == timeslot }.each do |entry| %>
-      <tr>
-        <td><%= simple_format entry.entry_name %></td>
-        <td><%= simple_format entry.entrant_string %></td>
-        <td><%= simple_format entry.judge_name_or_unnassigned %></td>
-        <td><%= simple_format entry.location_description %></td>
-      </tr>
+        <% if slot_entries.any? %>
+          <% duplicate_room_ids = view_schedule_duplicate_room_ids(slot_entries) %>
+          <% judge_conflict_entry_ids = view_schedule_double_booked_judge_entry_ids(slot_entries) %>
+          <% if duplicate_room_ids.any? || judge_conflict_entry_ids.any? %>
+            <div class="alert alert-danger py-2 px-3 mb-0 rounded-0 border-start-0 border-end-0 small view-schedule-conflict-banner">
+              <% if duplicate_room_ids.any? %>
+                <span class="d-block">Same room assigned more than once in this timeslot.</span>
+              <% end %>
+              <% if judge_conflict_entry_ids.any? %>
+                <span class="d-block<%= ' mt-1' if duplicate_room_ids.any? %>">At least one judge is assigned to more than one entry in this timeslot.</span>
+              <% end %>
+            </div>
+          <% end %>
+          <div class="table-responsive">
+            <table class="mb-0 view-schedule-table">
+              <thead>
+                <tr>
+                  <th scope="col">Entry</th>
+                  <th scope="col">Entrants</th>
+                  <th scope="col">Judges</th>
+                  <th scope="col">Room</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% slot_entries.each do |entry| %>
+                  <tr class="<%= view_schedule_conflict_row_class(entry, duplicate_room_ids, judge_conflict_entry_ids) %>">
+                    <td class="text-break"><%= simple_format entry.entry_name %></td>
+                    <td class="text-break"><%= simple_format entry.entrant_string %></td>
+                    <td class="text-break"><%= simple_format entry.judge_name_or_unnassigned %></td>
+                    <td class="text-break"><%= simple_format entry.location_description %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <div class="card-body py-4">
+            <p class="text-secondary small mb-0">No entries assigned to this timeslot.</p>
+          </div>
+        <% end %>
+      </section>
     <% end %>
-    </tbody>
-  </table>
-<% end %>
-
-<br>
-
-<br>  <%= link_to 'Back', fairs_path %>
-
-<br>
-
-<script type="text/javascript">
-    function printpage()
-    {
-        window.print()
-    }
-</script>
-
-<%= link_to "Print Page", '#', onclick: "printpage()" %>
+  <% end %>
+</div>

@@ -1,5 +1,11 @@
-<p>Welcome to the NEW Midrealm A&S Registration System!</p>
-<p>This is where you can register to be an entrant, as well as a judge for the Middle Kingdom's annual A&S Faire - for both the Regional and Kingdom Faires!</p>
-<p>PLEASE NOTE:  If you have not registered for a new account as of January 1st, 2020, you will be prompted to do so.  Old user accounts from the other system will not be recognized here.</p>
-<hr>
-<%= link_to('Login', new_user_session_path) %> | <%= link_to('Register', new_user_registration_path) %>
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <h1 class="h2 mb-3">Welcome</h1>
+    <p class="lead">Welcome to the Midrealm A&amp;S registration system. Register as an entrant, a judge, or both, for the Middle Kingdom&rsquo;s annual Arts &amp; Sciences Faire&mdash;regional and kingdom events.</p>
+    <hr class="my-4">
+    <div class="d-flex flex-wrap gap-2">
+      <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-primary' %>
+      <%= link_to 'Create an account', new_user_registration_path, class: 'btn btn-outline-primary' %>
+    </div>
+  </div>
+</div>

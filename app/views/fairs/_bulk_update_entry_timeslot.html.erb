@@ -1,3 +1,0 @@
-<% Timeslot.all.in_order.each do |timeslot| %>
-  <td><%= timeslot.description %> <%= form.radio_button :timeslot_id, timeslot.id %></td>
-<% end %>

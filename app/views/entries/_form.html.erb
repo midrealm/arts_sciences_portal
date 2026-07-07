@@ -91,6 +91,16 @@
     <%= form.label :youth %>
   </div>
 
+  <div class="field">
+    <%= form.label :preference_ids, "Judging preferences for this entry (optional)" %><br>
+    <%= form.collection_check_boxes :preference_ids, Preference.default_order, :id, :name do |b| %>
+      <div>
+        <%= b.check_box %>
+        <%= b.label %>
+      </div>
+    <% end %>
+  </div>
+
   <div class="actions">
     <% if Fair.all.empty? %>
       <%= form.submit disabled: true%>

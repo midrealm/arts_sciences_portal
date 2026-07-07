@@ -1,42 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Midrealm Arts and Sciences Fair Portal</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
 </head>
+<body class="d-flex flex-column min-vh-100 site-body">
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark site-navbar shadow-sm">
+      <div class="container">
+        <%= link_to 'Midrealm A&S Portal', root_path, class: 'navbar-brand fw-semibold' %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-1">
+            <% if user_signed_in? %>
+              <li class="nav-item"><%= link_to 'Dashboard', root_path, class: 'nav-link px-lg-3' %></li>
+              <li class="nav-item"><%= link_to 'Entries', entries_path, class: 'nav-link px-lg-3' %></li>
+              <li class="nav-item"><%= link_to 'Your Schedule', review_path, class: 'nav-link px-lg-3' %></li>
+              <li class="nav-item"><%= link_to 'Account', edit_user_registration_path, class: 'nav-link px-lg-3' %></li>
+              <li class="nav-item ms-lg-2">
+                <%= button_to 'Sign out', destroy_user_session_path, method: :delete, form: { class: 'd-inline' }, class: 'btn btn-outline-light btn-sm' %>
+              </li>
+            <% else %>
+              <li class="nav-item"><%= link_to 'Sign in', new_user_session_path, class: 'nav-link px-lg-3' %></li>
+              <li class="nav-item"><%= link_to 'Register', new_user_registration_path, class: 'btn btn-light btn-sm ms-lg-2' %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-<body>
-<div class="banner">
-  <h1>Midrealm Arts and Sciences Fair Portal</h1>
-</div>
+  <main class="flex-grow-1">
+    <div class="container py-4 py-lg-5">
+      <div class="site-main">
+        <% flash.each do |name, msg| %>
+          <% alert_variant =
+               case name.to_s
+               when 'notice' then 'success'
+               when 'alert', 'error' then 'danger'
+               else 'info'
+               end %>
+          <% if msg.is_a?(Array) %>
+            <% msg.each do |message| %>
+              <%= content_tag :div, message, id: "flash_#{name}", class: "alert alert-#{alert_variant}", role: 'alert' %>
+            <% end %>
+          <% else %>
+            <%= content_tag :div, msg, id: "flash_#{name}", class: "alert alert-#{alert_variant}", role: 'alert' %>
+          <% end %>
+        <% end %>
 
-<div class="body">
-  <% flash.each do |name, msg| %>
-    <% if msg.class == Array %>
-      <% msg.each do |message| %>
-        <%= content_tag :div, message, id: "flash_#{name}", class: "alert alert-#{name}" %>
-      <% end %>
-    <% else %>
-      <%= content_tag :div, msg, id: "flash_#{name}", class: "alert alert-#{name}" %>
-    <% end %>
-  <% end %>
-
-  <%= yield %>
-
-  <% if user_signed_in? %>
-    <br><br>
-
-    <div>
-      <%= link_to 'Home', root_path %>
-      <br>
-      <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
+        <%= yield %>
+      </div>
     </div>
-  <% end %>
-</div>
+  </main>
+
+  <footer class="site-footer mt-auto py-4">
+    <div class="container small text-secondary d-flex flex-column flex-md-row justify-content-between gap-2">
+      <span>Middle Kingdom Arts &amp; Sciences</span>
+      <span><%= Time.current.year %></span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

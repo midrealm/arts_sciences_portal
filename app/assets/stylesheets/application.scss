@@ -1,52 +1,222 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
+ * Global styles — loaded after Bootstrap.
  */
 @import "bootstrap";
+@import "scaffolds";
+@import "fairs";
 
-/*!
- * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)
- * Copyright 2013-2019 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
- */
-.body {
-  margin: 5em;
+:root {
+  --site-bg: #f3f1ea;
+  --site-surface: #ffffff;
+  --site-navbar-start: #152a45;
+  --site-navbar-end: #2a4a73;
+  --site-border: rgba(0, 0, 0, 0.08);
+  --site-link: #1a4a7a;
+  --site-link-hover: #0f3358;
+  --site-link-underline: rgba(26, 74, 122, 0.35);
 }
 
-tr {
-  padding: 1em;
+.site-body {
+  background-color: var(--site-bg);
+  color: #1b1b1b;
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-td {
-  padding: 1em;
+.site-navbar {
+  background: linear-gradient(
+    120deg,
+    var(--site-navbar-start) 0%,
+    var(--site-navbar-end) 100%
+  ) !important;
 }
 
+.site-navbar .navbar-brand {
+  letter-spacing: 0.02em;
+}
+
+.site-navbar .nav-link {
+  border-radius: 0.35rem;
+}
+
+.site-navbar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.site-main {
+  background-color: var(--site-surface);
+  border-radius: 0.75rem;
+  border: 1px solid var(--site-border);
+  box-shadow: 0 2px 12px rgba(21, 42, 69, 0.06);
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  max-width: 100%;
+}
+
+@media (max-width: 575.98px) {
+  .site-main {
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+  }
+}
+
+.site-footer {
+  border-top: 1px solid var(--site-border);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(6px);
+}
+
+/* Rails tables: readable defaults without editing every view */
+main table {
+  @extend .table;
+  @extend .table-striped;
+  @extend .table-hover;
+  @extend .table-sm;
+  @extend .table-bordered;
+  vertical-align: middle;
+}
+
+main table thead th {
+  background-color: rgba(21, 42, 69, 0.06);
+  font-weight: 600;
+  border-bottom-width: 2px;
+}
+
+main h1,
+main h2,
+main h3 {
+  color: #152a45;
+  font-weight: 600;
+}
+
+main hr {
+  opacity: 0.12;
+}
+
+/* In-content links: clear affordance without clashing with Bootstrap components */
+main {
+  a:not(.btn):not([class*="btn-"]):not(.nav-link):not(.navbar-brand):not(.page-link):not(.dropdown-item):not(.alert-link):not(.list-group-item):not(.stretched-link) {
+    color: var(--site-link);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: var(--site-link-underline);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    transition:
+      color 0.12s ease,
+      text-decoration-color 0.12s ease;
+
+    &:hover {
+      color: var(--site-link-hover);
+      text-decoration-color: var(--site-link-hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(26, 74, 122, 0.45);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+  }
+}
+
+/* Dashboard cards */
+.dashboard-page-title {
+  letter-spacing: -0.02em;
+}
+
+.dashboard-lead {
+  max-width: 42rem;
+}
+
+.dashboard-card {
+  border: 1px solid var(--site-border) !important;
+  transition:
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.dashboard-card:hover {
+  box-shadow: 0 0.35rem 1.25rem rgba(21, 42, 69, 0.1) !important;
+  border-color: rgba(21, 42, 69, 0.12) !important;
+}
+
+.dashboard-card .list-group-item {
+  border-color: var(--site-border);
+}
+
+.dashboard-card .list-group-item-action {
+  color: var(--site-link);
+  font-weight: 500;
+  text-decoration: none;
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+
+  &:hover {
+    background-color: rgba(26, 74, 122, 0.06);
+    color: var(--site-link-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(26, 74, 122, 0.35);
+    outline-offset: -2px;
+    z-index: 1;
+  }
+}
+
+.dashboard-link-chevron {
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: transform 0.15s ease;
+}
+
+.dashboard-card .list-group-item-action:hover .dashboard-link-chevron {
+  transform: translateX(3px);
+  opacity: 0.85;
+}
+
+.dashboard-section-label {
+  letter-spacing: 0.06em;
+}
+
+.dashboard-section-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dashboard-section-divider-line {
+  flex: 1;
+  margin: 0;
+  border: 0;
+  border-top: 2px solid rgba(21, 42, 69, 0.12);
+  opacity: 1;
+}
+
+.dashboard-section-divider-label {
+  flex-shrink: 0;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Utility colors used in views */
 .red {
-  color: #cc0000;
+  color: #b42318 !important;
 }
 
 .blue {
-  color: cornflowerblue;
+  color: #2c5282 !important;
 }
 
 .black {
-  color: black;
-}
-
-.banner {
-  width: 100%;
-  padding: 4em;
-  background-color: #445e86;
-  color: white;
+  color: #1b1b1b !important;
 }
 
 .dropdown-container {
@@ -54,7 +224,3 @@ td {
   float: right;
   text-align: right;
 }
-
-//body {
-//  background-color: seashell;
-//}

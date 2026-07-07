@@ -1,3 +1,248 @@
-// Place all the styles related to the Fairs controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+/* Fairs & scheduling UI */
+
+.fairs-index-scroll {
+  border: 1px solid var(--site-border, rgba(0, 0, 0, 0.08));
+  background-color: #fff;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fairs-index-table {
+  width: 100%;
+  margin-bottom: 0;
+
+  thead th {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: normal;
+    line-height: 1.25;
+    vertical-align: bottom;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  thead th.text-center {
+    max-width: 5.25rem;
+    min-width: 3.25rem;
+  }
+
+  .fair-name-col {
+    min-width: 8rem;
+    max-width: 14rem;
+    white-space: normal;
+  }
+
+  thead th.fair-name-col {
+    max-width: 14rem;
+  }
+
+  .fairs-index-data-row > * {
+    border-bottom: none;
+  }
+
+  .fairs-index-actions-row > * {
+    padding-top: 0;
+    padding-bottom: 0.85rem;
+    border-top: none;
+    background-color: rgba(21, 42, 69, 0.04);
+  }
+
+  .fairs-index-data-row:hover + .fairs-index-actions-row > *,
+  .fairs-index-actions-row:hover > * {
+    background-color: rgba(21, 42, 69, 0.07);
+  }
+
+  .fairs-index-actions {
+    padding: 0.35rem 0 0.15rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .fairs-index-scroll-hint {
+    display: none;
+  }
+}
+
+.schedule-page {
+  margin-bottom: 2rem;
+}
+
+.schedule-lead {
+  max-width: 42rem;
+}
+
+.schedule-entry-card {
+  border: 1px solid var(--site-border, rgba(0, 0, 0, 0.08)) !important;
+}
+
+.schedule-entry-card--manual {
+  border: 2px solid var(--bs-danger, #dc3545) !important;
+  box-shadow: 0 0.25rem 0.75rem rgba(220, 53, 69, 0.15) !important;
+}
+
+.schedule-entry-card--manual .schedule-entry-header {
+  background-color: rgba(220, 53, 69, 0.08);
+}
+
+.schedule-manual-banner {
+  border-left: 4px solid var(--bs-danger, #dc3545);
+}
+
+.schedule-entry-manual-alert {
+  font-size: 0.875rem;
+}
+
+.schedule-entry-header {
+  background-color: rgba(21, 42, 69, 0.06);
+  border-bottom: 1px solid var(--site-border, rgba(0, 0, 0, 0.08));
+}
+
+.schedule-entry-title {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.schedule-slot-option {
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+
+  &:hover {
+    border-color: rgba(26, 74, 122, 0.35) !important;
+    background-color: rgba(26, 74, 122, 0.04);
+  }
+
+  &:has(.form-check-input:checked) {
+    border-color: rgba(26, 74, 122, 0.65) !important;
+    background-color: rgba(26, 74, 122, 0.08);
+  }
+}
+
+.schedule-judge-check {
+  cursor: help;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+
+  &:hover {
+    border-color: rgba(26, 74, 122, 0.25) !important;
+  }
+
+  &:has(.form-check-input:checked) {
+    border-color: rgba(26, 74, 122, 0.45) !important;
+    background-color: rgba(26, 74, 122, 0.06);
+  }
+
+  .form-check-label {
+    padding-left: 0.25rem;
+    line-height: 1.35;
+    cursor: help;
+  }
+
+  .form-check-label a {
+    cursor: pointer;
+  }
+
+  .form-check-input {
+    cursor: pointer;
+  }
+}
+
+.popover.schedule-judge-prefs-popover,
+.popover .popover-body ul {
+  max-width: 16rem;
+}
+
+.schedule-save-card {
+  margin-top: 0.5rem;
+}
+
+/* View schedule (read-only overview) */
+
+.view-schedule-page {
+  margin-bottom: 2rem;
+}
+
+.view-schedule-lead {
+  max-width: 42rem;
+}
+
+.view-schedule-timeslot-card {
+  border: 1px solid var(--site-border, rgba(0, 0, 0, 0.08)) !important;
+}
+
+.view-schedule-slot-header {
+  background-color: rgba(21, 42, 69, 0.06);
+  border-bottom: 1px solid var(--site-border, rgba(0, 0, 0, 0.08));
+}
+
+.view-schedule-table {
+  font-size: 0.9375rem;
+
+  tbody td {
+    vertical-align: top;
+  }
+
+  tbody td p {
+    margin-bottom: 0.35rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  tbody tr.table-danger > td {
+    background-color: rgba(var(--bs-danger-rgb), 0.12) !important;
+    box-shadow: inset 3px 0 0 rgba(var(--bs-danger-rgb), 0.85);
+  }
+}
+
+.view-schedule-conflict-banner {
+  border-radius: 0 !important;
+}
+
+@media print {
+  .site-navbar,
+  .site-footer,
+  .view-schedule-no-print {
+    display: none !important;
+  }
+
+  .site-main {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .view-schedule-timeslot-card {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .view-schedule-table {
+    font-size: 10pt;
+  }
+
+  .view-schedule-table tbody tr.table-danger > td {
+    background-color: #f8d7da !important;
+    box-shadow: inset 3px 0 0 #dc3545 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .view-schedule-conflict-banner {
+    color: #842029 !important;
+    background-color: #f8d7da !important;
+    border-color: #f5c2c7 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  a[href]::after {
+    content: none !important;
+  }
+}

@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :judge_preference do
-
-    association :division, factory: :division
+    association :preference, factory: :preference
     association :user, factory: :user
   end
 end

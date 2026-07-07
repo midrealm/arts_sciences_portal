@@ -29,8 +29,8 @@ class User < ApplicationRecord
     self.user_role.role_name == "admin"
   end
 
-  def selected_categories
-    JudgePreference.where(user_id: self.id).pluck(:category_id)
+  def selected_preferences
+    JudgePreference.where(user_id: self.id).pluck(:preference_id)
   end
 
   def email_or_name

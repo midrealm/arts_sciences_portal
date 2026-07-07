@@ -4,7 +4,7 @@ RSpec.describe JudgePreferencesController, type: :controller do
   describe 'authorization' do
     context "if the preferences don't belong to the user" do
       let!(:judge_preference) {FactoryBot.create(:judge_preference, id: 1, user_id: right_user.id)}
-      let!(:category) {FactoryBot.create(:category)}
+      let!(:preference) {FactoryBot.create(:preference)}
       let!(:right_user) {FactoryBot.create(:user)}
       let!(:wrong_user) {FactoryBot.create(:user)}
 
@@ -31,7 +31,7 @@ RSpec.describe JudgePreferencesController, type: :controller do
       end
 
       it "denies user to create jude preferences" do
-        post :create, params: {id: judge_preference.id, user_id: right_user.id, judge_preference: {judge_preferences: {category_id: category.id}}}
+        post :create, params: {id: judge_preference.id, user_id: right_user.id, judge_preference: {judge_preferences: {preference_id: preference.id}}}
         expect(response.status).to eq 302
         expect(flash[:alert]).to eq "You are not authorized to perform this action."
       end
@@ -39,7 +39,7 @@ RSpec.describe JudgePreferencesController, type: :controller do
 
     context "if the preferences belong to the user" do
       let!(:judge_preference) {FactoryBot.create(:judge_preference, id: 1, user_id: right_user.id)}
-      let!(:category) {FactoryBot.create(:category)}
+      let!(:preference) {FactoryBot.create(:preference)}
       let!(:right_user) {FactoryBot.create(:user)}
 
       before(:each) do
@@ -63,7 +63,7 @@ RSpec.describe JudgePreferencesController, type: :controller do
       end
 
       it "allows user to create preferences" do
-        post :create, params: {id: judge_preference.id, user_id: right_user.id, judge_preference: {judge_preferences: {category_id: category.id}}}
+        post :create, params: {id: judge_preference.id, user_id: right_user.id, judge_preference: {judge_preferences: {preference_id: preference.id}}}
         expect(response.status).to eq 302
         expect(flash[:notice]).to be_present
       end
@@ -96,9 +96,9 @@ RSpec.describe JudgePreferencesController, type: :controller do
 
       it "allows admin to create judge preferences" do
         user = FactoryBot.create(:user)
-        category = FactoryBot.create(:category)
+        preference = FactoryBot.create(:preference)
 
-        post :create, params: {id: judge_preference.id, user_id: user.id, judge_preference: {judge_preferences: {category_id: category.id}}}
+        post :create, params: {id: judge_preference.id, user_id: user.id, judge_preference: {judge_preferences: {preference_id: preference.id}}}
         expect(response.status).to eq 302
         expect(flash[:notice]).to be_present
       end
@@ -109,10 +109,10 @@ RSpec.describe JudgePreferencesController, type: :controller do
     subject(:index) {get :index, params: {user_id: user.id}}
 
     let!(:user) {FactoryBot.create(:user)}
-    let!(:category1) {FactoryBot.create(:category, name: 'category 1')}
-    let!(:category2) {FactoryBot.create(:category, name: 'category 2')}
-    let!(:judge_preference1) {FactoryBot.create(:judge_preference, category_id: category1.id, user_id: user.id)}
-    let!(:judge_preference2) {FactoryBot.create(:judge_preference, category_id: category2.id, user_id: user.id)}
+    let!(:preference1) {FactoryBot.create(:preference, name: 'category 1')}
+    let!(:preference2) {FactoryBot.create(:preference, name: 'category 2')}
+    let!(:judge_preference1) {FactoryBot.create(:judge_preference, preference_id: preference1.id, user_id: user.id)}
+    let!(:judge_preference2) {FactoryBot.create(:judge_preference, preference_id: preference2.id, user_id: user.id)}
 
     before(:each) do
       stub_login
@@ -126,17 +126,17 @@ RSpec.describe JudgePreferencesController, type: :controller do
     end
 
     it 'lists out all judge preferences' do
-      expect(response.body).to include(category1.name)
-      expect(response.body).to include(category2.name)
+      expect(response.body).to include(preference1.name)
+      expect(response.body).to include(preference2.name)
     end
   end
 
   describe 'POST delete' do
     subject(:destroy) {post :destroy, params: {user_id: user.id, id: judge_preference.id}}
 
-    let!(:category) {FactoryBot.create(:category, name: 'delete me')}
+    let!(:preference) {FactoryBot.create(:preference, name: 'delete me')}
     let!(:user) {FactoryBot.create(:user)}
-    let!(:judge_preference) {FactoryBot.create(:judge_preference, category: category, user: user)}
+    let!(:judge_preference) {FactoryBot.create(:judge_preference, preference: preference, user: user)}
 
     before(:each) do
       stub_login
@@ -146,7 +146,7 @@ RSpec.describe JudgePreferencesController, type: :controller do
     it 'deleted the judge assign' do
       preferences = JudgePreference.all
       preferences.each do |judge|
-        expect(preferences.category.name).to_not be 'delete me'
+        expect(judge.preference.name).to_not be 'delete me'
       end
     end
   end

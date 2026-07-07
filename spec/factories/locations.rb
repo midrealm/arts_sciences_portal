@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :location do
     description { "MyString" }
-    fair { nil }
+    association :fair, factory: :fair
   end
 end

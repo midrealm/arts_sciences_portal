@@ -38,14 +38,14 @@ class JudgePreferencesController < ApplicationController
   # POST /judge_preferences.json
   def create
     user = current_user.admin? ? User.find(params[:user_id]) : @user
-    selected_categories = params[:user][:selected_categories].drop(1)
-    #destroy all unselected divisions
-    user.selected_categories.each do |category_id|
-      JudgePreference.find_by(user_id: user.id, category_id: category_id).destroy unless selected_categories.include?(category_id.to_s)
+    selected_preferences = params[:user][:selected_preferences].drop(1)
+    #destroy all unselected preferences
+    user.selected_preferences.each do |preference_id|
+      JudgePreference.find_by(user_id: user.id, preference_id: preference_id).destroy unless selected_preferences.include?(preference_id.to_s)
     end
 
-    selected_categories.each do |category_id|
-      JudgePreference.find_or_create_by({user_id: user.id, category_id: category_id})
+    selected_preferences.each do |preference_id|
+      JudgePreference.find_or_create_by({ user_id: user.id, preference_id: preference_id })
     end
 
     respond_to do |format|
@@ -91,6 +91,6 @@ class JudgePreferencesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def judge_preference_params
-      params.require(:judge_preference).require(:judge_preferences).permit(:category_id).merge({user_id: @current_user.id})
+      params.require(:judge_preference).require(:judge_preferences).permit(:preference_id).merge({ user_id: @current_user.id })
     end
 end

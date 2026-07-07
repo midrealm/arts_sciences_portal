@@ -3,7 +3,7 @@ class FairsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :verify_admin
-  before_action :set_fair, only: [:show, :edit, :update, :destroy, :schedule, :view_schedule, :submit_schedule, :review, :tallyroom]
+  before_action :set_fair, only: [:show, :edit, :update, :destroy, :schedule, :auto_schedule, :view_schedule, :submit_schedule, :review, :tallyroom]
 
   # GET /fairs
   # GET /fairs.json
@@ -66,12 +66,29 @@ class FairsController < ApplicationController
   end
 
   def view_schedule
-    @entries = Entry.fair_entries(@fair).in_schedule_order
+    @entries = Entry.fair_entries(@fair).in_schedule_order.includes(:judge_assigns)
+    @timeslots = Timeslot.all.in_order
+    @entries_by_timeslot = @timeslots.index_with { |ts| @entries.select { |e| e.timeslot_id == ts.id } }
   end
 
   def schedule
-    @entries = Entry.fair_entries(@fair).order(:entry_name)
-    @judges = User.volunteered(@fair).includes([:judge_assigns, :judge_preferences, :user_peerages])
+    load_schedule_data
+    @auto_schedule_preview = false
+    @proposed_schedule = {}
+  end
+
+  def auto_schedule
+    load_schedule_data
+    @locations = Location.for_fair(@fair)
+    @proposed_schedule = AutoScheduleService.new(
+      entries: @entries,
+      judges: @judges,
+      timeslots: @timeslots,
+      locations: @locations
+    ).call
+    @auto_schedule_preview = true
+    flash.now[:notice] = "Auto-schedule preview generated. Review the suggestions below and click Save schedule to persist."
+    render :schedule
   end
 
   def submit_schedule
@@ -108,6 +125,14 @@ class FairsController < ApplicationController
   end
 
   private
+    def load_schedule_data
+      @entries = Entry.fair_entries(@fair)
+        .includes(:preferences, :judge_assigns, :users)
+        .order(:entry_name)
+      @judges = User.volunteered(@fair).includes(:judge_assigns, :peerages, judge_preferences: :preference)
+      @timeslots = Timeslot.all.in_order
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_fair
       @fair = Fair.find(params[:id])
@@ -142,15 +167,16 @@ class FairsController < ApplicationController
     end
 
     Entry.where(fair_id: @fair.id).each do |entry|
-      selections = assignments.has_key?(entry.id) ? assigments[entry.id] : []
+      selections = assignments.has_key?(entry.id.to_s) ? assignments[entry.id.to_s] : []
       JudgeAssign.where(entry_id: entry.id).each do |judge|
         judge.destroy unless selections.include?(judge.user_id)
       end
     end
 
-    assignments.each do |entry, selections|
+    assignments.each do |entry_id, selections|
+      eid = entry_id.to_i
       selections.each do |new_judge|
-        JudgeAssign.create(user_id: new_judge, entry_id: entry) if JudgeAssign.find_by(user_id: new_judge, entry_id: entry).nil?
+        JudgeAssign.create(user_id: new_judge, entry_id: eid) if JudgeAssign.find_by(user_id: new_judge, entry_id: eid).nil?
       end
     end
   end
